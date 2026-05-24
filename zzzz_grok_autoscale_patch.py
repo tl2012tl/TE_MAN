@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from .logger import logger
 from .Grok_Safe_PY import (
     BananaGeminiAsyncSafePyNode,
     BananaGeminiImageSafePyNode,
@@ -31,6 +32,9 @@ if BananaTEVeoVideoSafePyNode is not None:
     NODE_CLASS_MAPPINGS["TE_image_pro_te_veo_video"] = BananaTEVeoVideoSafePyNode
 if TEHappyHVideoSafePyNode is not None:
     NODE_CLASS_MAPPINGS["TE_image_pro_happyh_video"] = TEHappyHVideoSafePyNode
+    logger.success("HappyH Safe PY 包装已启用: TE_image_pro_happyh_video")
+else:
+    logger.warning("HappyH Safe PY 包装未启用: TEHappyHVideoSafePyNode is None")
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TE_image_pro_grok_image": "TE MAN Grok Image",
@@ -46,4 +50,4 @@ if BananaTEJMVideoSafePyNode is not None:
 if BananaTEVeoVideoSafePyNode is not None:
     NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_veo_video"] = "TE veo video"
 if TEHappyHVideoSafePyNode is not None:
-    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_happyh_video"] = "TE HappyH Video"
+    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_happyh_video"] = "TE MAN HappyH Video"
