@@ -47,6 +47,21 @@ except Exception as exc:  # pragma: no cover
     logger.warning(f"TE_VEO_Video 基础节点暂不可用，等待编译后的模块: {exc}")
 
 try:
+    from .TE_HappyH_Video import TEHappyHVideoNode as _BaseTEHappyHVideoNode
+except Exception as exc:  # pragma: no cover
+    try:
+        from .TE_HappyH_Video import NODE_CLASS_MAPPINGS as _HappyHNodeClassMappings
+
+        _BaseTEHappyHVideoNode = _HappyHNodeClassMappings.get("TE_image_pro_happyh_video")  # type: ignore
+        if _BaseTEHappyHVideoNode is None:
+            raise ImportError("NODE_CLASS_MAPPINGS 中未找到 TE_image_pro_happyh_video")
+    except Exception as mapping_exc:
+        _BaseTEHappyHVideoNode = None  # type: ignore
+        logger.warning(
+            f"TE_HappyH_Video 基础节点暂不可用，等待编译后的模块: {exc}; {mapping_exc}"
+        )
+
+try:
     from .Sora_2_Video_Generator import BananaSora2VideoNode as _BaseSora2VideoNode
 except Exception as exc:  # pragma: no cover
     raise ImportError(f"无法加载 Sora_2_Video_Generator 基础节点: {exc}")
@@ -589,6 +604,42 @@ if _BaseTEVeoVideoNode is not None:
             return super().generate_video(*args, **call_kwargs)
 else:
     BananaTEVeoVideoSafePyNode = None  # type: ignore
+
+
+if _BaseTEHappyHVideoNode is not None:
+    class TEHappyHVideoSafePyNode(_BaseTEHappyHVideoNode):
+        CATEGORY = "TE MAN/HappyHorse"
+
+        @classmethod
+        def INPUT_TYPES(cls):
+            input_types = super().INPUT_TYPES()
+            try:
+                prompt_schema = input_types["required"]["prompt"]
+                prompt_config = prompt_schema[1]
+                if isinstance(prompt_config, dict):
+                    prompt_config = dict(prompt_config)
+                    prompt_config["defaultInput"] = True
+                    input_types["required"]["prompt"] = (prompt_schema[0], prompt_config)
+            except Exception:
+                pass
+            return input_types
+
+        def generate_video(self, *args, **kwargs):
+            call_kwargs = dict(kwargs)
+            call_kwargs, input_routes, merged_count = _scale_named_image_kwargs(
+                call_kwargs,
+                [f"image_{i}" for i in range(1, 10)],
+                "HappyH Safe PY 输入图",
+                log_unscaled=True,
+            )
+            if input_routes > 0:
+                logger.info(
+                    f"HappyH Safe PY 参考图数量: "
+                    f"{input_routes} 路输入, 合并后 {merged_count} 张"
+                )
+            return super().generate_video(*args, **call_kwargs)
+else:
+    TEHappyHVideoSafePyNode = None  # type: ignore
 
 
 class BananaSora2VideoSafePyNode(_BaseSora2VideoNode):

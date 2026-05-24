@@ -6,6 +6,11 @@
 用了新特性，只支持 Python 3.13，可去 B 站下载我的 Py3.13 整合包https://pan.quark.cn/s/e1649b85eb60
 
 
+## v2.3.1
+1.增加TE happyh video 节点 支持快乐马
+
+
+
 ## v2.3
 重磅更新:加入TE MAN 资产素材库功能,再次重塑ComfyUI使用方式
   支持一键添加ComfyUI内图片到资产库

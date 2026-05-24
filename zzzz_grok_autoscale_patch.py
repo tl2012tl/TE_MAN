@@ -9,6 +9,7 @@ from .Grok_Safe_PY import (
     BananaSora2VideoSafePyNode,
     BananaTEJMVideoSafePyNode,
     BananaTEVeoVideoSafePyNode,
+    TEHappyHVideoSafePyNode,
     TEGPTImage2SafePyNode,
 )
 
@@ -28,6 +29,8 @@ if BananaTEJMVideoSafePyNode is not None:
     NODE_CLASS_MAPPINGS["TE_image_pro_te_jm_video"] = BananaTEJMVideoSafePyNode
 if BananaTEVeoVideoSafePyNode is not None:
     NODE_CLASS_MAPPINGS["TE_image_pro_te_veo_video"] = BananaTEVeoVideoSafePyNode
+if TEHappyHVideoSafePyNode is not None:
+    NODE_CLASS_MAPPINGS["TE_image_pro_happyh_video"] = TEHappyHVideoSafePyNode
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TE_image_pro_grok_image": "TE MAN Grok Image",
@@ -42,3 +45,5 @@ if BananaTEJMVideoSafePyNode is not None:
     NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_jm_video"] = "TE JM Video"
 if BananaTEVeoVideoSafePyNode is not None:
     NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_veo_video"] = "TE veo video"
+if TEHappyHVideoSafePyNode is not None:
+    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_happyh_video"] = "TE HappyH Video"
