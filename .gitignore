@@ -1,0 +1,10 @@
+/config.ini
+/config_IdeaDesk.ini
+/data/te_man_idea_desk.db
+/data/te_man_idea_desk.db-*
+/te_bernini_backend/text_embed_cache/
+__pycache__/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
