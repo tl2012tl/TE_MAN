@@ -1,5 +1,6 @@
 /config.ini
 /config_IdeaDesk.ini
+/GPT_Image_2_Generator test.py
 /data/te_man_idea_desk.db
 /data/te_man_idea_desk.db-*
 /te_bernini_backend/text_embed_cache/
