@@ -67,6 +67,7 @@ except Exception as exc:  # pragma: no cover
     raise ImportError(f"无法加载 Sora_2_Video_Generator 基础节点: {exc}")
 
 
+_ENABLE_INPUT_IMAGE_AUTOSCALE = False
 _MAX_INPUT_IMAGE_MEGAPIXELS = 1.0
 _EDIT_IMAGE_URL_FORMAT_OPTION_NAME = "图生图image_url格式测试"
 _OFFICIAL_SCALE_METHOD = "nearest-exact"
@@ -93,6 +94,9 @@ def _scale_image_tensor_to_total_pixels_if_needed(
     megapixels: float = _MAX_INPUT_IMAGE_MEGAPIXELS,
     resolution_steps: int = 1,
 ):
+    if not _ENABLE_INPUT_IMAGE_AUTOSCALE:
+        return image_tensor
+
     if image_tensor is None or not hasattr(image_tensor, "shape"):
         return image_tensor
 
@@ -401,6 +405,11 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
     def INPUT_TYPES(cls):
         input_types = super().INPUT_TYPES()
         try:
+            required_inputs = dict(input_types.get("required", {}))
+            required_inputs.pop("aspect_ratio", None)
+            required_inputs.pop("线路1清晰度", None)
+            input_types["required"] = required_inputs
+
             optional_inputs = dict(input_types.get("optional", {}))
             image_schema = optional_inputs.get("image")
             if image_schema:
@@ -432,6 +441,7 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
         timeout_s: int = 600,
         绕过代理: bool = False,
         线路选择: str = "线路1",
+        **extra_kwargs,
     ):
         original_images = (image, image_2, image_3, image_4, image_5)
         scaled_images: List[Optional[Any]] = []
@@ -463,7 +473,8 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
                 f"合并后 {_count_batch_images(scaled_image)} 张"
             )
 
-        return super().generate_video(
+        super_generate_video = super().generate_video
+        call_kwargs = dict(
             prompt=prompt,
             api_key=api_key,
             api_base_url=api_base_url,
@@ -478,6 +489,7 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
             绕过代理=绕过代理,
             线路选择=线路选择,
         )
+        return super_generate_video(**call_kwargs)
 
 
 class TEGPTImage2SafePyNode(_BaseGPTImage2Node):
