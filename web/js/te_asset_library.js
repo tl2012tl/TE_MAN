@@ -1,1 +1,2300 @@
-const a0_0x14ac9b=a0_0x9945;(function(_0x4c8458,_0x573b40){const _0x4b473c=a0_0x9945,_0x533f99=_0x4c8458();while(!![]){try{const _0x110ab2=parseInt(_0x4b473c(0x1aa))/0x1*(parseInt(_0x4b473c(0x1e2))/0x2)+-parseInt(_0x4b473c(0x1ab))/0x3*(-parseInt(_0x4b473c(0x1ea))/0x4)+-parseInt(_0x4b473c(0x1e5))/0x5+parseInt(_0x4b473c(0x187))/0x6*(parseInt(_0x4b473c(0x170))/0x7)+-parseInt(_0x4b473c(0x18f))/0x8+-parseInt(_0x4b473c(0x20e))/0x9*(parseInt(_0x4b473c(0x1bf))/0xa)+-parseInt(_0x4b473c(0x174))/0xb;if(_0x110ab2===_0x573b40)break;else _0x533f99['push'](_0x533f99['shift']());}catch(_0x34943f){_0x533f99['push'](_0x533f99['shift']());}}}(a0_0x2f24,0x84576));import{app}from'../../../scripts/app.js';import{api}from'../../../scripts/api.js';const EXTENSION_NAME='TEImagePro.AssetLibrary',IMAGE_NODE_CLASS=a0_0x14ac9b(0x1ed),TEXT_NODE_CLASS=a0_0x14ac9b(0x1e0),PANEL_ID='te-asset-library-panel',MENU_BUTTON_ID=a0_0x14ac9b(0x1b6),STYLE_ID='te-asset-library-style',STORAGE_KEY='te_asset_library_state_v1',DEFAULT_CATEGORY=a0_0x14ac9b(0x167),DEFAULT_PROJECT=a0_0x14ac9b(0x1e3),TEXT_CATEGORY=a0_0x14ac9b(0x16f),ASSET_KIND_IMAGE='image',ASSET_KIND_TEXT=a0_0x14ac9b(0x216),PROTECTED_CATEGORIES=new Set([DEFAULT_CATEGORY,'全部','未分类','',TEXT_CATEGORY]);let panel=null,addDialog=null,previewDialog=null,state={'visible':![],'project':'','category':DEFAULT_CATEGORY,'query':'','viewSize':0x80,'projects':[],'assets':[],'selectedAsset':null,'loading':![],'status':''};function loadState(){const _0x53b554=a0_0x9945;try{const _0x4c21f1=JSON['parse'](localStorage['getItem'](STORAGE_KEY)||'{}');state[_0x53b554(0x1d5)]=_0x4c21f1['project']||'',state['category']=_0x4c21f1[_0x53b554(0x1ad)]||DEFAULT_CATEGORY,state[_0x53b554(0x1f0)]=_0x4c21f1['query']||'',state['viewSize']=Number(_0x4c21f1['viewSize'])||0x80;}catch{}}function saveState(){const _0x2a0eef=a0_0x9945;localStorage['setItem'](STORAGE_KEY,JSON['stringify']({'project':state['project'],'category':state['category'],'query':state['query'],'viewSize':state[_0x2a0eef(0x18c)]}));}function injectStyle(){const _0x2256f3=a0_0x9945;if(document['getElementById'](STYLE_ID))return;const _0x27f851=document['createElement']('style');_0x27f851['id']=STYLE_ID,_0x27f851['textContent']=_0x2256f3(0x181),document['head'][_0x2256f3(0x1d7)](_0x27f851);}function a0_0x2f24(){const _0x4d5594=['confirm','节点：','canvas','已新建项目：','TE\x20MAN\x20资产素材库','TE_text_display','[data-action=\x27close-preview\x27]','2rCJMza','默认项目','statusText','3746080BkpOtD','createNode','isArray','add','right','3780476uvfZHH','message','max','TE_image_pro_save_image_with_output','复制失败','mousedown','query','已复制：','trim','handle','json','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal\x22\x20role=\x22dialog\x22\x20aria-modal=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal-title\x22>添加提示词到\x20TE\x20MAN\x20资产库</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22>提示词会保存到当前项目的“','&#039;','resize','select','&quot;','hidden','toFixed','当前文本节点没有可添加的提示词。','relative_path','te-asset-modal-backdrop','/te_asset_library/project','click','replaceAll','确定删除这个素材吗？\x0a\x0a','querySelectorAll','graph','当前节点没有可预览的图片。','isFinite','pointercancel','width','pos','link','auto','className','[data-role=\x27add-project\x27]','9QBpzzi','<div\x20class=\x22te-asset-empty\x22>这个项目/分类里还没有素材。可以从\x20TE\x20图像节点或文本展示节点添加。</div>','setDirtyCanvas','settingsGroup','remove','startY','请选择具体分类后再删除','catch','text','新建项目失败：','then','[data-role=\x27add-category\x27]','/te_asset_library/delete','../../../scripts/ui/components/buttonGroup.js','找不到\x20TE\x20MAN\x20加载图像&保存图像\x20节点','te-asset-menu-button','getBoundingClientRect','size','_nodes','图片预览','setProperty','preserveScroll','body','\x22\x20alt=\x22\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','__all__','selected','stopPropagation','target','imageInfo','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22\x20data-role=\x22preview-zoom\x22>100%</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22close-preview\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','dataset','</select>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22add-new-category\x22>+</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>文件名，可留空</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-asset-input\x22\x20data-role=\x22add-filename\x22\x20placeholder=\x22留空则沿用原文件名\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22cancel-add\x22>取消</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20primary\x22\x20data-action=\x22confirm-add\x22>添加</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','提示词','7lGBUKi','closest','[data-action=\x27smaller\x27]','textContent','2654267DeaXzb','scale','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal\x22\x20role=\x22dialog\x22\x20aria-modal=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal-title\x22>添加到\x20TE\x20MAN\x20资产库</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22>选择项目和分类，不需要手动输入已有名称。</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>项目</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<select\x20class=\x22te-asset-select\x22\x20data-role=\x22add-project\x22>','now','set','新建分类失败：','[data-action=\x27delete-category\x27]','innerHTML','find','element','name','path','apiURL','\x0a\x20\x20\x20\x20\x20\x20\x20\x20:root\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-bg:\x20rgba(12,\x2015,\x2017,\x200.94);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-panel:\x20rgba(24,\x2029,\x2032,\x200.96);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-line:\x20rgba(255,\x20255,\x20255,\x200.1);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-line-strong:\x20rgba(255,\x20204,\x20102,\x200.38);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-text:\x20rgba(244,\x20241,\x20231,\x200.95);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-muted:\x20rgba(244,\x20241,\x20231,\x200.58);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-accent:\x20#f3b44e;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-accent-2:\x20#65d1b7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-danger:\x20#ff7b7b;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-asset-radius:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-asset-library-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2034px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2032px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x2086px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x208px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20700;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-asset-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x2086px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(255,\x20196,\x2090,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(28,\x2033,\x2034,\x200.88),\x20rgba(66,\x2049,\x2026,\x200.72));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x208px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20700\x2013px/1.1\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x208px\x2020px\x20rgba(0,\x200,\x200,\x200.18);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-asset-menu-button:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-asset-menu-button.active,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-asset-library-menu-button[data-visible=\x22true\x22]\x20.te-asset-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20218,\x20132,\x200.9);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.24),\x20rgba(101,\x20209,\x20183,\x200.12));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x20112px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(720px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20min(720px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20901;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20210px\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20var(--te-asset-radius);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20radial-gradient(circle\x20at\x20top\x20left,\x20rgba(243,\x20180,\x2078,\x200.18),\x20transparent\x2035%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(145deg,\x20rgba(16,\x2020,\x2022,\x200.97),\x20rgba(9,\x2011,\x2013,\x200.97));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2024px\x2080px\x20rgba(0,\x200,\x200,\x200.55);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-panel[hidden]\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-sidebar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-right:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.035);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-main\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20auto\x20auto\x20minmax(0,\x201fr)\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-title-row,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-row\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-drag-handle\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20move;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20touch-action:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-title\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2017px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20900;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20letter-spacing:\x200.02em;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-subtitle\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.4;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-launcher-link\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-top:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20block;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(101,\x20209,\x20183,\x200.3);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x207px\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(235,\x20255,\x20247,\x200.92);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(101,\x20209,\x20183,\x200.12),\x20rgba(243,\x20180,\x2078,\x200.08));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.35;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-decoration:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-launcher-link:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(101,\x20209,\x20183,\x200.62);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(101,\x20209,\x20183,\x200.2),\x20rgba(243,\x20180,\x2078,\x200.12));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-spacer\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex:\x201;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-input,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-select\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.07);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20600\x2012px/1\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20outline:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20border-color\x200.15s\x20ease,\x20background\x200.15s\x20ease,\x20transform\x200.15s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20var(--te-asset-line-strong);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(243,\x20180,\x2078,\x200.14);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button.primary\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(243,\x20180,\x2078,\x200.7);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.27),\x20rgba(101,\x20209,\x20183,\x200.12));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button.ghost\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x207px\x209px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20transparent;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button.danger\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffd7d7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.36);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20123,\x20123,\x200.08);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button.danger:hover:not(:disabled)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.68);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20123,\x20123,\x200.15);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button:disabled\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200.42;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20not-allowed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-button:disabled:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.07);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-input,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-select\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2010px\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-input::placeholder\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(244,\x20241,\x20231,\x200.38);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-select\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20appearance:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-select\x20option\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#161a1c;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#f6f0df;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-label\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20letter-spacing:\x200.09em;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-transform:\x20uppercase;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-stack\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-categories\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding-right:\x203px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-category\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20space-between;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20transparent;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.045);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20left;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-category:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-category.active\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20var(--te-asset-line-strong);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(243,\x20180,\x2078,\x200.13);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-count\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-toolbar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20minmax(0,\x201fr)\x20auto\x20auto\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-grid\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow-y:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow-x:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20repeat(auto-fill,\x20minmax(var(--te-asset-thumb,\x20128px),\x201fr));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-content:\x20start;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x202px\x204px\x208px\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-card\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.055);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20var(--te-asset-thumb,\x20128px)\x2056px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20calc(var(--te-asset-thumb,\x20128px)\x20+\x2056px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-card:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-card.selected\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(243,\x20180,\x2078,\x200.72);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x200\x200\x201px\x20rgba(243,\x20180,\x2078,\x200.2),\x200\x2014px\x2034px\x20rgba(0,\x200,\x200,\x200.28);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-thumb\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20var(--te-asset-thumb,\x20128px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20place-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(45deg,\x20rgba(255,255,255,0.035)\x2025%,\x20transparent\x2025%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(-45deg,\x20rgba(255,255,255,0.035)\x2025%,\x20transparent\x2025%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(45deg,\x20transparent\x2075%,\x20rgba(255,255,255,0.035)\x2075%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(-45deg,\x20transparent\x2075%,\x20rgba(255,255,255,0.035)\x2075%);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background-size:\x2018px\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background-position:\x200\x200,\x200\x209px,\x209px\x20-9px,\x20-9px\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-thumb\x20img\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20object-fit:\x20contain;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20block;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-card.text\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20var(--te-asset-thumb,\x20128px)\x2056px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20calc(var(--te-asset-thumb,\x20128px)\x20+\x2056px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-thumb.te-asset-text-thumb\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20stretch;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2013px\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20radial-gradient(circle\x20at\x20top\x20right,\x20rgba(243,\x20180,\x2078,\x200.12),\x20transparent\x2046%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(145deg,\x20rgba(255,\x20255,\x20255,\x200.055),\x20rgba(255,\x20255,\x20255,\x200.025));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(246,\x20243,\x20232,\x200.88);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20600\x2012px/1.5\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20pre-wrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20word-break:\x20break-word;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-text-preview\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20-webkit-box;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20-webkit-line-clamp:\x206;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20-webkit-box-orient:\x20vertical;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20left;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-meta\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px\x2010px\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x204px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-name\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-path\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-actions\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20absolute;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-3px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20opacity\x200.15s\x20ease,\x20transform\x200.15s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-card:hover\x20.te-asset-actions\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x201;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(0);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-chip\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(255,\x20255,\x20255,\x200.15);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20999px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x206px\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(0,\x200,\x200,\x200.56);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-more\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding-bottom:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-bottom:\x20-10px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-more-menu\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20absolute;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x20calc(100%\x20-\x201px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x2076px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x205px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(9,\x2011,\x2013,\x200.94);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2012px\x2030px\x20rgba(0,\x200,\x200,\x200.38);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-more:hover\x20.te-asset-more-menu\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-chip.danger\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffd7d7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-footer\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2030px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-empty\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-column:\x201\x20/\x20-1;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20dashed\x20rgba(255,\x20255,\x20255,\x200.16);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2036px\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.035);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-drop-hint\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20pointer-events:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20902;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20999px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(243,\x20180,\x2078,\x200.6);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(13,\x2016,\x2018,\x200.92);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2010px\x2030px\x20rgba(0,0,0,0.35);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translate(-50%,\x20-50%);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-modal-backdrop\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20inset:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20910;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20place-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(0,\x200,\x200,\x200.34);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20backdrop-filter:\x20blur(2px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-modal\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(430px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20radial-gradient(circle\x20at\x20top\x20right,\x20rgba(101,\x20209,\x20183,\x200.15),\x20transparent\x2036%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(145deg,\x20rgba(21,\x2025,\x2027,\x200.98),\x20rgba(11,\x2013,\x2015,\x200.98));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2024px\x2070px\x20rgba(0,\x200,\x200,\x200.52);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-modal-title\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20900;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-modal-actions\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20flex-end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding-top:\x204px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-backdrop\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20inset:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20912;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20place-items:\x20start\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x20112px\x2022px\x2052px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(0,\x200,\x200,\x200.62);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20backdrop-filter:\x20blur(3px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(920px,\x20calc(100vw\x20-\x2044px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20min(720px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2020px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20radial-gradient(circle\x20at\x20top\x20left,\x20rgba(243,\x20180,\x2078,\x200.13),\x20transparent\x2038%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20rgba(10,\x2012,\x2014,\x200.98);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2028px\x2090px\x20rgba(0,\x200,\x200,\x200.62);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20auto\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-head\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2012px\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-title\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20900;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-asset-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-body\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20place-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-body\x20img\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20object-fit:\x20contain;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2012px\x2046px\x20rgba(0,\x200,\x200,\x200.38);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform-origin:\x20center\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20zoom-in;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20-webkit-user-drag:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-body.text\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20place-items:\x20stretch;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-text\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.045);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(248,\x20245,\x20235,\x200.94);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20600\x2013px/1.65\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20pre-wrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20word-break:\x20break-word;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20@media\x20(max-width:\x20760px)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x2088px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20calc(100vw\x20-\x2020px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20calc(100vh\x20-\x20140px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x201fr;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview-backdrop\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2088px\x2010px\x2052px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-preview\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20calc(100vw\x20-\x2020px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20calc(100vh\x20-\x20140px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-sidebar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-right:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x201px\x20solid\x20var(--te-asset-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20230px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-asset-toolbar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x201fr\x201fr;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20','values','subfolder','pop','height','min','4483122rklCOX','clipboard','visible','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<aside\x20class=\x22te-asset-sidebar\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-title-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-title\x22>TE\x20MAN\x20资产素材库</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22>项目\x20/\x20分类\x20/\x20图片\x20/\x20提示词</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>项目</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<select\x20class=\x22te-asset-select\x22\x20data-role=\x22project\x22></select>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22new-project\x22>+</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22\x20style=\x22min-height:0;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>分类</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22new-category\x22>+</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-categories\x22\x20data-role=\x22categories\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20danger\x22\x20data-action=\x22delete-category\x22>删除当前分类</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20点“添加”或双击素材创建对应节点。\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20class=\x22te-asset-launcher-link\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20href=\x22https://www.bilibili.com/video/BV1xu9cByELa/?share_source=copy_web&amp;vd_source=a74fe7a15dbf45f77a4ef19aacacd83c\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20target=\x22_blank\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20rel=\x22noopener\x20noreferrer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20推荐配合\x20ComfyUI\x20TE\x20启动器使用，开启并发功能\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</aside>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<main\x20class=\x22te-asset-main\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-title-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-title\x22\x20data-role=\x22heading\x22>素材</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-subtitle\x22\x20data-role=\x22summary\x22>input/TE_MAN</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22close\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-toolbar\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-asset-input\x22\x20data-role=\x22search\x22\x20placeholder=\x22搜索当前项目素材...\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x22\x20data-action=\x22smaller\x22>缩小</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x22\x20data-action=\x22larger\x22>放大</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20primary\x22\x20data-action=\x22refresh\x22>刷新</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-grid\x22\x20data-role=\x22assets\x22></div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-footer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20data-role=\x22status\x22></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22te-asset-spacer\x22></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20data-role=\x22selected\x22></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</main>\x0a\x20\x20\x20\x20','onclick','viewSize','pointerup','mtime','5950640ZNKBjX','warn','创建节点失败：','pointerId','type','categories','serialize','nodeOutputs','widgets_values','options','setPointerCapture','&gt;','createElement','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22add\x22>添加</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22copy\x22>复制</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22preview\x22>预览</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-more\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22more\x22>更多</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-more-menu\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22rename\x22>更名</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x20danger\x22\x20data-action=\x22delete\x22>删除</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-meta\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-name\x22>','加载失败：','length','userSelect','clientY','toggle','left','onNodeCreated','loading','style','加载图像','filename','registerExtension','[data-role=\x27summary\x27]','765753STiOKF','3FgnKby','px)\x20scale(','category','&lt;','selectedAsset','toString','scrollHeight','widgets','<option\x20value=\x22','status','asset','te-asset-library-menu-button','value','includes','after','dispatchEvent','callback','prompt','\x20selected','资产库','1816460oAmuqD','line_count','article','</pre>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','POST','/te_asset_library/thumbnail?','round','querySelector','te_saved_preview_images','selectNode','oninput','已删除：','/view?','添加失败：','已新建分类：','删除分类：','comfyClass','readonly','[data-action=\x27close\x27]','active','projects','行\x20·\x20','project','删除分类失败：','appendChild','preventDefault','addEventListener','</select>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22add-new-project\x22>+</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>标题，可留空</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-asset-input\x22\x20data-role=\x22add-title\x22\x20placeholder=\x22留空则自动命名为\x20TE_MAN_prompt_年月日时分秒\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>预览</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-text\x22\x20style=\x22height:140px;\x22>'];a0_0x2f24=function(){return _0x4d5594;};return a0_0x2f24();}function qs(_0x3febc2,_0x14de58){const _0x7e612=a0_0x9945;return _0x3febc2[_0x7e612(0x1c6)](_0x14de58);}function setStatus(_0x25e61b){state['status']=_0x25e61b||'';if(panel){const _0xe9c7d5=qs(panel,'[data-role=\x27status\x27]');_0xe9c7d5&&(_0xe9c7d5['textContent']=state['status']);}}function markCanvasDirty(){const _0x2f9de9=a0_0x9945;app['graph']?.[_0x2f9de9(0x210)]?.(!![],![]),app['canvas']?.['setDirty']?.(!![],![]);}function clampPanelPosition(_0x367de0,_0x31754e,_0xe47e55){return Math['max'](_0x31754e,Math['min'](_0xe47e55,_0x367de0));}function placePanelAtCurrentPosition(_0xfae55a){const _0x5efbeb=a0_0x9945,_0x55d9ec=_0xfae55a[_0x5efbeb(0x21e)]();if(!_0x55d9ec['width']||!_0x55d9ec['height'])return _0x55d9ec;return _0xfae55a['style']['left']=_0x55d9ec['left']+'px',_0xfae55a['style']['top']=_0x55d9ec['top']+'px',_0xfae55a['style'][_0x5efbeb(0x1e9)]=_0x5efbeb(0x20b),_0xfae55a[_0x5efbeb(0x1a5)]['bottom']='auto',getComputedStyle(_0xfae55a)['position']!=='fixed'&&(_0xfae55a['style']['position']='fixed'),_0x55d9ec;}function clampDraggablePanel(_0x44af80){const _0x4522af=a0_0x9945,_0x5ef53c=_0x44af80['getBoundingClientRect']();if(!_0x5ef53c['width']||!_0x5ef53c['height'])return;const _0x2ed186=0x8,_0x5bfccb=Math['max'](_0x2ed186,window['innerWidth']-_0x5ef53c['width']-_0x2ed186),_0x4764fe=Math['max'](_0x2ed186,window['innerHeight']-_0x5ef53c[_0x4522af(0x185)]-_0x2ed186),_0x23b1b9=clampPanelPosition(_0x5ef53c['left'],_0x2ed186,_0x5bfccb),_0x5543a7=clampPanelPosition(_0x5ef53c['top'],_0x2ed186,_0x4764fe);_0x44af80['style']['left']=_0x23b1b9+'px',_0x44af80['style']['top']=_0x5543a7+'px',_0x44af80['style'][_0x4522af(0x1e9)]='auto',_0x44af80['style']['bottom']='auto';}function enableDraggablePanel(_0x45dd7c,_0x1d2028){const _0x59d1b5=a0_0x9945;if(!_0x45dd7c||_0x45dd7c['__teAssetDragBound'])return;const _0x1140d1=(Array['isArray'](_0x1d2028)?_0x1d2028:[_0x1d2028])['filter'](Boolean);if(!_0x1140d1['length'])return;_0x45dd7c['__teAssetDragBound']=!![];let _0xacd914=null,_0x54bac0='';const _0x5994ae=_0x3dbb09=>{const _0x47f8ac=a0_0x9945;if(!_0xacd914)return;try{_0xacd914[_0x47f8ac(0x1f3)]?.['releasePointerCapture']?.(_0x3dbb09['pointerId']);}catch{}document[_0x47f8ac(0x165)]['style'][_0x47f8ac(0x19f)]=_0x54bac0,_0xacd914=null;},_0x546bbe=_0x241edd=>{const _0x3d8757=a0_0x9945;if(!_0xacd914)return;const _0x23bd53=_0xacd914['startLeft']+_0x241edd['clientX']-_0xacd914['startX'],_0xd77457=_0xacd914['startTop']+_0x241edd['clientY']-_0xacd914[_0x3d8757(0x213)],_0x2a533d=0x8,_0x3a7500=Math['max'](_0x2a533d,window['innerWidth']-_0xacd914['width']-_0x2a533d),_0x4c7ccf=Math['max'](_0x2a533d,window['innerHeight']-_0xacd914[_0x3d8757(0x185)]-_0x2a533d);_0x45dd7c[_0x3d8757(0x1a5)][_0x3d8757(0x1a2)]=clampPanelPosition(_0x23bd53,_0x2a533d,_0x3a7500)+'px',_0x45dd7c['style']['top']=clampPanelPosition(_0xd77457,_0x2a533d,_0x4c7ccf)+'px',_0x45dd7c[_0x3d8757(0x1a5)]['right']='auto',_0x45dd7c['style']['bottom']='auto',_0x241edd[_0x3d8757(0x1d8)]();};for(const _0x3a59f0 of _0x1140d1){_0x3a59f0['classList']['add']('te-asset-drag-handle'),_0x3a59f0['addEventListener']('pointerdown',_0x3f81c9=>{const _0x19618c=a0_0x9945;if(_0x3f81c9['button']!==0x0||_0x3f81c9['target']?.[_0x19618c(0x171)]?.('button,a,input,select,textarea'))return;const _0x183d88=placePanelAtCurrentPosition(_0x45dd7c);if(!_0x183d88[_0x19618c(0x208)]||!_0x183d88[_0x19618c(0x185)])return;_0xacd914={'startX':_0x3f81c9['clientX'],'startY':_0x3f81c9['clientY'],'startLeft':_0x183d88['left'],'startTop':_0x183d88['top'],'width':_0x183d88['width'],'height':_0x183d88['height'],'handle':_0x3f81c9['currentTarget']},_0x54bac0=document[_0x19618c(0x165)][_0x19618c(0x1a5)][_0x19618c(0x19f)],document['body'][_0x19618c(0x1a5)]['userSelect']='none',_0x3f81c9['currentTarget'][_0x19618c(0x199)]?.(_0x3f81c9['pointerId']),_0x3f81c9['preventDefault']();}),_0x3a59f0['addEventListener']('pointermove',_0x546bbe),_0x3a59f0['addEventListener']('pointerup',_0x5994ae),_0x3a59f0['addEventListener']('pointercancel',_0x5994ae);}window[_0x59d1b5(0x1d9)](_0x59d1b5(0x1f7),()=>clampDraggablePanel(_0x45dd7c));}function getAssetGridScrollTop(){const _0x24b877=panel?qs(panel,'[data-role=\x27assets\x27]'):null;return Number(_0x24b877?.['scrollTop']||0x0);}function restoreAssetGridScrollTop(_0x41e15b){if(!Number['isFinite'](_0x41e15b)||_0x41e15b<=0x0)return;requestAnimationFrame(()=>{const _0x2ccba9=a0_0x9945,_0x571208=panel?qs(panel,'[data-role=\x27assets\x27]'):null;if(!_0x571208)return;_0x571208['scrollTop']=Math[_0x2ccba9(0x186)](_0x41e15b,Math[_0x2ccba9(0x1ec)](0x0,_0x571208[_0x2ccba9(0x1b1)]-_0x571208['clientHeight']));});}function imageInfoFromAsset(_0x403e06){const _0x494dc0=a0_0x9945,_0x35b115=_0x403e06['subfolder']||_0x403e06[_0x494dc0(0x1fd)]['split']('/')['slice'](0x0,-0x1)['join']('/');return{'filename':_0x403e06['name']||_0x403e06['relative_path']['split']('/')[_0x494dc0(0x184)](),'subfolder':_0x35b115,'type':'input'};}function buildViewUrl(_0x1a3985){const _0x167321=a0_0x9945,_0x2ea9dd=imageInfoFromAsset(_0x1a3985),_0x493ca0=new URLSearchParams({'filename':_0x2ea9dd['filename'],'type':_0x2ea9dd['type'],'rand':String(Math['floor'](_0x1a3985[_0x167321(0x18e)]||Date[_0x167321(0x177)]()))});return _0x2ea9dd['subfolder']&&_0x493ca0['set']('subfolder',_0x2ea9dd[_0x167321(0x183)]),api['apiURL']('/view?'+_0x493ca0[_0x167321(0x1b0)]());}function buildImageInfoViewUrl(_0x32eb9a){const _0x2d1025=a0_0x9945;if(!_0x32eb9a?.['filename']&&!_0x32eb9a?.[_0x2d1025(0x17f)])return'';if(String(_0x32eb9a['type']||'')==='te_custom_save'){const _0x354018=new URLSearchParams({'filename':_0x32eb9a[_0x2d1025(0x1a7)]||'','path':_0x32eb9a['path']||'','token':_0x32eb9a['token']||'','type':'te_custom_save'});return api['apiURL']('/te_image/view_saved?'+_0x354018[_0x2d1025(0x1b0)]());}const _0xd12ab0=new URLSearchParams({'filename':_0x32eb9a['filename']||'','type':_0x32eb9a[_0x2d1025(0x193)]||'output','rand':String(Date['now']())});return _0x32eb9a['subfolder']&&_0xd12ab0['set'](_0x2d1025(0x183),_0x32eb9a['subfolder']),api[_0x2d1025(0x180)](_0x2d1025(0x1cb)+_0xd12ab0['toString']());}function buildThumbUrl(_0x1d27e0){const _0x2e2bc8=a0_0x9945,_0x28ee38=new URLSearchParams({'path':_0x1d27e0['relative_path'],'size':String(Math['max'](state['viewSize']*0x2,0xdc)),'rand':String(Math['floor'](_0x1d27e0['mtime']||Date['now']()))});return api['apiURL'](_0x2e2bc8(0x1c4)+_0x28ee38[_0x2e2bc8(0x1b0)]());}function getAssetKind(_0xb0aff4){const _0x4afa1c=a0_0x9945,_0x3a499c=String(_0xb0aff4?.['kind']||'')['toLowerCase']();if(_0x3a499c)return _0x3a499c;const _0x464b05=String(_0xb0aff4?.['relative_path']||_0xb0aff4?.[_0x4afa1c(0x17e)]||'')['toLowerCase']();return _0x464b05['endsWith']('.txt')?ASSET_KIND_TEXT:ASSET_KIND_IMAGE;}function isTextAsset(_0x5d5525){return getAssetKind(_0x5d5525)===ASSET_KIND_TEXT;}async function requestJson(_0x598b06,_0xca244={}){const _0x85382=a0_0x9945,_0x126f78=await api['fetchApi'](_0x598b06,_0xca244);if(!_0x126f78['ok']){let _0x5ac5e9=_0x126f78[_0x85382(0x1b4)]+'\x20'+_0x126f78[_0x85382(0x1e4)];try{const _0x18df6a=await _0x126f78[_0x85382(0x1f4)]();_0x5ac5e9=_0x18df6a['error']||_0x5ac5e9;}catch{}throw new Error(_0x5ac5e9);}return await _0x126f78['json']();}async function requestJsonWithGetFallback(_0x5b54e9,_0x211220,_0x5ca82e='405'){try{return await requestJson(_0x5b54e9,{'method':'POST','headers':{'Content-Type':'application/json'},'body':JSON['stringify'](_0x211220||{})});}catch(_0x68f7c6){if(!String(_0x68f7c6?.['message']||'')['includes'](_0x5ca82e))throw _0x68f7c6;const _0x5dda73=new URLSearchParams();for(const [_0x1cb2a4,_0x4bf0c2]of Object['entries'](_0x211220||{})){_0x5dda73['set'](_0x1cb2a4,_0x4bf0c2??'');}return await requestJson(_0x5b54e9+'?'+_0x5dda73['toString']());}}async function getTextAssetContent(_0x36376a){const _0x2eae58=a0_0x9945,_0x434585=new URLSearchParams({'path':_0x36376a['relative_path'],'rand':String(Math['floor'](_0x36376a['mtime']||Date[_0x2eae58(0x177)]()))}),_0x4cdb72=await requestJson('/te_asset_library/text/get?'+_0x434585['toString']());return String(_0x4cdb72['text']??'');}async function copyTextToClipboard(_0x3e7da8){const _0x304e5d=a0_0x9945,_0x6a81b4=String(_0x3e7da8??'');if(!_0x6a81b4)return![];try{if(navigator?.[_0x304e5d(0x188)]?.['writeText'])return await navigator['clipboard']['writeText'](_0x6a81b4),!![];}catch{}try{const _0x179e84=document['createElement']('textarea');_0x179e84['value']=_0x6a81b4,_0x179e84['setAttribute']('readonly',_0x304e5d(0x1d0)),Object['assign'](_0x179e84['style'],{'position':'fixed','left':'-9999px','opacity':'0'}),document[_0x304e5d(0x165)][_0x304e5d(0x1d7)](_0x179e84),_0x179e84['focus'](),_0x179e84[_0x304e5d(0x1f8)]();const _0xf5382c=document['execCommand']?.('copy');return document['body']['removeChild'](_0x179e84),!!_0xf5382c;}catch{return![];}}async function refreshLibrary(_0x2abb6e={}){const _0x40a90f=a0_0x9945,_0x202694=_0x2abb6e['preserveScroll']?getAssetGridScrollTop():null;state[_0x40a90f(0x1a4)]=!![],setStatus('加载中...'),renderPanel();try{const _0x6dac47=new URLSearchParams();state[_0x40a90f(0x1d5)]&&_0x6dac47['set']('project',state['project']);state[_0x40a90f(0x1ad)]&&_0x6dac47['set']('category',state['category']);state['query']&&_0x6dac47[_0x40a90f(0x178)]('q',state['query']);const _0x231eb8=await requestJson('/te_asset_library/list?'+_0x6dac47['toString']());state['projects']=_0x231eb8['projects']||[],state['assets']=_0x231eb8['assets']||[],state['project']=_0x231eb8['current_project']||state['projects'][0x0]?.['name']||DEFAULT_PROJECT,state['category']=_0x231eb8['current_category']||state['category']||DEFAULT_CATEGORY,state['loading']=![],saveState(),renderPanel(),_0x2abb6e['preserveScroll']&&restoreAssetGridScrollTop(_0x202694),!_0x2abb6e['quiet']&&setStatus('已加载\x20'+state['assets']['length']+'\x20个素材');}catch(_0x1726a7){state['loading']=![],renderPanel(),_0x2abb6e[_0x40a90f(0x223)]&&restoreAssetGridScrollTop(_0x202694),setStatus(_0x40a90f(0x19d)+(_0x1726a7[_0x40a90f(0x1eb)]||_0x1726a7));}}function getCurrentProject(){const _0xe4f99a=a0_0x9945;return state['projects'][_0xe4f99a(0x17c)](_0x3f6913=>_0x3f6913['name']===state['project'])||state['projects'][0x0]||null;}function getCategoriesForCurrentProject(){const _0x251dea=a0_0x9945,_0x5aab61=getCurrentProject(),_0x4bbee6=_0x5aab61?.['categories']||[],_0x3a21ac=_0x4bbee6['reduce']((_0xdff359,_0x1feb23)=>_0xdff359+(Number(_0x1feb23['count'])||0x0),0x0);return[{'name':DEFAULT_CATEGORY,'label':'全部','count':_0x3a21ac},..._0x4bbee6['map'](_0x44ffa6=>({'name':_0x44ffa6[_0x251dea(0x17e)],'label':_0x44ffa6[_0x251dea(0x17e)],'count':_0x44ffa6['count']}))];}function isProtectedCategory(_0x437a57){return PROTECTED_CATEGORIES['has'](String(_0x437a57||'')['trim']());}function isSerializedWidget(_0xe0d19d){const _0x337dfe=a0_0x9945;return _0xe0d19d?.[_0x337dfe(0x195)]!==![]&&_0xe0d19d?.[_0x337dfe(0x198)]?.['serialize']!==![];}function getSerializedWidgetIndex(_0x2e0ad2,_0x21567c){const _0x24171b=a0_0x9945;if(!Array['isArray'](_0x2e0ad2?.[_0x24171b(0x1b2)])||!_0x21567c)return-0x1;let _0x29ead3=0x0;for(const _0x4da6a2 of _0x2e0ad2[_0x24171b(0x1b2)]){if(_0x4da6a2===_0x21567c)return isSerializedWidget(_0x4da6a2)?_0x29ead3:-0x1;isSerializedWidget(_0x4da6a2)&&(_0x29ead3+=0x1);}return-0x1;}function setWidgetValue(_0x4aec6b,_0x5875ff,_0x20ffc9){const _0x11baac=a0_0x9945,_0x30e6d0=_0x4aec6b?.['widgets']?.['find'](_0x508126=>_0x508126?.[_0x11baac(0x17e)]===_0x5875ff);if(!_0x30e6d0)return![];Array['isArray'](_0x30e6d0['options']?.[_0x11baac(0x182)])&&!_0x30e6d0['options']['values'][_0x11baac(0x1b8)](_0x20ffc9)&&_0x30e6d0['options'][_0x11baac(0x182)]['push'](_0x20ffc9);_0x30e6d0['value']=_0x20ffc9;const _0x315995=getSerializedWidgetIndex(_0x4aec6b,_0x30e6d0);return _0x315995>=0x0&&(_0x4aec6b[_0x11baac(0x197)]??=[],_0x4aec6b[_0x11baac(0x197)][_0x315995]=_0x20ffc9),_0x30e6d0[_0x11baac(0x1bb)]?.(_0x20ffc9),!![];}function getWidgetTextElement(_0x20090f){const _0x4e7381=a0_0x9945,_0x5c35d3=[_0x20090f?.['inputEl'],_0x20090f?.['element'],_0x20090f?.['domElement'],_0x20090f?.['inputElement']];for(const _0x201f53 of _0x5c35d3){if(!_0x201f53)continue;if(_0x201f53 instanceof HTMLTextAreaElement||_0x201f53 instanceof HTMLInputElement)return _0x201f53;const _0xcc738=_0x201f53[_0x4e7381(0x1c6)]?.('textarea,input');if(_0xcc738 instanceof HTMLTextAreaElement||_0xcc738 instanceof HTMLInputElement)return _0xcc738;}return null;}function setTextNodeText(_0x3fa5b6,_0x54202b){const _0x1186b6=a0_0x9945,_0x8bc41d=String(_0x54202b??''),_0x350da4=setWidgetValue(_0x3fa5b6,'text',_0x8bc41d);if(!_0x350da4)throw new Error('目标节点没有\x20text\x20字段');const _0x2eac80=_0x3fa5b6?.[_0x1186b6(0x1b2)]?.['find'](_0x4065a2=>_0x4065a2?.[_0x1186b6(0x17e)]==='text'),_0x3056c5=getWidgetTextElement(_0x2eac80);_0x3056c5&&(_0x3056c5['value']=_0x8bc41d,_0x3056c5['dispatchEvent'](new Event('input',{'bubbles':!![]})),_0x3056c5[_0x1186b6(0x1ba)](new Event('change',{'bubbles':!![]}))),markCanvasDirty();}function setNodePreview(_0x4ebed1,_0x392f77){const _0x19f6fd=imageInfoFromAsset(_0x392f77);_0x4ebed1['images']=[_0x19f6fd],_0x4ebed1['imageIndex']=0x0,_0x4ebed1['overIndex']=0x0,app['nodeOutputs']??={},app['nodeOutputs'][String(_0x4ebed1['id'])]={...app['nodeOutputs'][String(_0x4ebed1['id'])]||{},'images':[_0x19f6fd]};const _0x5eeffc=new Image();_0x5eeffc['src']=buildViewUrl(_0x392f77),_0x4ebed1['imgs']=[_0x5eeffc];}function screenPointToCanvasPoint(_0xea998b,_0x1ed525){const _0x39a61e=a0_0x9945,_0x35383e=app[_0x39a61e(0x1dd)];if(_0x35383e?.['convertEventToCanvasOffset']&&Number[_0x39a61e(0x206)](_0xea998b)&&Number['isFinite'](_0x1ed525)){const _0x18d1ea=_0x35383e['convertEventToCanvasOffset']({'clientX':_0xea998b,'clientY':_0x1ed525}),_0x51020e=Array['isArray'](_0x18d1ea)?_0x18d1ea[0x0]:_0x18d1ea?.['x'],_0x2629c0=Array[_0x39a61e(0x1e7)](_0x18d1ea)?_0x18d1ea[0x1]:_0x18d1ea?.['y'];if(Number[_0x39a61e(0x206)](_0x51020e)&&Number['isFinite'](_0x2629c0))return[_0x51020e,_0x2629c0];}const _0x14d468=_0x35383e?.['ds'];if(_0x14d468)return[(_0xea998b-_0x14d468['offset'][0x0])/_0x14d468[_0x39a61e(0x175)],(_0x1ed525-_0x14d468['offset'][0x1])/_0x14d468['scale']];return[0x64,0x64];}function canvasPointFromEvent(_0x460735){const _0x1b14f4=a0_0x9945,_0x56ee40=app['canvas']?.['canvas'],_0x43e17d=_0x460735?.['composedPath']?.()||[],_0x1e00d7=!!_0x56ee40&&(_0x460735?.['target']===_0x56ee40||_0x43e17d['includes'](_0x56ee40));if(!_0x1e00d7&&_0x56ee40?.[_0x1b14f4(0x21e)]){const _0x2378f1=_0x56ee40[_0x1b14f4(0x21e)]();return screenPointToCanvasPoint(_0x2378f1['left']+_0x2378f1['width']*0.38,_0x2378f1['top']+_0x2378f1['height']/0x2);}return screenPointToCanvasPoint(_0x460735?.['clientX'],_0x460735?.['clientY']);}function createImageNodeAtEvent(_0x20c4ca,_0x454505){const _0x44c23d=a0_0x9945,_0x47eca5=window['LiteGraph'];if(!_0x47eca5)throw new Error('LiteGraph\x20未加载');const _0x291870=_0x47eca5['createNode'](IMAGE_NODE_CLASS);if(!_0x291870)throw new Error(_0x44c23d(0x21c));return _0x291870[_0x44c23d(0x209)]=canvasPointFromEvent(_0x20c4ca),_0x291870[_0x44c23d(0x21f)]=[Math[_0x44c23d(0x1ec)](_0x291870['size']?.[0x0]||0x1a4,0x1a4),Math['max'](_0x291870[_0x44c23d(0x21f)]?.[0x1]||0x208,0x208)],app['graph'][_0x44c23d(0x1e8)](_0x291870),applyAssetToImageNode(_0x291870,_0x454505),app['canvas']['selectNode']?.(_0x291870),markCanvasDirty(),_0x291870;}async function createTextNodeAtEvent(_0x1bc4f9,_0x36b793){const _0x28bebb=a0_0x9945,_0x30b4d5=window['LiteGraph'];if(!_0x30b4d5)throw new Error('LiteGraph\x20未加载');const _0x1b30d2=_0x30b4d5[_0x28bebb(0x1e6)](TEXT_NODE_CLASS);if(!_0x1b30d2)throw new Error('找不到\x20TE\x20MAN\x20TEXT文本展示\x20节点');const _0x47757c=await getTextAssetContent(_0x36b793);return _0x1b30d2[_0x28bebb(0x209)]=canvasPointFromEvent(_0x1bc4f9),_0x1b30d2['size']=[Math['max'](_0x1b30d2[_0x28bebb(0x21f)]?.[0x0]||0x1a4,0x1a4),Math['max'](_0x1b30d2[_0x28bebb(0x21f)]?.[0x1]||0xf0,0xf0)],app['graph'][_0x28bebb(0x1e8)](_0x1b30d2),setTextNodeText(_0x1b30d2,_0x47757c),app['canvas'][_0x28bebb(0x1c8)]?.(_0x1b30d2),markCanvasDirty(),_0x1b30d2;}function a0_0x9945(_0x4580d8,_0x3a759c){const _0x2f24c9=a0_0x2f24();return a0_0x9945=function(_0x9945ea,_0x25b614){_0x9945ea=_0x9945ea-0x165;let _0x4108c5=_0x2f24c9[_0x9945ea];return _0x4108c5;},a0_0x9945(_0x4580d8,_0x3a759c);}async function createNodeFromAssetAtEvent(_0x7bb8d2,_0xde0388){if(isTextAsset(_0xde0388))return await createTextNodeAtEvent(_0x7bb8d2,_0xde0388);return createImageNodeAtEvent(_0x7bb8d2,_0xde0388);}function applyAssetToImageNode(_0x814fb2,_0x1ad0a2){const _0x323de4=setWidgetValue(_0x814fb2,'upload_image',_0x1ad0a2['relative_path']);if(!_0x323de4)throw new Error('目标节点没有\x20upload_image\x20字段');setNodePreview(_0x814fb2,_0x1ad0a2),markCanvasDirty();}function updateNodesAfterAssetRename(_0x450182,_0x211dab){const _0x40202c=a0_0x9945;if(!_0x450182||!_0x211dab?.['relative_path']||!Array['isArray'](app[_0x40202c(0x204)]?.['_nodes']))return;for(const _0x354345 of app['graph'][_0x40202c(0x220)]){if(_0x354345?.['comfyClass']!==IMAGE_NODE_CLASS&&_0x354345?.['type']!==IMAGE_NODE_CLASS)continue;const _0x3bc08c=_0x354345['widgets']?.['find'](_0x454113=>_0x454113?.['name']==='upload_image');if(_0x3bc08c?.[_0x40202c(0x1b7)]!==_0x450182)continue;setWidgetValue(_0x354345,'upload_image',_0x211dab[_0x40202c(0x1fd)]),setNodePreview(_0x354345,_0x211dab);}markCanvasDirty();}function closePreviewDialog(){const _0x42827f=a0_0x9945;previewDialog?.[_0x42827f(0x212)](),previewDialog=null;}async function openTextPreview(_0x58189f){const _0x2a0a75=a0_0x9945;closePreviewDialog();const _0x51953e=await getTextAssetContent(_0x58189f);previewDialog=document['createElement']('div'),previewDialog[_0x2a0a75(0x20c)]='te-asset-preview-backdrop',previewDialog['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview\x22\x20role=\x22dialog\x22\x20aria-modal=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-title\x22>'+escapeHtml(_0x58189f['name'])+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22copy-preview-text\x22>复制</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22close-preview\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-body\x20text\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<pre\x20class=\x22te-asset-preview-text\x22>'+escapeHtml(_0x51953e)+_0x2a0a75(0x1c2),document[_0x2a0a75(0x165)]['appendChild'](previewDialog),enableDraggablePanel(qs(previewDialog,'.te-asset-preview'),qs(previewDialog,'.te-asset-preview-head')),qs(previewDialog,'[data-action=\x27copy-preview-text\x27]')[_0x2a0a75(0x18b)]=async()=>{const _0x1baa30=a0_0x9945,_0x259401=await copyTextToClipboard(_0x51953e);setStatus(_0x259401?_0x1baa30(0x1f1)+_0x58189f['name']:'复制失败');},qs(previewDialog,'[data-action=\x27close-preview\x27]')['onclick']=closePreviewDialog,previewDialog[_0x2a0a75(0x1d9)]('mousedown',_0x2f641b=>{const _0x2e6a32=a0_0x9945;_0x2f641b[_0x2e6a32(0x16a)]===previewDialog&&closePreviewDialog();});}function openImagePreviewDialog(_0x1e9c35,_0x5ee518){const _0x7cbb1=a0_0x9945;if(!_0x5ee518)throw new Error('没有可预览的图片。');closePreviewDialog();let _0x19d969=0x1,_0x396b3c=0x0,_0x426dde=0x0,_0x32b2f1=![],_0x1eebc4=0x0,_0x3f2aa9=0x0,_0x447b2b=0x0,_0x1e593a=0x0;previewDialog=document['createElement']('div'),previewDialog['className']='te-asset-preview-backdrop',previewDialog[_0x7cbb1(0x17b)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview\x22\x20role=\x22dialog\x22\x20aria-modal=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-preview-title\x22>'+escapeHtml(_0x1e9c35||_0x7cbb1(0x221))+_0x7cbb1(0x16c)+escapeHtml(_0x5ee518)+_0x7cbb1(0x166),document['body']['appendChild'](previewDialog),enableDraggablePanel(qs(previewDialog,'.te-asset-preview'),qs(previewDialog,'.te-asset-preview-head'));const _0x17c7c1=qs(previewDialog,'.te-asset-preview-body'),_0x4fff95=qs(previewDialog,'.te-asset-preview-body\x20img'),_0x58b7d8=qs(previewDialog,'[data-role=\x27preview-zoom\x27]'),_0x1bca7f=()=>{const _0x54d777=a0_0x9945;_0x19d969<=0x1&&(_0x396b3c=0x0,_0x426dde=0x0),_0x4fff95[_0x54d777(0x1a5)]['transform']='translate('+_0x396b3c+'px,\x20'+_0x426dde+_0x54d777(0x1ac)+_0x19d969+')',_0x4fff95['style']['cursor']=_0x19d969>0x1?_0x32b2f1?'grabbing':'grab':'zoom-in',_0x17c7c1['style']['overflow']=_0x19d969>0x1?_0x54d777(0x20b):'hidden',_0x58b7d8[_0x54d777(0x173)]=Math[_0x54d777(0x1c5)](_0x19d969*0x64)+'%';};_0x17c7c1['addEventListener']('wheel',_0x119e54=>{const _0x10673e=a0_0x9945;_0x119e54['preventDefault']();const _0x52d232=_0x119e54['deltaY']<0x0?0.12:-0.12;_0x19d969=Math['max'](0x1,Math[_0x10673e(0x186)](0x5,Number((_0x19d969+_0x52d232)[_0x10673e(0x1fb)](0x2)))),_0x1bca7f();},{'passive':![]}),_0x4fff95['addEventListener']('pointerdown',_0x2d6ff0=>{const _0x492d3f=a0_0x9945;if(_0x19d969<=0x1)return;_0x32b2f1=!![],_0x1eebc4=_0x2d6ff0['clientX'],_0x3f2aa9=_0x2d6ff0[_0x492d3f(0x1a0)],_0x447b2b=_0x396b3c,_0x1e593a=_0x426dde,_0x4fff95['setPointerCapture']?.(_0x2d6ff0['pointerId']),_0x1bca7f(),_0x2d6ff0[_0x492d3f(0x1d8)]();}),_0x4fff95['addEventListener']('pointermove',_0x2a2303=>{const _0x40cc67=a0_0x9945;if(!_0x32b2f1)return;_0x396b3c=_0x447b2b+_0x2a2303['clientX']-_0x1eebc4,_0x426dde=_0x1e593a+_0x2a2303[_0x40cc67(0x1a0)]-_0x3f2aa9,_0x1bca7f(),_0x2a2303['preventDefault']();});const _0x40c58a=_0x480d03=>{const _0x203d43=a0_0x9945;if(!_0x32b2f1)return;_0x32b2f1=![],_0x4fff95['releasePointerCapture']?.(_0x480d03[_0x203d43(0x192)]),_0x1bca7f();};_0x4fff95[_0x7cbb1(0x1d9)](_0x7cbb1(0x18d),_0x40c58a),_0x4fff95[_0x7cbb1(0x1d9)](_0x7cbb1(0x207),_0x40c58a),qs(previewDialog,_0x7cbb1(0x1e1))['onclick']=closePreviewDialog,previewDialog['addEventListener']('mousedown',_0x336aac=>{_0x336aac['target']===previewDialog&&closePreviewDialog();});}async function openPreview(_0x595b69){if(isTextAsset(_0x595b69)){await openTextPreview(_0x595b69);return;}openImagePreviewDialog(_0x595b69['name'],buildViewUrl(_0x595b69));}async function renameAsset(_0x4c4d81){const _0x532a2b=a0_0x9945,_0x42054d=window['prompt']('输入新的素材文件名',_0x4c4d81['name']);if(!_0x42054d||_0x42054d===_0x4c4d81[_0x532a2b(0x17e)])return;try{const _0x12c074=await requestJsonWithGetFallback('/te_asset_library/rename',{'relative_path':_0x4c4d81['relative_path'],'new_name':_0x42054d});updateNodesAfterAssetRename(_0x4c4d81[_0x532a2b(0x1fd)],_0x12c074['asset']),state['selectedAsset']=_0x12c074['asset']||null,await refreshLibrary({'quiet':!![],'preserveScroll':!![]}),setStatus('已更名：'+(_0x12c074[_0x532a2b(0x1b5)]?.['name']||_0x42054d));}catch(_0x45faaf){setStatus('更名失败：'+(_0x45faaf[_0x532a2b(0x1eb)]||_0x45faaf));}}async function deleteAsset(_0x44d2ac){const _0x53707d=a0_0x9945,_0x55e553=window['confirm'](_0x53707d(0x202)+_0x44d2ac['name']);if(!_0x55e553)return;try{await requestJsonWithGetFallback(_0x53707d(0x21a),{'relative_path':_0x44d2ac['relative_path']}),state['selectedAsset']?.['relative_path']===_0x44d2ac['relative_path']&&(state['selectedAsset']=null),await refreshLibrary({'quiet':!![],'preserveScroll':!![]}),setStatus(_0x53707d(0x1ca)+_0x44d2ac['name']);}catch(_0x48bba1){setStatus('删除失败：'+(_0x48bba1['message']||_0x48bba1));}}function setSelectedAsset(_0x5be342){state['selectedAsset']=_0x5be342,renderAssets();}async function createProject(){const _0x12ef13=a0_0x9945,_0x1fba21=window['prompt']('新建项目名称',state['project']||DEFAULT_PROJECT);if(!_0x1fba21)return;try{const _0x5aee7d=await requestJsonWithGetFallback(_0x12ef13(0x1ff),{'project':_0x1fba21});state['project']=_0x5aee7d['project']||_0x1fba21,state[_0x12ef13(0x1ad)]=DEFAULT_CATEGORY,await refreshLibrary({'quiet':!![]}),setStatus(_0x12ef13(0x1de)+state['project']);}catch(_0x21a98b){setStatus('新建项目失败：'+(_0x21a98b[_0x12ef13(0x1eb)]||_0x21a98b));}}async function createCategory(){const _0x125494=a0_0x9945,_0x86a229=window[_0x125494(0x1bc)]('新建分类名称','人物');if(!_0x86a229)return;try{const _0x44a702=await requestJsonWithGetFallback('/te_asset_library/category',{'project':state['project']||DEFAULT_PROJECT,'category':_0x86a229});state['category']=_0x44a702['category']||_0x86a229,await refreshLibrary({'quiet':!![]}),setStatus('已新建分类：'+state['category']);}catch(_0x4d0a64){setStatus('新建分类失败：'+(_0x4d0a64['message']||_0x4d0a64));}}async function deleteCurrentCategory(){const _0x4e235=a0_0x9945,_0x377013=String(state['category']||'')[_0x4e235(0x1f2)](),_0x11e9a7=state[_0x4e235(0x1d5)]||DEFAULT_PROJECT;if(isProtectedCategory(_0x377013)){setStatus('请先选择一个可删除的分类。');return;}const _0x57ad6a=window[_0x4e235(0x1db)]('确定删除当前分类吗？\x0a\x0a项目：'+_0x11e9a7+'\x0a分类：'+_0x377013+'\x0a\x0a这个分类里的所有素材都会一起删除。');if(!_0x57ad6a)return;try{await requestJsonWithGetFallback('/te_asset_library/category/delete',{'project':_0x11e9a7,'category':_0x377013}),state[_0x4e235(0x1ad)]=DEFAULT_CATEGORY,state['selectedAsset']=null,await refreshLibrary({'quiet':!![]}),setStatus('已删除分类：'+_0x377013);}catch(_0x2dce7b){setStatus(_0x4e235(0x1d6)+(_0x2dce7b[_0x4e235(0x1eb)]||_0x2dce7b));}}function getNodeUploadImage(_0x31f581){const _0x3c0cd8=a0_0x9945,_0x11f92d=_0x31f581?.[_0x3c0cd8(0x1b2)]?.['find'](_0x20d9f1=>_0x20d9f1?.['name']==='upload_image');return String(_0x11f92d?.['value']||'')['trim']();}function getNodePreviewImageInfo(_0x3a97fd){const _0x589302=a0_0x9945,_0x1689e1=_0x3a97fd?.['images']||app[_0x589302(0x196)]?.[String(_0x3a97fd?.['id'])]?.['images'];if(Array['isArray'](_0x1689e1)&&_0x1689e1[0x0]?.['filename'])return _0x1689e1[0x0];const _0x4e999a=_0x3a97fd?.['properties']?.[_0x589302(0x1c7)];if(Array['isArray'](_0x4e999a)&&_0x4e999a[0x0]?.['filename'])return _0x4e999a[0x0];return null;}function isImagesInputConnected(_0xddf5ff){const _0x4be1cb=a0_0x9945,_0x3fca9f=_0xddf5ff?.['inputs']?.[_0x4be1cb(0x17c)](_0x214f81=>_0x214f81?.['name']==='images');return!!_0x3fca9f?.[_0x4be1cb(0x20a)];}function getAddableNodeImagePayload(_0x30eac0){const _0x1b3582=getNodePreviewImageInfo(_0x30eac0),_0xbaa912=isImagesInputConnected(_0x30eac0)?'':getNodeUploadImage(_0x30eac0),_0x19daf5=_0xbaa912?null:_0x1b3582;if(!_0xbaa912&&!_0x19daf5)return setStatus('当前节点没有可添加的图片。请先选择/上传图片，或运行生成一次。'),null;return{'uploadImage':_0xbaa912,'imageInfo':_0x19daf5};}function getNodeTextValue(_0x1aad33){const _0x42c225=a0_0x9945,_0x32a63e=_0x1aad33?.['widgets']?.[_0x42c225(0x17c)](_0x395e62=>_0x395e62?.['name']==='text'),_0x268fee=getWidgetTextElement(_0x32a63e);return String(_0x268fee?.['value']??_0x32a63e?.[_0x42c225(0x1b7)]??'');}function closeAddDialog(){addDialog?.['remove'](),addDialog=null;}function projectOptionsHtml(_0x403bfb){const _0x425113=a0_0x9945,_0x51fea2=state[_0x425113(0x1d3)]['length']?state[_0x425113(0x1d3)]:[{'name':_0x403bfb||DEFAULT_PROJECT}];return _0x51fea2['map'](_0x47b6cd=>{const _0x7022a5=a0_0x9945,_0x51b5bd=_0x47b6cd['name']===_0x403bfb?_0x7022a5(0x1bd):'';return _0x7022a5(0x1b3)+escapeHtml(_0x47b6cd[_0x7022a5(0x17e)])+'\x22'+_0x51b5bd+'>'+escapeHtml(_0x47b6cd['name'])+'</option>';})['join']('');}function categoryOptionsHtml(_0x4ef165,_0x103774){const _0x570a80=a0_0x9945,_0x2b2af0=state[_0x570a80(0x1d3)]['find'](_0x4ca307=>_0x4ca307['name']===_0x4ef165)||getCurrentProject(),_0x4f177b=(_0x2b2af0?.[_0x570a80(0x194)]||[])['filter'](_0x45b0b9=>_0x45b0b9['name']!=='未分类'&&_0x45b0b9[_0x570a80(0x17e)]!==TEXT_CATEGORY),_0x37fb47=_0x4f177b['length']?_0x4f177b:[{'name':_0x103774||'人物'}];return _0x37fb47['map'](_0x22d30a=>{const _0x32f2fd=a0_0x9945,_0x27d4b3=_0x22d30a['name']===_0x103774?_0x32f2fd(0x1bd):'';return'<option\x20value=\x22'+escapeHtml(_0x22d30a['name'])+'\x22'+_0x27d4b3+'>'+escapeHtml(_0x22d30a[_0x32f2fd(0x17e)])+'</option>';})['join']('');}async function addImageToLibraryFromDialog(_0x487b3b,_0x4961d7,_0x11d464,_0x42e65b=''){const _0xd31b8d=a0_0x9945;try{const _0x35c1a2=await requestJson('/te_asset_library/add',{'method':'POST','headers':{'Content-Type':'application/json'},'body':JSON['stringify']({'project':_0x4961d7,'category':_0x11d464,'filename_stem':_0x42e65b,'upload_image':_0x487b3b['uploadImage'],'image_info':_0x487b3b[_0xd31b8d(0x16b)]})});state[_0xd31b8d(0x1d5)]=_0x35c1a2['asset']?.['project']||_0x4961d7,state['category']=_0x35c1a2[_0xd31b8d(0x1b5)]?.['category']||_0x11d464,await refreshLibrary({'quiet':!![]}),setStatus('已添加到素材库：'+(_0x35c1a2['asset']?.['relative_path']||'')),showPanel(!![]),closeAddDialog();}catch(_0x36c346){setStatus(_0xd31b8d(0x1cc)+(_0x36c346['message']||_0x36c346));}}async function addTextToLibraryFromDialog(_0x45b0d8,_0x2641d7,_0x47769e=''){const _0x25eb67=a0_0x9945;try{const _0xf82440=await requestJson('/te_asset_library/text/add',{'method':_0x25eb67(0x1c3),'headers':{'Content-Type':'application/json'},'body':JSON['stringify']({'project':_0x2641d7,'title':_0x47769e,'text':_0x45b0d8})});state[_0x25eb67(0x1d5)]=_0xf82440[_0x25eb67(0x1b5)]?.['project']||_0x2641d7,state['category']=_0xf82440[_0x25eb67(0x1b5)]?.['category']||TEXT_CATEGORY,await refreshLibrary({'quiet':!![]}),setStatus('已添加提示词：'+(_0xf82440['asset']?.['relative_path']||'')),showPanel(!![]),closeAddDialog();}catch(_0x2c3fc9){setStatus('添加提示词失败：'+(_0x2c3fc9[_0x25eb67(0x1eb)]||_0x2c3fc9));}}async function openAddTextToLibraryDialog(_0x30b733){const _0x43e5f3=a0_0x9945;ensurePanel();!state[_0x43e5f3(0x1d3)]['length']&&!state['loading']&&await refreshLibrary({'quiet':!![]});const _0x46802f=getNodeTextValue(_0x30b733)['trim']();if(!_0x46802f){setStatus(_0x43e5f3(0x1fc)),showPanel(!![]);return;}closeAddDialog();const _0x5f0d55=state['project']||getCurrentProject()?.[_0x43e5f3(0x17e)]||DEFAULT_PROJECT;addDialog=document[_0x43e5f3(0x19b)]('div'),addDialog['className']=_0x43e5f3(0x1fe),addDialog['innerHTML']=_0x43e5f3(0x1f5)+TEXT_CATEGORY+'”分类。</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>项目</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<select\x20class=\x22te-asset-select\x22\x20data-role=\x22add-project\x22>'+projectOptionsHtml(_0x5f0d55)+_0x43e5f3(0x1da)+escapeHtml(_0x46802f)+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-modal-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22cancel-add\x22>取消</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20primary\x22\x20data-action=\x22confirm-add\x22>添加</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20',document['body']['appendChild'](addDialog),enableDraggablePanel(qs(addDialog,'.te-asset-modal'),qs(addDialog,'.te-asset-modal-title'));const _0x3b1400=qs(addDialog,_0x43e5f3(0x20d)),_0x560cdb=qs(addDialog,'[data-role=\x27add-title\x27]');qs(addDialog,'[data-action=\x27cancel-add\x27]')['onclick']=closeAddDialog,addDialog[_0x43e5f3(0x1d9)](_0x43e5f3(0x1ef),_0x151e42=>{_0x151e42['target']===addDialog&&closeAddDialog();}),qs(addDialog,'[data-action=\x27add-new-project\x27]')[_0x43e5f3(0x18b)]=async()=>{const _0x410eed=a0_0x9945,_0x47da98=window[_0x410eed(0x1bc)]('新建项目名称',_0x3b1400['value']||DEFAULT_PROJECT);if(!_0x47da98)return;try{const _0x590292=await requestJsonWithGetFallback(_0x410eed(0x1ff),{'project':_0x47da98});state['project']=_0x590292[_0x410eed(0x1d5)]||_0x47da98,await refreshLibrary({'quiet':!![]}),_0x3b1400[_0x410eed(0x17b)]=projectOptionsHtml(state['project']),setStatus('已新建项目：'+state['project']);}catch(_0x262e6c){setStatus('新建项目失败：'+(_0x262e6c[_0x410eed(0x1eb)]||_0x262e6c));}},qs(addDialog,'[data-action=\x27confirm-add\x27]')['onclick']=()=>{const _0x3b9c53=a0_0x9945;addTextToLibraryFromDialog(_0x46802f,_0x3b1400['value']||DEFAULT_PROJECT,_0x560cdb[_0x3b9c53(0x1b7)]||'');};}async function openAddToLibraryDialog(_0x535f1d){const _0x2a50b2=a0_0x9945;ensurePanel();!state[_0x2a50b2(0x1d3)]['length']&&!state['loading']&&await refreshLibrary({'quiet':!![]});const _0x17da3b=getAddableNodeImagePayload(_0x535f1d);if(!_0x17da3b)return;closeAddDialog();const _0x1c421c=state['project']||getCurrentProject()?.['name']||DEFAULT_PROJECT,_0x17b31c=state['category']&&state[_0x2a50b2(0x1ad)]!==DEFAULT_CATEGORY&&state[_0x2a50b2(0x1ad)]!==TEXT_CATEGORY?state['category']:'人物';addDialog=document['createElement']('div'),addDialog['className']='te-asset-modal-backdrop',addDialog['innerHTML']=_0x2a50b2(0x176)+projectOptionsHtml(_0x1c421c)+'</select>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-button\x20ghost\x22\x20data-action=\x22add-new-project\x22>+</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-stack\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-label\x22>分类</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<select\x20class=\x22te-asset-select\x22\x20data-role=\x22add-category\x22>'+categoryOptionsHtml(_0x1c421c,_0x17b31c)+_0x2a50b2(0x16e),document['body'][_0x2a50b2(0x1d7)](addDialog),enableDraggablePanel(qs(addDialog,'.te-asset-modal'),qs(addDialog,'.te-asset-modal-title'));const _0x2da4f2=qs(addDialog,_0x2a50b2(0x20d)),_0xed537d=qs(addDialog,_0x2a50b2(0x219)),_0x45db21=qs(addDialog,'[data-role=\x27add-filename\x27]');_0x2da4f2['onchange']=()=>{const _0x225ec6=a0_0x9945;_0xed537d[_0x225ec6(0x17b)]=categoryOptionsHtml(_0x2da4f2[_0x225ec6(0x1b7)],'');},qs(addDialog,'[data-action=\x27cancel-add\x27]')[_0x2a50b2(0x18b)]=closeAddDialog,addDialog[_0x2a50b2(0x1d9)]('mousedown',_0x53a841=>{_0x53a841['target']===addDialog&&closeAddDialog();}),qs(addDialog,'[data-action=\x27add-new-project\x27]')['onclick']=async()=>{const _0x23fda0=a0_0x9945,_0x3786e2=window['prompt']('新建项目名称',_0x2da4f2['value']||DEFAULT_PROJECT);if(!_0x3786e2)return;try{const _0x1d8064=await requestJsonWithGetFallback('/te_asset_library/project',{'project':_0x3786e2});state['project']=_0x1d8064[_0x23fda0(0x1d5)]||_0x3786e2,await refreshLibrary({'quiet':!![]}),_0x2da4f2['innerHTML']=projectOptionsHtml(state['project']),_0xed537d[_0x23fda0(0x17b)]=categoryOptionsHtml(state['project'],''),setStatus(_0x23fda0(0x1de)+state['project']);}catch(_0x4344ae){setStatus(_0x23fda0(0x217)+(_0x4344ae['message']||_0x4344ae));}},qs(addDialog,'[data-action=\x27add-new-category\x27]')['onclick']=async()=>{const _0x130a5c=a0_0x9945,_0x1d8c86=window['prompt']('新建分类名称',_0xed537d[_0x130a5c(0x1b7)]||'人物');if(!_0x1d8c86)return;try{const _0x2f6c08=await requestJsonWithGetFallback('/te_asset_library/category',{'project':_0x2da4f2['value']||DEFAULT_PROJECT,'category':_0x1d8c86});state[_0x130a5c(0x1d5)]=_0x2f6c08['project']||_0x2da4f2['value'],state['category']=_0x2f6c08['category']||_0x1d8c86,await refreshLibrary({'quiet':!![]}),_0x2da4f2['innerHTML']=projectOptionsHtml(state[_0x130a5c(0x1d5)]),_0xed537d['innerHTML']=categoryOptionsHtml(state[_0x130a5c(0x1d5)],state[_0x130a5c(0x1ad)]),setStatus(_0x130a5c(0x1cd)+state['category']);}catch(_0x1a8e0e){setStatus(_0x130a5c(0x179)+(_0x1a8e0e[_0x130a5c(0x1eb)]||_0x1a8e0e));}},qs(addDialog,'[data-action=\x27confirm-add\x27]')['onclick']=()=>{addImageToLibraryFromDialog(_0x17da3b,_0x2da4f2['value']||DEFAULT_PROJECT,_0xed537d['value']||'人物',_0x45db21['value']||'');};}async function addNodeImageToLibrary(_0x14e406){await openAddToLibraryDialog(_0x14e406);}async function addNodeTextToLibrary(_0x486bcd){await openAddTextToLibraryDialog(_0x486bcd);}async function previewImageInfo(_0x38e288,_0x1bb79f={}){const _0x2f43f0=a0_0x9945,_0x522667=buildImageInfoViewUrl(_0x38e288||{});if(!_0x522667)throw new Error(_0x2f43f0(0x205));openImagePreviewDialog(_0x1bb79f['title']||_0x38e288?.[_0x2f43f0(0x17e)]||_0x38e288?.[_0x2f43f0(0x1a7)]||'图片预览',_0x522667);}function registerAssetLibraryAction(){window['TEImageAssetLibrary']={...window['TEImageAssetLibrary']||{},'addNodeImageToLibrary':async _0xff114c=>{ensurePanel(),await addNodeImageToLibrary(_0xff114c);},'addNodeTextToLibrary':async _0x14e563=>{ensurePanel(),await addNodeTextToLibrary(_0x14e563);},'previewImageInfo':previewImageInfo,'showPanel':showPanel};}function removeLegacyFloatingToggle(){const _0x203b62=a0_0x9945;for(const _0x383390 of document['querySelectorAll']('.te-asset-toggle')){_0x383390[_0x203b62(0x212)]();}}function updateMenuButtonState(){const _0x142d88=a0_0x9945,_0x433820=document['getElementById'](MENU_BUTTON_ID);if(!_0x433820)return;const _0x3e4e54=panel?.['hidden']===![];_0x433820[_0x142d88(0x16d)]['visible']=_0x3e4e54?'true':'false';for(const _0x5d6dc3 of _0x433820[_0x142d88(0x203)]('[data-role=\x27asset-library-toggle\x27]')){_0x5d6dc3['classList'][_0x142d88(0x1a1)](_0x142d88(0x1d2),_0x3e4e54);}}async function tryInstallMenuButton(){const _0x14c3ff=a0_0x9945;if(document['getElementById'](MENU_BUTTON_ID))return updateMenuButtonState(),!![];const _0x26be06=document['querySelector']('.comfy-menu');if(!_0x26be06)return![];injectStyle();try{const [{ComfyButton:_0x50d53a},{ComfyButtonGroup:_0x44ecfd}]=await Promise['all']([import('../../../scripts/ui/components/button.js'),import(_0x14c3ff(0x21b))]),_0x9e5dcf=new _0x50d53a({'icon':'image-multiple-outline','action':()=>showPanel(panel?.['hidden']!==![]),'tooltip':_0x14c3ff(0x1df),'content':'资产库'})[_0x14c3ff(0x17d)];_0x9e5dcf['classList']['add']('te-asset-menu-button'),_0x9e5dcf[_0x14c3ff(0x16d)]['role']='asset-library-toggle';const _0x5722b6=new _0x44ecfd(_0x9e5dcf),_0x35eca0=document[_0x14c3ff(0x19b)]('div');_0x35eca0['id']=MENU_BUTTON_ID,_0x35eca0['append'](_0x5722b6['element']);const _0x42878c=app['menu']?.[_0x14c3ff(0x211)]?.['element'];return _0x42878c?.[_0x14c3ff(0x1b9)]?_0x42878c['after'](_0x35eca0):_0x26be06['appendChild'](_0x35eca0),updateMenuButtonState(),!![];}catch(_0x36e33b){const _0x57e6fa=document['createElement']('div');_0x57e6fa['id']=MENU_BUTTON_ID;const _0x5d5874=document[_0x14c3ff(0x19b)]('button');_0x5d5874['className']=_0x14c3ff(0x21d),_0x5d5874['dataset']['role']='asset-library-toggle',_0x5d5874['type']='button',_0x5d5874['textContent']=_0x14c3ff(0x1be),_0x5d5874['title']='TE\x20MAN\x20资产素材库',_0x5d5874[_0x14c3ff(0x18b)]=()=>showPanel(panel?.['hidden']!==![]),_0x57e6fa['appendChild'](_0x5d5874);const _0x9b01a=app['menu']?.[_0x14c3ff(0x211)]?.['element'];return _0x9b01a?.['after']?_0x9b01a['after'](_0x57e6fa):_0x26be06['appendChild'](_0x57e6fa),updateMenuButtonState(),console[_0x14c3ff(0x190)]('[TE\x20MAN]\x20新版顶部菜单按钮不可用，已使用兼容按钮。',_0x36e33b),!![];}}async function installMenuButtonWithRetry({timeoutMs:timeoutMs=0x7530,intervalMs:intervalMs=0xc8}={}){const _0x25b077=performance['now']();while(performance['now']()-_0x25b077<timeoutMs){if(await tryInstallMenuButton())return;await new Promise(_0x1abd75=>setTimeout(_0x1abd75,intervalMs));}console['warn']('[TE\x20MAN]\x20未找到\x20ComfyUI\x20顶部菜单，资产库入口按钮未安装。');}function ensurePanel(){const _0x369250=a0_0x9945;if(panel)return panel;return injectStyle(),removeLegacyFloatingToggle(),panel=document['createElement']('section'),panel['id']=PANEL_ID,panel['className']='te-asset-panel',panel[_0x369250(0x1fa)]=!![],panel['innerHTML']=_0x369250(0x18a),document['body']['appendChild'](panel),enableDraggablePanel(panel,[qs(panel,'.te-asset-sidebar\x20.te-asset-title-row'),qs(panel,'.te-asset-main\x20>\x20.te-asset-title-row')]),bindPanelEvents(),panel;}function bindPanelEvents(){const _0x4d16e8=a0_0x9945;qs(panel,_0x4d16e8(0x1d1))['onclick']=()=>showPanel(![]),qs(panel,'[data-action=\x27refresh\x27]')['onclick']=()=>refreshLibrary(),qs(panel,'[data-action=\x27new-project\x27]')[_0x4d16e8(0x18b)]=()=>createProject(),qs(panel,'[data-action=\x27new-category\x27]')[_0x4d16e8(0x18b)]=()=>createCategory(),qs(panel,'[data-action=\x27delete-category\x27]')['onclick']=()=>deleteCurrentCategory(),qs(panel,_0x4d16e8(0x172))['onclick']=()=>{const _0x5236cd=a0_0x9945;state['viewSize']=Math['max'](0x58,state[_0x5236cd(0x18c)]-0x14),saveState(),renderAssets();},qs(panel,'[data-action=\x27larger\x27]')[_0x4d16e8(0x18b)]=()=>{const _0x48b46c=a0_0x9945;state[_0x48b46c(0x18c)]=Math['min'](0xdc,state['viewSize']+0x14),saveState(),renderAssets();},qs(panel,'[data-role=\x27project\x27]')['onchange']=_0x43c460=>{const _0x557d46=a0_0x9945;state['project']=_0x43c460[_0x557d46(0x16a)]['value'],state['category']=DEFAULT_CATEGORY,saveState(),refreshLibrary({'quiet':!![]});};const _0x1aa9be=qs(panel,'[data-role=\x27search\x27]');let _0x59ed40=null;_0x1aa9be[_0x4d16e8(0x1c9)]=_0x19e727=>{const _0x5dc071=a0_0x9945;state[_0x5dc071(0x1f0)]=_0x19e727['target']['value'],clearTimeout(_0x59ed40),_0x59ed40=setTimeout(()=>{saveState(),refreshLibrary({'quiet':!![]});},0xdc);};}function showPanel(_0x1304c6){const _0x3d8a39=a0_0x9945;ensurePanel(),state[_0x3d8a39(0x189)]=_0x1304c6,panel['hidden']=!_0x1304c6,updateMenuButtonState(),_0x1304c6&&!state[_0x3d8a39(0x1d3)]['length']&&!state[_0x3d8a39(0x1a4)]?refreshLibrary({'quiet':!![]}):renderPanel();}function renderPanel(){const _0x495fca=a0_0x9945;ensurePanel();const _0xc88185=qs(panel,'[data-role=\x27project\x27]');_0xc88185['innerHTML']='';for(const _0x454a14 of state['projects']){const _0x234cb6=document['createElement']('option');_0x234cb6['value']=_0x454a14[_0x495fca(0x17e)],_0x234cb6['textContent']=_0x454a14['name'],_0x234cb6['selected']=_0x454a14['name']===state['project'],_0xc88185['appendChild'](_0x234cb6);}qs(panel,'[data-role=\x27search\x27]')['value']=state['query']||'',qs(panel,'[data-role=\x27heading\x27]')['textContent']=state['project']||'素材',qs(panel,_0x495fca(0x1a9))['textContent']='input/TE_MAN/'+(state['project']||''),renderCategories(),renderAssets(),setStatus(state['status']);}function renderCategories(){const _0x3deb90=a0_0x9945,_0x244b3b=qs(panel,'[data-role=\x27categories\x27]');_0x244b3b[_0x3deb90(0x17b)]='';const _0x4f1ede=getCategoriesForCurrentProject();for(const _0x384774 of _0x4f1ede){const _0x5d5166=document[_0x3deb90(0x19b)]('button');_0x5d5166['className']='te-asset-category\x20'+(_0x384774[_0x3deb90(0x17e)]===state['category']?'active':''),_0x5d5166['innerHTML']='<span>'+_0x384774['label']+'</span><span\x20class=\x22te-asset-count\x22>'+(_0x384774['count']??0x0)+'</span>',_0x5d5166['onclick']=()=>{state['category']=_0x384774['name'],saveState(),refreshLibrary({'quiet':!![]});},_0x244b3b['appendChild'](_0x5d5166);}const _0x3b6891=qs(panel,_0x3deb90(0x17a));_0x3b6891&&(_0x3b6891['disabled']=isProtectedCategory(state['category']),_0x3b6891['title']=_0x3b6891['disabled']?_0x3deb90(0x214):_0x3deb90(0x1ce)+state['category']);}function renderAssets(){const _0x120f40=a0_0x9945;if(!panel)return;const _0x3c5cee=qs(panel,'[data-role=\x27assets\x27]');_0x3c5cee['style'][_0x120f40(0x222)]('--te-asset-thumb',state['viewSize']+'px'),_0x3c5cee['innerHTML']='';const _0x191fb0=qs(panel,'[data-role=\x27selected\x27]');_0x191fb0['textContent']=state[_0x120f40(0x1af)]?state['selectedAsset'][_0x120f40(0x1fd)]:'';if(state['loading']){_0x3c5cee[_0x120f40(0x17b)]='<div\x20class=\x22te-asset-empty\x22>正在加载素材...</div>';return;}if(!state['assets']['length']){_0x3c5cee[_0x120f40(0x17b)]=_0x120f40(0x20f);return;}for(const _0x5489ec of state['assets']){const _0x3b8b96=isTextAsset(_0x5489ec),_0x3b4822=document[_0x120f40(0x19b)](_0x120f40(0x1c1));_0x3b4822[_0x120f40(0x20c)]='te-asset-card\x20'+(_0x3b8b96?'text':'')+'\x20'+(state[_0x120f40(0x1af)]?.['relative_path']===_0x5489ec['relative_path']?_0x120f40(0x168):''),_0x3b4822['title']=_0x5489ec[_0x120f40(0x1fd)],_0x3b8b96?_0x3b4822[_0x120f40(0x17b)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-thumb\x20te-asset-text-thumb\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-text-preview\x22>'+escapeHtml(_0x5489ec['text_preview']||_0x5489ec[_0x120f40(0x17e)])+_0x120f40(0x19c)+escapeHtml(_0x5489ec[_0x120f40(0x17e)])+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-path\x22>'+escapeHtml(_0x5489ec['category'])+'\x20·\x20'+(_0x5489ec[_0x120f40(0x1c0)]||0x0)+_0x120f40(0x1d4)+(_0x5489ec['char_count']||0x0)+'字</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20':_0x3b4822['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-thumb\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20loading=\x22lazy\x22\x20draggable=\x22false\x22\x20src=\x22'+buildThumbUrl(_0x5489ec)+'\x22\x20alt=\x22\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22add\x22>添加</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22preview\x22>预览</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-more\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22more\x22>更多</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-more-menu\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x22\x20data-action=\x22rename\x22>更名</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-asset-chip\x20danger\x22\x20data-action=\x22delete\x22>删除</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-meta\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-name\x22>'+escapeHtml(_0x5489ec['name'])+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-asset-path\x22>'+escapeHtml(_0x5489ec['category'])+'\x20·\x20'+(_0x5489ec['width']||'?')+'x'+(_0x5489ec[_0x120f40(0x185)]||'?')+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x3b4822['onclick']=()=>setSelectedAsset(_0x5489ec),_0x3b4822['ondblclick']=_0x4ad6d9=>{const _0x1f7d8c=a0_0x9945;_0x4ad6d9['preventDefault'](),Promise['resolve'](createNodeFromAssetAtEvent(_0x4ad6d9,_0x5489ec))['then'](()=>setStatus('已创建'+(_0x3b8b96?'文本':'加载图像')+_0x1f7d8c(0x1dc)+_0x5489ec['name']))['catch'](_0x1ed376=>setStatus(_0x1f7d8c(0x191)+(_0x1ed376[_0x1f7d8c(0x1eb)]||_0x1ed376)));},qs(_0x3b4822,'[data-action=\x27add\x27]')[_0x120f40(0x18b)]=_0x1c4d05=>{const _0x38372=a0_0x9945;_0x1c4d05['stopPropagation'](),Promise['resolve'](createNodeFromAssetAtEvent(_0x1c4d05,_0x5489ec))[_0x38372(0x218)](()=>setStatus('已创建'+(_0x3b8b96?'文本':_0x38372(0x1a6))+'节点：'+_0x5489ec[_0x38372(0x17e)]))['catch'](_0x202d23=>setStatus('创建节点失败：'+(_0x202d23['message']||_0x202d23)));},qs(_0x3b4822,'[data-action=\x27copy\x27]')?.['addEventListener'](_0x120f40(0x200),_0x30df7a=>{const _0x19b6f4=a0_0x9945;_0x30df7a['stopPropagation'](),getTextAssetContent(_0x5489ec)[_0x19b6f4(0x218)](_0x55fcef=>copyTextToClipboard(_0x55fcef))['then'](_0x120057=>setStatus(_0x120057?'已复制：'+_0x5489ec['name']:_0x19b6f4(0x1ee)))['catch'](_0x1d3728=>setStatus('复制失败：'+(_0x1d3728['message']||_0x1d3728)));}),qs(_0x3b4822,'[data-action=\x27preview\x27]')['onclick']=_0x2e12f6=>{const _0x2ef6ae=a0_0x9945;_0x2e12f6[_0x2ef6ae(0x169)](),Promise['resolve'](openPreview(_0x5489ec))[_0x2ef6ae(0x215)](_0x320078=>setStatus('预览失败：'+(_0x320078['message']||_0x320078)));},qs(_0x3b4822,'[data-action=\x27more\x27]')[_0x120f40(0x18b)]=_0x87a511=>{_0x87a511['stopPropagation']();},qs(_0x3b4822,'[data-action=\x27rename\x27]')['onclick']=_0x17ec5a=>{_0x17ec5a['stopPropagation'](),renameAsset(_0x5489ec);},qs(_0x3b4822,'[data-action=\x27delete\x27]')['onclick']=_0x5f010f=>{_0x5f010f['stopPropagation'](),deleteAsset(_0x5489ec);},_0x3c5cee['appendChild'](_0x3b4822);}}function escapeHtml(_0x84714f){const _0x227dbf=a0_0x9945;return String(_0x84714f??'')['replaceAll']('&','&amp;')['replaceAll']('<',_0x227dbf(0x1ae))[_0x227dbf(0x201)]('>',_0x227dbf(0x19a))['replaceAll']('\x22',_0x227dbf(0x1f9))['replaceAll']('\x27',_0x227dbf(0x1f6));}function removeLegacyAssetButtonOnImageNode(_0x3916cc){const _0x20f692=a0_0x9945;if(!Array['isArray'](_0x3916cc?.['widgets']))return;for(let _0x331d93=_0x3916cc[_0x20f692(0x1b2)][_0x20f692(0x19e)]-0x1;_0x331d93>=0x0;_0x331d93-=0x1){const _0x1ac877=_0x3916cc['widgets'][_0x331d93];if(_0x1ac877?.['name']!=='添加到素材库')continue;_0x1ac877['onRemove']?.(),_0x1ac877['onRemoved']?.(),_0x3916cc['widgets']['splice'](_0x331d93,0x1),Array['isArray'](_0x3916cc['widgets_values'])&&_0x331d93<_0x3916cc['widgets_values']['length']&&_0x3916cc[_0x20f692(0x197)]['splice'](_0x331d93,0x1);}}function installAssetButtonOnImageNode(_0xc74d68){if(!_0xc74d68)return;registerAssetLibraryAction(),removeLegacyAssetButtonOnImageNode(_0xc74d68),_0xc74d68['__teAssetLibraryButtonInstalled']=!![],markCanvasDirty();}function patchImageNode(_0x4101c3,_0x57e147){const _0xebd6e=a0_0x9945;if(_0x57e147['name']!==IMAGE_NODE_CLASS)return;const _0xdbbfd6=_0x4101c3['prototype']['onNodeCreated'];_0x4101c3['prototype'][_0xebd6e(0x1a3)]=function(){const _0x57b0d4=_0xdbbfd6?.['apply'](this,arguments);return installAssetButtonOnImageNode(this),_0x57b0d4;};}loadState(),registerAssetLibraryAction(),app[a0_0x14ac9b(0x1a8)]({'name':EXTENSION_NAME,async 'setup'(){registerAssetLibraryAction(),ensurePanel(),installMenuButtonWithRetry();},async 'beforeRegisterNodeDef'(_0x24c9f1,_0x27d45b){patchImageNode(_0x24c9f1,_0x27d45b);},async 'nodeCreated'(_0x359af4){const _0x33f9ab=a0_0x9945;(_0x359af4?.[_0x33f9ab(0x1cf)]===IMAGE_NODE_CLASS||_0x359af4?.['type']===IMAGE_NODE_CLASS)&&installAssetButtonOnImageNode(_0x359af4);}});
+import { app } from "../../../scripts/app.js";
+import { api } from "../../../scripts/api.js";
+
+const EXTENSION_NAME = "TEImagePro.AssetLibrary";
+const IMAGE_NODE_CLASS = "TE_image_pro_save_image_with_output";
+const TEXT_NODE_CLASS = "TE_text_display";
+const PANEL_ID = "te-asset-library-panel";
+const MENU_BUTTON_ID = "te-asset-library-menu-button";
+const STYLE_ID = "te-asset-library-style";
+const STORAGE_KEY = "te_asset_library_state_v1";
+const DEFAULT_CATEGORY = "__all__";
+const DEFAULT_PROJECT = "默认项目";
+const TEXT_CATEGORY = "提示词";
+const ASSET_KIND_IMAGE = "image";
+const ASSET_KIND_TEXT = "text";
+const PROTECTED_CATEGORIES = new Set([DEFAULT_CATEGORY, "全部", "未分类", "", TEXT_CATEGORY]);
+
+let panel = null;
+let addDialog = null;
+let previewDialog = null;
+let state = {
+    visible: false,
+    project: "",
+    category: DEFAULT_CATEGORY,
+    query: "",
+    viewSize: 128,
+    projects: [],
+    assets: [],
+    selectedAsset: null,
+    loading: false,
+    status: "",
+};
+
+function loadState() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        state.project = saved.project || "";
+        state.category = saved.category || DEFAULT_CATEGORY;
+        state.query = saved.query || "";
+        state.viewSize = Number(saved.viewSize) || 128;
+    } catch {
+    }
+}
+
+function saveState() {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+            project: state.project,
+            category: state.category,
+            query: state.query,
+            viewSize: state.viewSize,
+        })
+    );
+}
+
+function injectStyle() {
+    if (document.getElementById(STYLE_ID)) {
+        return;
+    }
+
+    const style = document.createElement("style");
+    style.id = STYLE_ID;
+    style.textContent = `
+        :root {
+            --te-asset-bg: rgba(12, 15, 17, 0.94);
+            --te-asset-panel: rgba(24, 29, 32, 0.96);
+            --te-asset-line: rgba(255, 255, 255, 0.1);
+            --te-asset-line-strong: rgba(255, 204, 102, 0.38);
+            --te-asset-text: rgba(244, 241, 231, 0.95);
+            --te-asset-muted: rgba(244, 241, 231, 0.58);
+            --te-asset-accent: #f3b44e;
+            --te-asset-accent-2: #65d1b7;
+            --te-asset-danger: #ff7b7b;
+            --te-asset-radius: 18px;
+        }
+
+        #te-asset-library-menu-button {
+            display: flex;
+            align-items: center;
+            min-height: 34px;
+        }
+
+        .te-asset-menu-button {
+            min-height: 32px;
+            min-width: 86px;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        button.te-asset-menu-button {
+            min-width: 86px;
+            border: 1px solid rgba(255, 196, 90, 0.42);
+            background: linear-gradient(135deg, rgba(28, 33, 34, 0.88), rgba(66, 49, 26, 0.72));
+            color: var(--te-asset-text);
+            border-radius: 14px;
+            padding: 8px 12px;
+            font: 700 13px/1.1 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        button.te-asset-menu-button:hover,
+        button.te-asset-menu-button.active,
+        #te-asset-library-menu-button[data-visible="true"] .te-asset-menu-button {
+            transform: translateY(-1px);
+            border-color: rgba(255, 218, 132, 0.9);
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.24), rgba(101, 209, 183, 0.12));
+        }
+
+        .te-asset-panel {
+            position: fixed;
+            top: 112px;
+            right: 16px;
+            width: min(720px, calc(100vw - 32px));
+            height: min(720px, calc(100vh - 164px));
+            z-index: 901;
+            display: grid;
+            grid-template-columns: 210px minmax(0, 1fr);
+            grid-template-rows: minmax(0, 1fr);
+            overflow: hidden;
+            border: 1px solid var(--te-asset-line);
+            border-radius: var(--te-asset-radius);
+            background:
+                radial-gradient(circle at top left, rgba(243, 180, 78, 0.18), transparent 35%),
+                linear-gradient(145deg, rgba(16, 20, 22, 0.97), rgba(9, 11, 13, 0.97));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            color: var(--te-asset-text);
+            font-family: ui-sans-serif, "Microsoft YaHei", sans-serif;
+        }
+
+        .te-asset-panel[hidden] {
+            display: none;
+        }
+
+        .te-asset-sidebar {
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+            border-right: 1px solid var(--te-asset-line);
+            background: rgba(255, 255, 255, 0.035);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .te-asset-main {
+            min-width: 0;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: auto auto minmax(0, 1fr) auto;
+            gap: 12px;
+            padding: 14px;
+            overflow: hidden;
+        }
+
+        .te-asset-title-row,
+        .te-asset-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .te-asset-drag-handle {
+            cursor: move;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .te-asset-title {
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+        }
+
+        .te-asset-subtitle {
+            color: var(--te-asset-muted);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .te-asset-launcher-link {
+            margin-top: auto;
+            display: block;
+            border: 1px solid rgba(101, 209, 183, 0.3);
+            border-radius: 11px;
+            padding: 7px 8px;
+            color: rgba(235, 255, 247, 0.92);
+            background: linear-gradient(135deg, rgba(101, 209, 183, 0.12), rgba(243, 180, 78, 0.08));
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.35;
+            text-decoration: none;
+        }
+
+        .te-asset-launcher-link:hover {
+            border-color: rgba(101, 209, 183, 0.62);
+            background: linear-gradient(135deg, rgba(101, 209, 183, 0.2), rgba(243, 180, 78, 0.12));
+            transform: translateY(-1px);
+        }
+
+        .te-asset-spacer {
+            flex: 1;
+        }
+
+        .te-asset-button,
+        .te-asset-input,
+        .te-asset-select {
+            border: 1px solid var(--te-asset-line);
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--te-asset-text);
+            border-radius: 12px;
+            font: 600 12px/1 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            outline: none;
+        }
+
+        .te-asset-button {
+            padding: 9px 11px;
+            cursor: pointer;
+            transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+        }
+
+        .te-asset-button:hover {
+            border-color: var(--te-asset-line-strong);
+            background: rgba(243, 180, 78, 0.14);
+            transform: translateY(-1px);
+        }
+
+        .te-asset-button.primary {
+            border-color: rgba(243, 180, 78, 0.7);
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.27), rgba(101, 209, 183, 0.12));
+        }
+
+        .te-asset-button.ghost {
+            padding: 7px 9px;
+            background: transparent;
+        }
+
+        .te-asset-button.danger {
+            width: 100%;
+            color: #ffd7d7;
+            border-color: rgba(255, 123, 123, 0.36);
+            background: rgba(255, 123, 123, 0.08);
+        }
+
+        .te-asset-button.danger:hover:not(:disabled) {
+            border-color: rgba(255, 123, 123, 0.68);
+            background: rgba(255, 123, 123, 0.15);
+        }
+
+        .te-asset-button:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .te-asset-button:disabled:hover {
+            border-color: var(--te-asset-line);
+            background: rgba(255, 255, 255, 0.07);
+            transform: none;
+        }
+
+        .te-asset-input,
+        .te-asset-select {
+            min-width: 0;
+            padding: 10px 11px;
+        }
+
+        .te-asset-input::placeholder {
+            color: rgba(244, 241, 231, 0.38);
+        }
+
+        .te-asset-select {
+            width: 100%;
+            appearance: none;
+        }
+
+        .te-asset-select option {
+            background: #161a1c;
+            color: #f6f0df;
+        }
+
+        .te-asset-label {
+            color: var(--te-asset-muted);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .te-asset-stack {
+            display: grid;
+            gap: 8px;
+        }
+
+        .te-asset-categories {
+            display: grid;
+            gap: 6px;
+            overflow: auto;
+            min-height: 0;
+            padding-right: 3px;
+        }
+
+        .te-asset-category {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border: 1px solid transparent;
+            border-radius: 13px;
+            padding: 9px 10px;
+            color: var(--te-asset-text);
+            background: rgba(255, 255, 255, 0.045);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .te-asset-category:hover,
+        .te-asset-category.active {
+            border-color: var(--te-asset-line-strong);
+            background: rgba(243, 180, 78, 0.13);
+        }
+
+        .te-asset-count {
+            color: var(--te-asset-muted);
+            font-size: 11px;
+        }
+
+        .te-asset-toolbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .te-asset-grid {
+            min-height: 0;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--te-asset-thumb, 128px), 1fr));
+            align-content: start;
+            gap: 12px;
+            padding: 2px 4px 8px 2px;
+        }
+
+        .te-asset-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--te-asset-line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.055);
+            cursor: pointer;
+            user-select: none;
+            display: grid;
+            grid-template-rows: var(--te-asset-thumb, 128px) 56px;
+            height: calc(var(--te-asset-thumb, 128px) + 56px);
+        }
+
+        .te-asset-card:hover,
+        .te-asset-card.selected {
+            border-color: rgba(243, 180, 78, 0.72);
+            box-shadow: 0 0 0 1px rgba(243, 180, 78, 0.2), 0 14px 34px rgba(0, 0, 0, 0.28);
+        }
+
+        .te-asset-thumb {
+            width: 100%;
+            height: var(--te-asset-thumb, 128px);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                linear-gradient(45deg, rgba(255,255,255,0.035) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,255,255,0.035) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.035) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.035) 75%);
+            background-size: 18px 18px;
+            background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+        }
+
+        .te-asset-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .te-asset-card.text {
+            grid-template-rows: var(--te-asset-thumb, 128px) 56px;
+            height: calc(var(--te-asset-thumb, 128px) + 56px);
+        }
+
+        .te-asset-thumb.te-asset-text-thumb {
+            display: flex;
+            align-items: stretch;
+            padding: 13px 14px;
+            box-sizing: border-box;
+            background:
+                radial-gradient(circle at top right, rgba(243, 180, 78, 0.12), transparent 46%),
+                linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+            color: rgba(246, 243, 232, 0.88);
+            font: 600 12px/1.5 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .te-asset-text-preview {
+            width: 100%;
+            min-width: 0;
+            height: 100%;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .te-asset-meta {
+            padding: 9px 10px 10px;
+            display: grid;
+            gap: 4px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .te-asset-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .te-asset-path {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--te-asset-muted);
+            font-size: 11px;
+        }
+
+        .te-asset-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transform: translateY(-3px);
+            transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+
+        .te-asset-card:hover .te-asset-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .te-asset-chip {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            padding: 6px 8px;
+            background: rgba(0, 0, 0, 0.56);
+            color: var(--te-asset-text);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .te-asset-more {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: -10px;
+        }
+
+        .te-asset-more-menu {
+            position: absolute;
+            top: calc(100% - 1px);
+            right: 0;
+            min-width: 76px;
+            display: none;
+            gap: 5px;
+            padding: 6px;
+            border: 1px solid var(--te-asset-line);
+            border-radius: 12px;
+            background: rgba(9, 11, 13, 0.94);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
+        }
+
+        .te-asset-more:hover .te-asset-more-menu {
+            display: grid;
+        }
+
+        .te-asset-chip.danger {
+            color: #ffd7d7;
+            border-color: rgba(255, 123, 123, 0.42);
+        }
+
+        .te-asset-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 30px;
+            color: var(--te-asset-muted);
+            font-size: 12px;
+        }
+
+        .te-asset-empty {
+            grid-column: 1 / -1;
+            border: 1px dashed rgba(255, 255, 255, 0.16);
+            border-radius: 18px;
+            padding: 36px 18px;
+            text-align: center;
+            color: var(--te-asset-muted);
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .te-asset-drop-hint {
+            position: fixed;
+            pointer-events: none;
+            z-index: 902;
+            padding: 9px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(243, 180, 78, 0.6);
+            background: rgba(13, 16, 18, 0.92);
+            color: var(--te-asset-text);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .te-asset-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 910;
+            display: grid;
+            place-items: center;
+            background: rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(2px);
+        }
+
+        .te-asset-modal {
+            width: min(430px, calc(100vw - 32px));
+            border: 1px solid var(--te-asset-line);
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at top right, rgba(101, 209, 183, 0.15), transparent 36%),
+                linear-gradient(145deg, rgba(21, 25, 27, 0.98), rgba(11, 13, 15, 0.98));
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.52);
+            color: var(--te-asset-text);
+            padding: 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .te-asset-modal-title {
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .te-asset-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        .te-asset-preview-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 912;
+            display: grid;
+            place-items: start center;
+            box-sizing: border-box;
+            padding: 112px 22px 52px;
+            background: rgba(0, 0, 0, 0.62);
+            backdrop-filter: blur(3px);
+        }
+
+        .te-asset-preview {
+            width: min(920px, calc(100vw - 44px));
+            height: min(720px, calc(100vh - 164px));
+            border: 1px solid var(--te-asset-line);
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at top left, rgba(243, 180, 78, 0.13), transparent 38%),
+                rgba(10, 12, 14, 0.98);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
+            overflow: hidden;
+        }
+
+        .te-asset-preview-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--te-asset-line);
+        }
+
+        .te-asset-preview-title {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 900;
+            color: var(--te-asset-text);
+        }
+
+        .te-asset-preview-body {
+            min-height: 0;
+            display: grid;
+            place-items: center;
+            padding: 14px;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .te-asset-preview-body img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 12px 46px rgba(0, 0, 0, 0.38);
+            transform-origin: center center;
+            cursor: zoom-in;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .te-asset-preview-body.text {
+            place-items: stretch;
+            overflow: hidden;
+        }
+
+        .te-asset-preview-text {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: auto;
+            border: 1px solid var(--te-asset-line);
+            border-radius: 14px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.045);
+            color: rgba(248, 245, 235, 0.94);
+            font: 600 13px/1.65 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media (max-width: 760px) {
+            .te-asset-panel {
+                top: 88px;
+                right: 10px;
+                width: calc(100vw - 20px);
+                height: calc(100vh - 140px);
+                grid-template-columns: 1fr;
+            }
+
+            .te-asset-preview-backdrop {
+                padding: 88px 10px 52px;
+            }
+
+            .te-asset-preview {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 140px);
+            }
+
+            .te-asset-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--te-asset-line);
+                max-height: 230px;
+            }
+
+            .te-asset-toolbar {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function qs(root, selector) {
+    return root.querySelector(selector);
+}
+
+function setStatus(text) {
+    state.status = text || "";
+    if (panel) {
+        const status = qs(panel, "[data-role='status']");
+        if (status) {
+            status.textContent = state.status;
+        }
+    }
+}
+
+function markCanvasDirty() {
+    app.graph?.setDirtyCanvas?.(true, false);
+    app.canvas?.setDirty?.(true, false);
+}
+
+function clampPanelPosition(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function placePanelAtCurrentPosition(element) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+        return rect;
+    }
+
+    element.style.left = `${rect.left}px`;
+    element.style.top = `${rect.top}px`;
+    element.style.right = "auto";
+    element.style.bottom = "auto";
+    if (getComputedStyle(element).position !== "fixed") {
+        element.style.position = "fixed";
+    }
+    return rect;
+}
+
+function clampDraggablePanel(element) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+        return;
+    }
+
+    const margin = 8;
+    const maxLeft = Math.max(margin, window.innerWidth - rect.width - margin);
+    const maxTop = Math.max(margin, window.innerHeight - rect.height - margin);
+    const left = clampPanelPosition(rect.left, margin, maxLeft);
+    const top = clampPanelPosition(rect.top, margin, maxTop);
+    element.style.left = `${left}px`;
+    element.style.top = `${top}px`;
+    element.style.right = "auto";
+    element.style.bottom = "auto";
+}
+
+function enableDraggablePanel(element, handles) {
+    if (!element || element.__teAssetDragBound) {
+        return;
+    }
+
+    const handleList = (Array.isArray(handles) ? handles : [handles]).filter(Boolean);
+    if (!handleList.length) {
+        return;
+    }
+
+    element.__teAssetDragBound = true;
+    let dragState = null;
+    let previousUserSelect = "";
+
+    const stopDrag = (event) => {
+        if (!dragState) {
+            return;
+        }
+        try {
+            dragState.handle?.releasePointerCapture?.(event.pointerId);
+        } catch {
+        }
+        document.body.style.userSelect = previousUserSelect;
+        dragState = null;
+    };
+
+    const moveDrag = (event) => {
+        if (!dragState) {
+            return;
+        }
+
+        const nextLeft = dragState.startLeft + event.clientX - dragState.startX;
+        const nextTop = dragState.startTop + event.clientY - dragState.startY;
+        const margin = 8;
+        const maxLeft = Math.max(margin, window.innerWidth - dragState.width - margin);
+        const maxTop = Math.max(margin, window.innerHeight - dragState.height - margin);
+        element.style.left = `${clampPanelPosition(nextLeft, margin, maxLeft)}px`;
+        element.style.top = `${clampPanelPosition(nextTop, margin, maxTop)}px`;
+        element.style.right = "auto";
+        element.style.bottom = "auto";
+        event.preventDefault();
+    };
+
+    for (const handle of handleList) {
+        handle.classList.add("te-asset-drag-handle");
+        handle.addEventListener("pointerdown", (event) => {
+            if (event.button !== 0 || event.target?.closest?.("button,a,input,select,textarea")) {
+                return;
+            }
+
+            const rect = placePanelAtCurrentPosition(element);
+            if (!rect.width || !rect.height) {
+                return;
+            }
+
+            dragState = {
+                startX: event.clientX,
+                startY: event.clientY,
+                startLeft: rect.left,
+                startTop: rect.top,
+                width: rect.width,
+                height: rect.height,
+                handle: event.currentTarget,
+            };
+            previousUserSelect = document.body.style.userSelect;
+            document.body.style.userSelect = "none";
+            event.currentTarget.setPointerCapture?.(event.pointerId);
+            event.preventDefault();
+        });
+        handle.addEventListener("pointermove", moveDrag);
+        handle.addEventListener("pointerup", stopDrag);
+        handle.addEventListener("pointercancel", stopDrag);
+    }
+
+    window.addEventListener("resize", () => clampDraggablePanel(element));
+}
+
+function getAssetGridScrollTop() {
+    const grid = panel ? qs(panel, "[data-role='assets']") : null;
+    return Number(grid?.scrollTop || 0);
+}
+
+function restoreAssetGridScrollTop(scrollTop) {
+    if (!Number.isFinite(scrollTop) || scrollTop <= 0) {
+        return;
+    }
+    requestAnimationFrame(() => {
+        const grid = panel ? qs(panel, "[data-role='assets']") : null;
+        if (!grid) {
+            return;
+        }
+        grid.scrollTop = Math.min(scrollTop, Math.max(0, grid.scrollHeight - grid.clientHeight));
+    });
+}
+
+function imageInfoFromAsset(asset) {
+    const subfolder = asset.subfolder || asset.relative_path.split("/").slice(0, -1).join("/");
+    return {
+        filename: asset.name || asset.relative_path.split("/").pop(),
+        subfolder,
+        type: "input",
+    };
+}
+
+function buildViewUrl(asset) {
+    const info = imageInfoFromAsset(asset);
+    const params = new URLSearchParams({
+        filename: info.filename,
+        type: info.type,
+        rand: String(Math.floor(asset.mtime || Date.now())),
+    });
+    if (info.subfolder) {
+        params.set("subfolder", info.subfolder);
+    }
+    return api.apiURL(`/view?${params.toString()}`);
+}
+
+function buildImageInfoViewUrl(imageInfo) {
+    if (!imageInfo?.filename && !imageInfo?.path) {
+        return "";
+    }
+
+    if (String(imageInfo.type || "") === "te_custom_save") {
+        const params = new URLSearchParams({
+            filename: imageInfo.filename || "",
+            path: imageInfo.path || "",
+            token: imageInfo.token || "",
+            type: "te_custom_save",
+        });
+        return api.apiURL(`/te_image/view_saved?${params.toString()}`);
+    }
+
+    const params = new URLSearchParams({
+        filename: imageInfo.filename || "",
+        type: imageInfo.type || "output",
+        rand: String(Date.now()),
+    });
+    if (imageInfo.subfolder) {
+        params.set("subfolder", imageInfo.subfolder);
+    }
+    return api.apiURL(`/view?${params.toString()}`);
+}
+
+function buildThumbUrl(asset) {
+    const params = new URLSearchParams({
+        path: asset.relative_path,
+        size: String(Math.max(state.viewSize * 2, 220)),
+        rand: String(Math.floor(asset.mtime || Date.now())),
+    });
+    return api.apiURL(`/te_asset_library/thumbnail?${params.toString()}`);
+}
+
+function getAssetKind(asset) {
+    const kind = String(asset?.kind || "").toLowerCase();
+    if (kind) {
+        return kind;
+    }
+    const path = String(asset?.relative_path || asset?.name || "").toLowerCase();
+    return path.endsWith(".txt") ? ASSET_KIND_TEXT : ASSET_KIND_IMAGE;
+}
+
+function isTextAsset(asset) {
+    return getAssetKind(asset) === ASSET_KIND_TEXT;
+}
+
+async function requestJson(path, options = {}) {
+    const response = await api.fetchApi(path, options);
+    if (!response.ok) {
+        let message = `${response.status} ${response.statusText}`;
+        try {
+            const body = await response.json();
+            message = body.error || message;
+        } catch {
+        }
+        throw new Error(message);
+    }
+    return await response.json();
+}
+
+async function requestJsonWithGetFallback(path, payload, errorCode = "405") {
+    try {
+        return await requestJson(path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload || {}),
+        });
+    } catch (error) {
+        if (!String(error?.message || "").includes(errorCode)) {
+            throw error;
+        }
+        const params = new URLSearchParams();
+        for (const [key, value] of Object.entries(payload || {})) {
+            params.set(key, value ?? "");
+        }
+        return await requestJson(`${path}?${params.toString()}`);
+    }
+}
+
+async function getTextAssetContent(asset) {
+    const params = new URLSearchParams({
+        path: asset.relative_path,
+        rand: String(Math.floor(asset.mtime || Date.now())),
+    });
+    const data = await requestJson(`/te_asset_library/text/get?${params.toString()}`);
+    return String(data.text ?? "");
+}
+
+async function copyTextToClipboard(text) {
+    const value = String(text ?? "");
+    if (!value) {
+        return false;
+    }
+    try {
+        if (navigator?.clipboard?.writeText) {
+            await navigator.clipboard.writeText(value);
+            return true;
+        }
+    } catch {
+    }
+    try {
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        textarea.setAttribute("readonly", "readonly");
+        Object.assign(textarea.style, {
+            position: "fixed",
+            left: "-9999px",
+            opacity: "0",
+        });
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        const copied = document.execCommand?.("copy");
+        document.body.removeChild(textarea);
+        return !!copied;
+    } catch {
+        return false;
+    }
+}
+
+async function refreshLibrary(options = {}) {
+    const preserveScrollTop = options.preserveScroll ? getAssetGridScrollTop() : null;
+    state.loading = true;
+    setStatus("加载中...");
+    renderPanel();
+
+    try {
+        const params = new URLSearchParams();
+        if (state.project) {
+            params.set("project", state.project);
+        }
+        if (state.category) {
+            params.set("category", state.category);
+        }
+        if (state.query) {
+            params.set("q", state.query);
+        }
+
+        const data = await requestJson(`/te_asset_library/list?${params.toString()}`);
+        state.projects = data.projects || [];
+        state.assets = data.assets || [];
+        state.project = data.current_project || state.projects[0]?.name || DEFAULT_PROJECT;
+        state.category = data.current_category || state.category || DEFAULT_CATEGORY;
+        state.loading = false;
+        saveState();
+        renderPanel();
+        if (options.preserveScroll) {
+            restoreAssetGridScrollTop(preserveScrollTop);
+        }
+        if (!options.quiet) {
+            setStatus(`已加载 ${state.assets.length} 个素材`);
+        }
+    } catch (error) {
+        state.loading = false;
+        renderPanel();
+        if (options.preserveScroll) {
+            restoreAssetGridScrollTop(preserveScrollTop);
+        }
+        setStatus(`加载失败：${error.message || error}`);
+    }
+}
+
+function getCurrentProject() {
+    return state.projects.find((project) => project.name === state.project) || state.projects[0] || null;
+}
+
+function getCategoriesForCurrentProject() {
+    const project = getCurrentProject();
+    const categories = project?.categories || [];
+    const total = categories.reduce((sum, category) => sum + (Number(category.count) || 0), 0);
+    return [{ name: DEFAULT_CATEGORY, label: "全部", count: total }, ...categories.map((category) => ({
+        name: category.name,
+        label: category.name,
+        count: category.count,
+    }))];
+}
+
+function isProtectedCategory(category) {
+    return PROTECTED_CATEGORIES.has(String(category || "").trim());
+}
+
+function isSerializedWidget(widget) {
+    return widget?.serialize !== false && widget?.options?.serialize !== false;
+}
+
+function getSerializedWidgetIndex(node, targetWidget) {
+    if (!Array.isArray(node?.widgets) || !targetWidget) {
+        return -1;
+    }
+
+    let serializedIndex = 0;
+    for (const widget of node.widgets) {
+        if (widget === targetWidget) {
+            return isSerializedWidget(widget) ? serializedIndex : -1;
+        }
+        if (isSerializedWidget(widget)) {
+            serializedIndex += 1;
+        }
+    }
+    return -1;
+}
+
+function setWidgetValue(node, widgetName, value) {
+    const widget = node?.widgets?.find((item) => item?.name === widgetName);
+    if (!widget) {
+        return false;
+    }
+    if (Array.isArray(widget.options?.values) && !widget.options.values.includes(value)) {
+        widget.options.values.push(value);
+    }
+    widget.value = value;
+    const index = getSerializedWidgetIndex(node, widget);
+    if (index >= 0) {
+        node.widgets_values ??= [];
+        node.widgets_values[index] = value;
+    }
+    widget.callback?.(value);
+    return true;
+}
+
+function getWidgetTextElement(widget) {
+    const candidates = [widget?.inputEl, widget?.element, widget?.domElement, widget?.inputElement];
+    for (const candidate of candidates) {
+        if (!candidate) {
+            continue;
+        }
+        if (candidate instanceof HTMLTextAreaElement || candidate instanceof HTMLInputElement) {
+            return candidate;
+        }
+        const found = candidate.querySelector?.("textarea,input");
+        if (found instanceof HTMLTextAreaElement || found instanceof HTMLInputElement) {
+            return found;
+        }
+    }
+    return null;
+}
+
+function setTextNodeText(node, text) {
+    const value = String(text ?? "");
+    const ok = setWidgetValue(node, "text", value);
+    if (!ok) {
+        throw new Error("目标节点没有 text 字段");
+    }
+
+    const widget = node?.widgets?.find((item) => item?.name === "text");
+    const element = getWidgetTextElement(widget);
+    if (element) {
+        element.value = value;
+        element.dispatchEvent(new Event("input", { bubbles: true }));
+        element.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    markCanvasDirty();
+}
+
+function setNodePreview(node, asset) {
+    const info = imageInfoFromAsset(asset);
+    node.images = [info];
+    node.imageIndex = 0;
+    node.overIndex = 0;
+    app.nodeOutputs ??= {};
+    app.nodeOutputs[String(node.id)] = {
+        ...(app.nodeOutputs[String(node.id)] || {}),
+        images: [info],
+    };
+
+    const img = new Image();
+    img.src = buildViewUrl(asset);
+    node.imgs = [img];
+}
+
+function screenPointToCanvasPoint(clientX, clientY) {
+    const canvas = app.canvas;
+    if (canvas?.convertEventToCanvasOffset && Number.isFinite(clientX) && Number.isFinite(clientY)) {
+        const point = canvas.convertEventToCanvasOffset({ clientX, clientY });
+        const x = Array.isArray(point) ? point[0] : point?.x;
+        const y = Array.isArray(point) ? point[1] : point?.y;
+        if (Number.isFinite(x) && Number.isFinite(y)) {
+            return [x, y];
+        }
+    }
+    const ds = canvas?.ds;
+    if (ds) {
+        return [
+            (clientX - ds.offset[0]) / ds.scale,
+            (clientY - ds.offset[1]) / ds.scale,
+        ];
+    }
+    return [100, 100];
+}
+
+function canvasPointFromEvent(event) {
+    const canvasEl = app.canvas?.canvas;
+    const path = event?.composedPath?.() || [];
+    const eventIsOnCanvas = !!canvasEl && (event?.target === canvasEl || path.includes(canvasEl));
+    if (!eventIsOnCanvas && canvasEl?.getBoundingClientRect) {
+        const rect = canvasEl.getBoundingClientRect();
+        return screenPointToCanvasPoint(rect.left + rect.width * 0.38, rect.top + rect.height / 2);
+    }
+    return screenPointToCanvasPoint(event?.clientX, event?.clientY);
+}
+
+function createImageNodeAtEvent(event, asset) {
+    const LiteGraph = window.LiteGraph;
+    if (!LiteGraph) {
+        throw new Error("LiteGraph 未加载");
+    }
+    const node = LiteGraph.createNode(IMAGE_NODE_CLASS);
+    if (!node) {
+        throw new Error("找不到 TE MAN 加载图像&保存图像 节点");
+    }
+
+    node.pos = canvasPointFromEvent(event);
+    node.size = [Math.max(node.size?.[0] || 420, 420), Math.max(node.size?.[1] || 520, 520)];
+    app.graph.add(node);
+    applyAssetToImageNode(node, asset);
+    app.canvas.selectNode?.(node);
+    markCanvasDirty();
+    return node;
+}
+
+async function createTextNodeAtEvent(event, asset) {
+    const LiteGraph = window.LiteGraph;
+    if (!LiteGraph) {
+        throw new Error("LiteGraph 未加载");
+    }
+    const node = LiteGraph.createNode(TEXT_NODE_CLASS);
+    if (!node) {
+        throw new Error("找不到 TE MAN TEXT文本展示 节点");
+    }
+
+    const text = await getTextAssetContent(asset);
+    node.pos = canvasPointFromEvent(event);
+    node.size = [Math.max(node.size?.[0] || 420, 420), Math.max(node.size?.[1] || 240, 240)];
+    app.graph.add(node);
+    setTextNodeText(node, text);
+    app.canvas.selectNode?.(node);
+    markCanvasDirty();
+    return node;
+}
+
+async function createNodeFromAssetAtEvent(event, asset) {
+    if (isTextAsset(asset)) {
+        return await createTextNodeAtEvent(event, asset);
+    }
+    return createImageNodeAtEvent(event, asset);
+}
+
+function applyAssetToImageNode(node, asset) {
+    const ok = setWidgetValue(node, "upload_image", asset.relative_path);
+    if (!ok) {
+        throw new Error("目标节点没有 upload_image 字段");
+    }
+    setNodePreview(node, asset);
+    markCanvasDirty();
+}
+
+function updateNodesAfterAssetRename(oldPath, newAsset) {
+    if (!oldPath || !newAsset?.relative_path || !Array.isArray(app.graph?._nodes)) {
+        return;
+    }
+
+    for (const node of app.graph._nodes) {
+        if (node?.comfyClass !== IMAGE_NODE_CLASS && node?.type !== IMAGE_NODE_CLASS) {
+            continue;
+        }
+        const widget = node.widgets?.find((item) => item?.name === "upload_image");
+        if (widget?.value !== oldPath) {
+            continue;
+        }
+        setWidgetValue(node, "upload_image", newAsset.relative_path);
+        setNodePreview(node, newAsset);
+    }
+    markCanvasDirty();
+}
+
+function closePreviewDialog() {
+    previewDialog?.remove();
+    previewDialog = null;
+}
+
+async function openTextPreview(asset) {
+    closePreviewDialog();
+    const text = await getTextAssetContent(asset);
+    previewDialog = document.createElement("div");
+    previewDialog.className = "te-asset-preview-backdrop";
+    previewDialog.innerHTML = `
+        <div class="te-asset-preview" role="dialog" aria-modal="true">
+            <div class="te-asset-preview-head">
+                <div class="te-asset-preview-title">${escapeHtml(asset.name)}</div>
+                <div class="te-asset-spacer"></div>
+                <button class="te-asset-button ghost" data-action="copy-preview-text">复制</button>
+                <button class="te-asset-button ghost" data-action="close-preview">关闭</button>
+            </div>
+            <div class="te-asset-preview-body text">
+                <pre class="te-asset-preview-text">${escapeHtml(text)}</pre>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(previewDialog);
+    enableDraggablePanel(qs(previewDialog, ".te-asset-preview"), qs(previewDialog, ".te-asset-preview-head"));
+    qs(previewDialog, "[data-action='copy-preview-text']").onclick = async () => {
+        const copied = await copyTextToClipboard(text);
+        setStatus(copied ? `已复制：${asset.name}` : "复制失败");
+    };
+    qs(previewDialog, "[data-action='close-preview']").onclick = closePreviewDialog;
+    previewDialog.addEventListener("mousedown", (event) => {
+        if (event.target === previewDialog) {
+            closePreviewDialog();
+        }
+    });
+}
+
+function openImagePreviewDialog(title, imageUrl) {
+    if (!imageUrl) {
+        throw new Error("没有可预览的图片。");
+    }
+
+    closePreviewDialog();
+    let zoom = 1;
+    let panX = 0;
+    let panY = 0;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let panStartX = 0;
+    let panStartY = 0;
+    previewDialog = document.createElement("div");
+    previewDialog.className = "te-asset-preview-backdrop";
+    previewDialog.innerHTML = `
+        <div class="te-asset-preview" role="dialog" aria-modal="true">
+            <div class="te-asset-preview-head">
+                <div class="te-asset-preview-title">${escapeHtml(title || "图片预览")}</div>
+                <div class="te-asset-spacer"></div>
+                <div class="te-asset-subtitle" data-role="preview-zoom">100%</div>
+                <button class="te-asset-button ghost" data-action="close-preview">关闭</button>
+            </div>
+            <div class="te-asset-preview-body">
+                <img src="${escapeHtml(imageUrl)}" alt="">
+            </div>
+        </div>
+    `;
+    document.body.appendChild(previewDialog);
+    enableDraggablePanel(qs(previewDialog, ".te-asset-preview"), qs(previewDialog, ".te-asset-preview-head"));
+    const body = qs(previewDialog, ".te-asset-preview-body");
+    const image = qs(previewDialog, ".te-asset-preview-body img");
+    const zoomLabel = qs(previewDialog, "[data-role='preview-zoom']");
+    const applyZoom = () => {
+        if (zoom <= 1) {
+            panX = 0;
+            panY = 0;
+        }
+        image.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+        image.style.cursor = zoom > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in";
+        body.style.overflow = zoom > 1 ? "auto" : "hidden";
+        zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
+    };
+    body.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        const step = event.deltaY < 0 ? 0.12 : -0.12;
+        zoom = Math.max(1, Math.min(5, Number((zoom + step).toFixed(2))));
+        applyZoom();
+    }, { passive: false });
+    image.addEventListener("pointerdown", (event) => {
+        if (zoom <= 1) {
+            return;
+        }
+        dragging = true;
+        dragStartX = event.clientX;
+        dragStartY = event.clientY;
+        panStartX = panX;
+        panStartY = panY;
+        image.setPointerCapture?.(event.pointerId);
+        applyZoom();
+        event.preventDefault();
+    });
+    image.addEventListener("pointermove", (event) => {
+        if (!dragging) {
+            return;
+        }
+        panX = panStartX + event.clientX - dragStartX;
+        panY = panStartY + event.clientY - dragStartY;
+        applyZoom();
+        event.preventDefault();
+    });
+    const stopDragging = (event) => {
+        if (!dragging) {
+            return;
+        }
+        dragging = false;
+        image.releasePointerCapture?.(event.pointerId);
+        applyZoom();
+    };
+    image.addEventListener("pointerup", stopDragging);
+    image.addEventListener("pointercancel", stopDragging);
+    qs(previewDialog, "[data-action='close-preview']").onclick = closePreviewDialog;
+    previewDialog.addEventListener("mousedown", (event) => {
+        if (event.target === previewDialog) {
+            closePreviewDialog();
+        }
+    });
+}
+
+async function openPreview(asset) {
+    if (isTextAsset(asset)) {
+        await openTextPreview(asset);
+        return;
+    }
+
+    openImagePreviewDialog(asset.name, buildViewUrl(asset));
+}
+
+async function renameAsset(asset) {
+    const nextName = window.prompt("输入新的素材文件名", asset.name);
+    if (!nextName || nextName === asset.name) {
+        return;
+    }
+
+    try {
+        const data = await requestJsonWithGetFallback("/te_asset_library/rename", {
+            relative_path: asset.relative_path,
+            new_name: nextName,
+        });
+        updateNodesAfterAssetRename(asset.relative_path, data.asset);
+        state.selectedAsset = data.asset || null;
+        await refreshLibrary({ quiet: true, preserveScroll: true });
+        setStatus(`已更名：${data.asset?.name || nextName}`);
+    } catch (error) {
+        setStatus(`更名失败：${error.message || error}`);
+    }
+}
+
+async function deleteAsset(asset) {
+    const confirmed = window.confirm(`确定删除这个素材吗？\n\n${asset.name}`);
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        await requestJsonWithGetFallback("/te_asset_library/delete", {
+            relative_path: asset.relative_path,
+        });
+        if (state.selectedAsset?.relative_path === asset.relative_path) {
+            state.selectedAsset = null;
+        }
+        await refreshLibrary({ quiet: true, preserveScroll: true });
+        setStatus(`已删除：${asset.name}`);
+    } catch (error) {
+        setStatus(`删除失败：${error.message || error}`);
+    }
+}
+
+function setSelectedAsset(asset) {
+    state.selectedAsset = asset;
+    renderAssets();
+}
+
+async function createProject() {
+    const name = window.prompt("新建项目名称", state.project || DEFAULT_PROJECT);
+    if (!name) {
+        return;
+    }
+    try {
+        const data = await requestJsonWithGetFallback("/te_asset_library/project", { project: name });
+        state.project = data.project || name;
+        state.category = DEFAULT_CATEGORY;
+        await refreshLibrary({ quiet: true });
+        setStatus(`已新建项目：${state.project}`);
+    } catch (error) {
+        setStatus(`新建项目失败：${error.message || error}`);
+    }
+}
+
+async function createCategory() {
+    const name = window.prompt("新建分类名称", "人物");
+    if (!name) {
+        return;
+    }
+    try {
+        const data = await requestJsonWithGetFallback("/te_asset_library/category", {
+            project: state.project || DEFAULT_PROJECT,
+            category: name,
+        });
+        state.category = data.category || name;
+        await refreshLibrary({ quiet: true });
+        setStatus(`已新建分类：${state.category}`);
+    } catch (error) {
+        setStatus(`新建分类失败：${error.message || error}`);
+    }
+}
+
+async function deleteCurrentCategory() {
+    const category = String(state.category || "").trim();
+    const project = state.project || DEFAULT_PROJECT;
+    if (isProtectedCategory(category)) {
+        setStatus("请先选择一个可删除的分类。");
+        return;
+    }
+
+    const confirmed = window.confirm(
+        `确定删除当前分类吗？\n\n项目：${project}\n分类：${category}\n\n这个分类里的所有素材都会一起删除。`
+    );
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        await requestJsonWithGetFallback("/te_asset_library/category/delete", {
+            project,
+            category,
+        });
+        state.category = DEFAULT_CATEGORY;
+        state.selectedAsset = null;
+        await refreshLibrary({ quiet: true });
+        setStatus(`已删除分类：${category}`);
+    } catch (error) {
+        setStatus(`删除分类失败：${error.message || error}`);
+    }
+}
+
+function getNodeUploadImage(node) {
+    const widget = node?.widgets?.find((item) => item?.name === "upload_image");
+    return String(widget?.value || "").trim();
+}
+
+function getNodePreviewImageInfo(node) {
+    const images = node?.images || app.nodeOutputs?.[String(node?.id)]?.images;
+    if (Array.isArray(images) && images[0]?.filename) {
+        return images[0];
+    }
+    const serialized = node?.properties?.te_saved_preview_images;
+    if (Array.isArray(serialized) && serialized[0]?.filename) {
+        return serialized[0];
+    }
+    return null;
+}
+
+function isImagesInputConnected(node) {
+    const imageInput = node?.inputs?.find((input) => input?.name === "images");
+    return !!imageInput?.link;
+}
+
+function getAddableNodeImagePayload(node) {
+    const previewImageInfo = getNodePreviewImageInfo(node);
+    const uploadImage = isImagesInputConnected(node) ? "" : getNodeUploadImage(node);
+    const imageInfo = uploadImage ? null : previewImageInfo;
+    if (!uploadImage && !imageInfo) {
+        setStatus("当前节点没有可添加的图片。请先选择/上传图片，或运行生成一次。");
+        return null;
+    }
+    return { uploadImage, imageInfo };
+}
+
+function getNodeTextValue(node) {
+    const widget = node?.widgets?.find((item) => item?.name === "text");
+    const element = getWidgetTextElement(widget);
+    return String(element?.value ?? widget?.value ?? "");
+}
+
+function closeAddDialog() {
+    addDialog?.remove();
+    addDialog = null;
+}
+
+function projectOptionsHtml(selectedProject) {
+    const projects = state.projects.length ? state.projects : [{ name: selectedProject || DEFAULT_PROJECT }];
+    return projects.map((project) => {
+        const selected = project.name === selectedProject ? " selected" : "";
+        return `<option value="${escapeHtml(project.name)}"${selected}>${escapeHtml(project.name)}</option>`;
+    }).join("");
+}
+
+function categoryOptionsHtml(projectName, selectedCategory) {
+    const project = state.projects.find((item) => item.name === projectName) || getCurrentProject();
+    const categories = (project?.categories || []).filter((category) => (
+        category.name !== "未分类" && category.name !== TEXT_CATEGORY
+    ));
+    const fallback = categories.length ? categories : [{ name: selectedCategory || "人物" }];
+    return fallback.map((category) => {
+        const selected = category.name === selectedCategory ? " selected" : "";
+        return `<option value="${escapeHtml(category.name)}"${selected}>${escapeHtml(category.name)}</option>`;
+    }).join("");
+}
+
+async function addImageToLibraryFromDialog(payload, project, category, filenameStem = "") {
+    try {
+        const data = await requestJson("/te_asset_library/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                project,
+                category,
+                filename_stem: filenameStem,
+                upload_image: payload.uploadImage,
+                image_info: payload.imageInfo,
+            }),
+        });
+        state.project = data.asset?.project || project;
+        state.category = data.asset?.category || category;
+        await refreshLibrary({ quiet: true });
+        setStatus(`已添加到素材库：${data.asset?.relative_path || ""}`);
+        showPanel(true);
+        closeAddDialog();
+    } catch (error) {
+        setStatus(`添加失败：${error.message || error}`);
+    }
+}
+
+async function addTextToLibraryFromDialog(text, project, title = "") {
+    try {
+        const data = await requestJson("/te_asset_library/text/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                project,
+                title,
+                text,
+            }),
+        });
+        state.project = data.asset?.project || project;
+        state.category = data.asset?.category || TEXT_CATEGORY;
+        await refreshLibrary({ quiet: true });
+        setStatus(`已添加提示词：${data.asset?.relative_path || ""}`);
+        showPanel(true);
+        closeAddDialog();
+    } catch (error) {
+        setStatus(`添加提示词失败：${error.message || error}`);
+    }
+}
+
+async function openAddTextToLibraryDialog(node) {
+    ensurePanel();
+    if (!state.projects.length && !state.loading) {
+        await refreshLibrary({ quiet: true });
+    }
+
+    const text = getNodeTextValue(node).trim();
+    if (!text) {
+        setStatus("当前文本节点没有可添加的提示词。");
+        showPanel(true);
+        return;
+    }
+
+    closeAddDialog();
+
+    const currentProject = state.project || getCurrentProject()?.name || DEFAULT_PROJECT;
+    addDialog = document.createElement("div");
+    addDialog.className = "te-asset-modal-backdrop";
+    addDialog.innerHTML = `
+        <div class="te-asset-modal" role="dialog" aria-modal="true">
+            <div>
+                <div class="te-asset-modal-title">添加提示词到 TE MAN 资产库</div>
+                <div class="te-asset-subtitle">提示词会保存到当前项目的“${TEXT_CATEGORY}”分类。</div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">项目</div>
+                <div class="te-asset-row">
+                    <select class="te-asset-select" data-role="add-project">${projectOptionsHtml(currentProject)}</select>
+                    <button class="te-asset-button ghost" data-action="add-new-project">+</button>
+                </div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">标题，可留空</div>
+                <input class="te-asset-input" data-role="add-title" placeholder="留空则自动命名为 TE_MAN_prompt_年月日时分秒" />
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">预览</div>
+                <div class="te-asset-preview-text" style="height:140px;">${escapeHtml(text)}</div>
+            </div>
+
+            <div class="te-asset-modal-actions">
+                <button class="te-asset-button ghost" data-action="cancel-add">取消</button>
+                <button class="te-asset-button primary" data-action="confirm-add">添加</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(addDialog);
+    enableDraggablePanel(qs(addDialog, ".te-asset-modal"), qs(addDialog, ".te-asset-modal-title"));
+
+    const projectSelect = qs(addDialog, "[data-role='add-project']");
+    const titleInput = qs(addDialog, "[data-role='add-title']");
+
+    qs(addDialog, "[data-action='cancel-add']").onclick = closeAddDialog;
+    addDialog.addEventListener("mousedown", (event) => {
+        if (event.target === addDialog) {
+            closeAddDialog();
+        }
+    });
+
+    qs(addDialog, "[data-action='add-new-project']").onclick = async () => {
+        const name = window.prompt("新建项目名称", projectSelect.value || DEFAULT_PROJECT);
+        if (!name) {
+            return;
+        }
+        try {
+            const data = await requestJsonWithGetFallback("/te_asset_library/project", { project: name });
+            state.project = data.project || name;
+            await refreshLibrary({ quiet: true });
+            projectSelect.innerHTML = projectOptionsHtml(state.project);
+            setStatus(`已新建项目：${state.project}`);
+        } catch (error) {
+            setStatus(`新建项目失败：${error.message || error}`);
+        }
+    };
+
+    qs(addDialog, "[data-action='confirm-add']").onclick = () => {
+        addTextToLibraryFromDialog(
+            text,
+            projectSelect.value || DEFAULT_PROJECT,
+            titleInput.value || ""
+        );
+    };
+}
+
+async function openAddToLibraryDialog(node) {
+    ensurePanel();
+    if (!state.projects.length && !state.loading) {
+        await refreshLibrary({ quiet: true });
+    }
+
+    const payload = getAddableNodeImagePayload(node);
+    if (!payload) {
+        return;
+    }
+
+    closeAddDialog();
+
+    const currentProject = state.project || getCurrentProject()?.name || DEFAULT_PROJECT;
+    const currentCategory = state.category && state.category !== DEFAULT_CATEGORY && state.category !== TEXT_CATEGORY
+        ? state.category
+        : "人物";
+    addDialog = document.createElement("div");
+    addDialog.className = "te-asset-modal-backdrop";
+    addDialog.innerHTML = `
+        <div class="te-asset-modal" role="dialog" aria-modal="true">
+            <div>
+                <div class="te-asset-modal-title">添加到 TE MAN 资产库</div>
+                <div class="te-asset-subtitle">选择项目和分类，不需要手动输入已有名称。</div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">项目</div>
+                <div class="te-asset-row">
+                    <select class="te-asset-select" data-role="add-project">${projectOptionsHtml(currentProject)}</select>
+                    <button class="te-asset-button ghost" data-action="add-new-project">+</button>
+                </div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">分类</div>
+                <div class="te-asset-row">
+                    <select class="te-asset-select" data-role="add-category">${categoryOptionsHtml(currentProject, currentCategory)}</select>
+                    <button class="te-asset-button ghost" data-action="add-new-category">+</button>
+                </div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">文件名，可留空</div>
+                <input class="te-asset-input" data-role="add-filename" placeholder="留空则沿用原文件名" />
+            </div>
+
+            <div class="te-asset-modal-actions">
+                <button class="te-asset-button ghost" data-action="cancel-add">取消</button>
+                <button class="te-asset-button primary" data-action="confirm-add">添加</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(addDialog);
+    enableDraggablePanel(qs(addDialog, ".te-asset-modal"), qs(addDialog, ".te-asset-modal-title"));
+
+    const projectSelect = qs(addDialog, "[data-role='add-project']");
+    const categorySelect = qs(addDialog, "[data-role='add-category']");
+    const filenameInput = qs(addDialog, "[data-role='add-filename']");
+
+    projectSelect.onchange = () => {
+        categorySelect.innerHTML = categoryOptionsHtml(projectSelect.value, "");
+    };
+
+    qs(addDialog, "[data-action='cancel-add']").onclick = closeAddDialog;
+    addDialog.addEventListener("mousedown", (event) => {
+        if (event.target === addDialog) {
+            closeAddDialog();
+        }
+    });
+
+    qs(addDialog, "[data-action='add-new-project']").onclick = async () => {
+        const name = window.prompt("新建项目名称", projectSelect.value || DEFAULT_PROJECT);
+        if (!name) {
+            return;
+        }
+        try {
+            const data = await requestJsonWithGetFallback("/te_asset_library/project", { project: name });
+            state.project = data.project || name;
+            await refreshLibrary({ quiet: true });
+            projectSelect.innerHTML = projectOptionsHtml(state.project);
+            categorySelect.innerHTML = categoryOptionsHtml(state.project, "");
+            setStatus(`已新建项目：${state.project}`);
+        } catch (error) {
+            setStatus(`新建项目失败：${error.message || error}`);
+        }
+    };
+
+    qs(addDialog, "[data-action='add-new-category']").onclick = async () => {
+        const name = window.prompt("新建分类名称", categorySelect.value || "人物");
+        if (!name) {
+            return;
+        }
+        try {
+            const data = await requestJsonWithGetFallback("/te_asset_library/category", {
+                project: projectSelect.value || DEFAULT_PROJECT,
+                category: name,
+            });
+            state.project = data.project || projectSelect.value;
+            state.category = data.category || name;
+            await refreshLibrary({ quiet: true });
+            projectSelect.innerHTML = projectOptionsHtml(state.project);
+            categorySelect.innerHTML = categoryOptionsHtml(state.project, state.category);
+            setStatus(`已新建分类：${state.category}`);
+        } catch (error) {
+            setStatus(`新建分类失败：${error.message || error}`);
+        }
+    };
+
+    qs(addDialog, "[data-action='confirm-add']").onclick = () => {
+        addImageToLibraryFromDialog(
+            payload,
+            projectSelect.value || DEFAULT_PROJECT,
+            categorySelect.value || "人物",
+            filenameInput.value || ""
+        );
+    };
+}
+
+async function addNodeImageToLibrary(node) {
+    await openAddToLibraryDialog(node);
+}
+
+async function addNodeTextToLibrary(node) {
+    await openAddTextToLibraryDialog(node);
+}
+
+async function previewImageInfo(imageInfo, options = {}) {
+    const imageUrl = buildImageInfoViewUrl(imageInfo || {});
+    if (!imageUrl) {
+        throw new Error("当前节点没有可预览的图片。");
+    }
+    openImagePreviewDialog(
+        options.title || imageInfo?.name || imageInfo?.filename || "图片预览",
+        imageUrl
+    );
+}
+
+function registerAssetLibraryAction() {
+    window.TEImageAssetLibrary = {
+        ...(window.TEImageAssetLibrary || {}),
+        addNodeImageToLibrary: async (node) => {
+            ensurePanel();
+            await addNodeImageToLibrary(node);
+        },
+        addNodeTextToLibrary: async (node) => {
+            ensurePanel();
+            await addNodeTextToLibrary(node);
+        },
+        previewImageInfo,
+        refreshLibrary: async (options = {}) => {
+            ensurePanel();
+            await refreshLibrary({ quiet: true, ...(options || {}) });
+        },
+        showPanel,
+    };
+}
+
+function removeLegacyFloatingToggle() {
+    for (const toggle of document.querySelectorAll(".te-asset-toggle")) {
+        toggle.remove();
+    }
+}
+
+function updateMenuButtonState() {
+    const wrapper = document.getElementById(MENU_BUTTON_ID);
+    if (!wrapper) {
+        return;
+    }
+
+    const visible = panel?.hidden === false;
+    wrapper.dataset.visible = visible ? "true" : "false";
+    for (const button of wrapper.querySelectorAll("[data-role='asset-library-toggle']")) {
+        button.classList.toggle("active", visible);
+    }
+}
+
+async function tryInstallMenuButton() {
+    if (document.getElementById(MENU_BUTTON_ID)) {
+        updateMenuButtonState();
+        return true;
+    }
+
+    const menu = document.querySelector(".comfy-menu");
+    if (!menu) {
+        return false;
+    }
+
+    injectStyle();
+
+    try {
+        const [{ ComfyButton }, { ComfyButtonGroup }] = await Promise.all([
+            import("../../../scripts/ui/components/button.js"),
+            import("../../../scripts/ui/components/buttonGroup.js"),
+        ]);
+
+        const button = new ComfyButton({
+            icon: "image-multiple-outline",
+            action: () => showPanel(panel?.hidden !== false),
+            tooltip: "TE MAN 资产素材库",
+            content: "资产库",
+        }).element;
+        button.classList.add("te-asset-menu-button");
+        button.dataset.role = "asset-library-toggle";
+
+        const group = new ComfyButtonGroup(button);
+        const wrapper = document.createElement("div");
+        wrapper.id = MENU_BUTTON_ID;
+        wrapper.append(group.element);
+
+        const anchor = app.menu?.settingsGroup?.element;
+        if (anchor?.after) {
+            anchor.after(wrapper);
+        } else {
+            menu.appendChild(wrapper);
+        }
+
+        updateMenuButtonState();
+        return true;
+    } catch (error) {
+        const wrapper = document.createElement("div");
+        wrapper.id = MENU_BUTTON_ID;
+
+        const button = document.createElement("button");
+        button.className = "te-asset-menu-button";
+        button.dataset.role = "asset-library-toggle";
+        button.type = "button";
+        button.textContent = "资产库";
+        button.title = "TE MAN 资产素材库";
+        button.onclick = () => showPanel(panel?.hidden !== false);
+        wrapper.appendChild(button);
+
+        const anchor = app.menu?.settingsGroup?.element;
+        if (anchor?.after) {
+            anchor.after(wrapper);
+        } else {
+            menu.appendChild(wrapper);
+        }
+
+        updateMenuButtonState();
+        console.warn("[TE MAN] 新版顶部菜单按钮不可用，已使用兼容按钮。", error);
+        return true;
+    }
+}
+
+async function installMenuButtonWithRetry({ timeoutMs = 30000, intervalMs = 200 } = {}) {
+    const start = performance.now();
+    while (performance.now() - start < timeoutMs) {
+        if (await tryInstallMenuButton()) {
+            return;
+        }
+        await new Promise((resolve) => setTimeout(resolve, intervalMs));
+    }
+    console.warn("[TE MAN] 未找到 ComfyUI 顶部菜单，资产库入口按钮未安装。");
+}
+
+function ensurePanel() {
+    if (panel) {
+        return panel;
+    }
+
+    injectStyle();
+    removeLegacyFloatingToggle();
+
+    panel = document.createElement("section");
+    panel.id = PANEL_ID;
+    panel.className = "te-asset-panel";
+    panel.hidden = true;
+    panel.innerHTML = `
+        <aside class="te-asset-sidebar">
+            <div class="te-asset-title-row">
+                <div>
+                    <div class="te-asset-title">TE MAN 资产素材库</div>
+                    <div class="te-asset-subtitle">项目 / 分类 / 图片 / 提示词</div>
+                </div>
+            </div>
+
+            <div class="te-asset-stack">
+                <div class="te-asset-label">项目</div>
+                <div class="te-asset-row">
+                    <select class="te-asset-select" data-role="project"></select>
+                    <button class="te-asset-button ghost" data-action="new-project">+</button>
+                </div>
+            </div>
+
+            <div class="te-asset-stack" style="min-height:0;">
+                <div class="te-asset-row">
+                    <div class="te-asset-label">分类</div>
+                    <div class="te-asset-spacer"></div>
+                    <button class="te-asset-button ghost" data-action="new-category">+</button>
+                </div>
+                <div class="te-asset-categories" data-role="categories"></div>
+                <button class="te-asset-button danger" data-action="delete-category">删除当前分类</button>
+            </div>
+
+            <div class="te-asset-subtitle">
+                点“添加”或双击素材创建对应节点。
+            </div>
+
+            <a class="te-asset-launcher-link"
+                href="https://www.bilibili.com/video/BV1xu9cByELa/?share_source=copy_web&amp;vd_source=a74fe7a15dbf45f77a4ef19aacacd83c"
+                target="_blank"
+                rel="noopener noreferrer">
+                推荐配合 ComfyUI TE 启动器使用，开启并发功能
+            </a>
+        </aside>
+
+        <main class="te-asset-main">
+            <div class="te-asset-title-row">
+                <div>
+                    <div class="te-asset-title" data-role="heading">素材</div>
+                    <div class="te-asset-subtitle" data-role="summary">input/TE_MAN</div>
+                </div>
+                <div class="te-asset-spacer"></div>
+                <button class="te-asset-button ghost" data-action="close">关闭</button>
+            </div>
+
+            <div class="te-asset-toolbar">
+                <input class="te-asset-input" data-role="search" placeholder="搜索当前项目素材..." />
+                <button class="te-asset-button" data-action="smaller">缩小</button>
+                <button class="te-asset-button" data-action="larger">放大</button>
+                <button class="te-asset-button primary" data-action="refresh">刷新</button>
+            </div>
+
+            <div class="te-asset-grid" data-role="assets"></div>
+
+            <div class="te-asset-footer">
+                <span data-role="status"></span>
+                <span class="te-asset-spacer"></span>
+                <span data-role="selected"></span>
+            </div>
+        </main>
+    `;
+    document.body.appendChild(panel);
+    enableDraggablePanel(panel, [
+        qs(panel, ".te-asset-sidebar .te-asset-title-row"),
+        qs(panel, ".te-asset-main > .te-asset-title-row"),
+    ]);
+
+    bindPanelEvents();
+    return panel;
+}
+
+function bindPanelEvents() {
+    qs(panel, "[data-action='close']").onclick = () => showPanel(false);
+    qs(panel, "[data-action='refresh']").onclick = () => refreshLibrary();
+    qs(panel, "[data-action='new-project']").onclick = () => createProject();
+    qs(panel, "[data-action='new-category']").onclick = () => createCategory();
+    qs(panel, "[data-action='delete-category']").onclick = () => deleteCurrentCategory();
+    qs(panel, "[data-action='smaller']").onclick = () => {
+        state.viewSize = Math.max(88, state.viewSize - 20);
+        saveState();
+        renderAssets();
+    };
+    qs(panel, "[data-action='larger']").onclick = () => {
+        state.viewSize = Math.min(220, state.viewSize + 20);
+        saveState();
+        renderAssets();
+    };
+
+    qs(panel, "[data-role='project']").onchange = (event) => {
+        state.project = event.target.value;
+        state.category = DEFAULT_CATEGORY;
+        saveState();
+        refreshLibrary({ quiet: true });
+    };
+
+    const search = qs(panel, "[data-role='search']");
+    let searchTimer = null;
+    search.oninput = (event) => {
+        state.query = event.target.value;
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            saveState();
+            refreshLibrary({ quiet: true });
+        }, 220);
+    };
+}
+
+function showPanel(visible) {
+    ensurePanel();
+    state.visible = visible;
+    panel.hidden = !visible;
+    updateMenuButtonState();
+    if (visible && !state.projects.length && !state.loading) {
+        refreshLibrary({ quiet: true });
+    } else {
+        renderPanel();
+    }
+}
+
+function renderPanel() {
+    ensurePanel();
+
+    const projectSelect = qs(panel, "[data-role='project']");
+    projectSelect.innerHTML = "";
+    for (const project of state.projects) {
+        const option = document.createElement("option");
+        option.value = project.name;
+        option.textContent = project.name;
+        option.selected = project.name === state.project;
+        projectSelect.appendChild(option);
+    }
+
+    qs(panel, "[data-role='search']").value = state.query || "";
+    qs(panel, "[data-role='heading']").textContent = state.project || "素材";
+    qs(panel, "[data-role='summary']").textContent = `input/TE_MAN/${state.project || ""}`;
+
+    renderCategories();
+    renderAssets();
+    setStatus(state.status);
+}
+
+function renderCategories() {
+    const root = qs(panel, "[data-role='categories']");
+    root.innerHTML = "";
+    const categories = getCategoriesForCurrentProject();
+
+    for (const category of categories) {
+        const button = document.createElement("button");
+        button.className = `te-asset-category ${category.name === state.category ? "active" : ""}`;
+        button.innerHTML = `<span>${category.label}</span><span class="te-asset-count">${category.count ?? 0}</span>`;
+        button.onclick = () => {
+            state.category = category.name;
+            saveState();
+            refreshLibrary({ quiet: true });
+        };
+        root.appendChild(button);
+    }
+
+    const deleteButton = qs(panel, "[data-action='delete-category']");
+    if (deleteButton) {
+        deleteButton.disabled = isProtectedCategory(state.category);
+        deleteButton.title = deleteButton.disabled ? "请选择具体分类后再删除" : `删除分类：${state.category}`;
+    }
+}
+
+function renderAssets() {
+    if (!panel) {
+        return;
+    }
+
+    const root = qs(panel, "[data-role='assets']");
+    root.style.setProperty("--te-asset-thumb", `${state.viewSize}px`);
+    root.innerHTML = "";
+
+    const selectedText = qs(panel, "[data-role='selected']");
+    selectedText.textContent = state.selectedAsset ? state.selectedAsset.relative_path : "";
+
+    if (state.loading) {
+        root.innerHTML = `<div class="te-asset-empty">正在加载素材...</div>`;
+        return;
+    }
+
+    if (!state.assets.length) {
+        root.innerHTML = `<div class="te-asset-empty">这个项目/分类里还没有素材。可以从 TE 图像节点或文本展示节点添加。</div>`;
+        return;
+    }
+
+    for (const asset of state.assets) {
+        const textAsset = isTextAsset(asset);
+        const card = document.createElement("article");
+        card.className = `te-asset-card ${textAsset ? "text" : ""} ${state.selectedAsset?.relative_path === asset.relative_path ? "selected" : ""}`;
+        card.title = asset.relative_path;
+        if (textAsset) {
+            card.innerHTML = `
+                <div class="te-asset-thumb te-asset-text-thumb">
+                    <div class="te-asset-text-preview">${escapeHtml(asset.text_preview || asset.name)}</div>
+                </div>
+                <div class="te-asset-actions">
+                    <button class="te-asset-chip" data-action="add">添加</button>
+                    <button class="te-asset-chip" data-action="copy">复制</button>
+                    <button class="te-asset-chip" data-action="preview">预览</button>
+                    <div class="te-asset-more">
+                        <button class="te-asset-chip" data-action="more">更多</button>
+                        <div class="te-asset-more-menu">
+                            <button class="te-asset-chip" data-action="rename">更名</button>
+                            <button class="te-asset-chip danger" data-action="delete">删除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="te-asset-meta">
+                    <div class="te-asset-name">${escapeHtml(asset.name)}</div>
+                    <div class="te-asset-path">${escapeHtml(asset.category)} · ${asset.line_count || 0}行 · ${asset.char_count || 0}字</div>
+                </div>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="te-asset-thumb">
+                    <img loading="lazy" draggable="false" src="${buildThumbUrl(asset)}" alt="">
+                </div>
+                <div class="te-asset-actions">
+                    <button class="te-asset-chip" data-action="add">添加</button>
+                    <button class="te-asset-chip" data-action="preview">预览</button>
+                    <div class="te-asset-more">
+                        <button class="te-asset-chip" data-action="more">更多</button>
+                        <div class="te-asset-more-menu">
+                            <button class="te-asset-chip" data-action="rename">更名</button>
+                            <button class="te-asset-chip danger" data-action="delete">删除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="te-asset-meta">
+                    <div class="te-asset-name">${escapeHtml(asset.name)}</div>
+                    <div class="te-asset-path">${escapeHtml(asset.category)} · ${asset.width || "?"}x${asset.height || "?"}</div>
+                </div>
+            `;
+        }
+
+        card.onclick = () => setSelectedAsset(asset);
+        card.ondblclick = (event) => {
+            event.preventDefault();
+            Promise.resolve(createNodeFromAssetAtEvent(event, asset))
+                .then(() => setStatus(`已创建${textAsset ? "文本" : "加载图像"}节点：${asset.name}`))
+                .catch((error) => setStatus(`创建节点失败：${error.message || error}`));
+        };
+        qs(card, "[data-action='add']").onclick = (event) => {
+            event.stopPropagation();
+            Promise.resolve(createNodeFromAssetAtEvent(event, asset))
+                .then(() => setStatus(`已创建${textAsset ? "文本" : "加载图像"}节点：${asset.name}`))
+                .catch((error) => setStatus(`创建节点失败：${error.message || error}`));
+        };
+        qs(card, "[data-action='copy']")?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            getTextAssetContent(asset)
+                .then((text) => copyTextToClipboard(text))
+                .then((copied) => setStatus(copied ? `已复制：${asset.name}` : "复制失败"))
+                .catch((error) => setStatus(`复制失败：${error.message || error}`));
+        });
+        qs(card, "[data-action='preview']").onclick = (event) => {
+            event.stopPropagation();
+            Promise.resolve(openPreview(asset)).catch((error) => setStatus(`预览失败：${error.message || error}`));
+        };
+        qs(card, "[data-action='more']").onclick = (event) => {
+            event.stopPropagation();
+        };
+        qs(card, "[data-action='rename']").onclick = (event) => {
+            event.stopPropagation();
+            renameAsset(asset);
+        };
+        qs(card, "[data-action='delete']").onclick = (event) => {
+            event.stopPropagation();
+            deleteAsset(asset);
+        };
+
+        root.appendChild(card);
+    }
+}
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function removeLegacyAssetButtonOnImageNode(node) {
+    if (!Array.isArray(node?.widgets)) {
+        return;
+    }
+
+    for (let index = node.widgets.length - 1; index >= 0; index -= 1) {
+        const widget = node.widgets[index];
+        if (widget?.name !== "添加到素材库") {
+            continue;
+        }
+        widget.onRemove?.();
+        widget.onRemoved?.();
+        node.widgets.splice(index, 1);
+        if (Array.isArray(node.widgets_values) && index < node.widgets_values.length) {
+            node.widgets_values.splice(index, 1);
+        }
+    }
+}
+
+function installAssetButtonOnImageNode(node) {
+    if (!node) {
+        return;
+    }
+
+    registerAssetLibraryAction();
+    removeLegacyAssetButtonOnImageNode(node);
+    node.__teAssetLibraryButtonInstalled = true;
+    markCanvasDirty();
+}
+
+function patchImageNode(nodeType, nodeData) {
+    if (nodeData.name !== IMAGE_NODE_CLASS) {
+        return;
+    }
+
+    const originalOnNodeCreated = nodeType.prototype.onNodeCreated;
+    nodeType.prototype.onNodeCreated = function () {
+        const result = originalOnNodeCreated?.apply(this, arguments);
+        installAssetButtonOnImageNode(this);
+        return result;
+    };
+}
+
+loadState();
+registerAssetLibraryAction();
+
+app.registerExtension({
+    name: EXTENSION_NAME,
+    async setup() {
+        registerAssetLibraryAction();
+        ensurePanel();
+        installMenuButtonWithRetry();
+    },
+    async beforeRegisterNodeDef(nodeType, nodeData) {
+        patchImageNode(nodeType, nodeData);
+    },
+    async nodeCreated(node) {
+        if (node?.comfyClass === IMAGE_NODE_CLASS || node?.type === IMAGE_NODE_CLASS) {
+            installAssetButtonOnImageNode(node);
+        }
+    },
+});
