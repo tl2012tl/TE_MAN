@@ -29,16 +29,7 @@ try:
 except Exception as exc:  # pragma: no cover
     raise ImportError(f"无法加载 Gemini_Imagen_Generator 基础节点: {exc}")
 
-try:
-    from .Jimeng_Video_Generator import BananaJimengVideoNode as _BaseJimengVideoNode
-except Exception as exc:  # pragma: no cover
-    raise ImportError(f"无法加载 Jimeng_Video_Generator 基础节点: {exc}")
 
-try:
-    from .TE_JM_Video import BananaTEJMVideoNode as _BaseTEJMVideoNode
-except Exception as exc:  # pragma: no cover
-    _BaseTEJMVideoNode = None  # type: ignore
-    logger.warning(f"TE_JM_Video 基础节点暂不可用，等待编译后的模块: {exc}")
 
 try:
     from .TE_VEO_Video import BananaTEVeoVideoNode as _BaseTEVeoVideoNode
@@ -409,15 +400,6 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
             required_inputs.pop("aspect_ratio", None)
             required_inputs.pop("线路1清晰度", None)
             input_types["required"] = required_inputs
-
-            optional_inputs = dict(input_types.get("optional", {}))
-            image_schema = optional_inputs.get("image")
-            if image_schema:
-                optional_inputs["image_2"] = ("IMAGE", {"tooltip": "参考图片 2（可选）"})
-                optional_inputs["image_3"] = ("IMAGE", {"tooltip": "参考图片 3（可选）"})
-                optional_inputs["image_4"] = ("IMAGE", {"tooltip": "参考图片 4（可选）"})
-                optional_inputs["image_5"] = ("IMAGE", {"tooltip": "参考图片 5（可选）"})
-                input_types["optional"] = optional_inputs
         except Exception:
             pass
         return input_types
@@ -434,44 +416,26 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
         preset: str = "normal",
         seed: int = -1,
         image=None,
-        image_2=None,
-        image_3=None,
-        image_4=None,
-        image_5=None,
         timeout_s: int = 600,
         绕过代理: bool = False,
         线路选择: str = "线路1",
         **extra_kwargs,
     ):
-        original_images = (image, image_2, image_3, image_4, image_5)
-        scaled_images: List[Optional[Any]] = []
-        for idx, img in enumerate(original_images, start=1):
-            if img is None:
-                scaled_images.append(None)
-                continue
-
-            scaled = _scale_image_tensor_to_total_pixels_if_needed(img)
-            if scaled is not img:
+        scaled_image = None
+        if image is not None:
+            scaled_image = _scale_image_tensor_to_total_pixels_if_needed(image)
+            if scaled_image is not image:
                 logger.info(
-                    f"Grok Video Safe PY 输入图{idx}自动缩放: "
-                    f"{_shape_to_hw_text(img)} -> {_shape_to_hw_text(scaled)} "
+                    f"Grok Video Safe PY 输入图自动缩放: "
+                    f"{_shape_to_hw_text(image)} -> {_shape_to_hw_text(scaled_image)} "
                     f"(目标约 {_MAX_INPUT_IMAGE_MEGAPIXELS:.1f}MP)"
                 )
             else:
                 logger.info(
-                    f"Grok Video Safe PY 输入图{idx}未缩放: "
-                    f"{_shape_to_hw_text(img)} "
+                    f"Grok Video Safe PY 输入图未缩放: "
+                    f"{_shape_to_hw_text(image)} "
                     f"(未超过约 {_MAX_INPUT_IMAGE_MEGAPIXELS:.1f}MP)"
                 )
-            scaled_images.append(scaled)
-
-        scaled_image = _merge_scaled_images(*scaled_images)
-        if any(img is not None for img in original_images) and scaled_image is not None:
-            logger.info(
-                f"Grok Video Safe PY 参考图数量: "
-                f"{len([img for img in original_images if img is not None])} 路输入, "
-                f"合并后 {_count_batch_images(scaled_image)} 张"
-            )
 
         super_generate_video = super().generate_video
         call_kwargs = dict(
@@ -549,45 +513,8 @@ class BananaGeminiAsyncSafePyNode(_BaseGeminiAsyncNode):
         return super().generate_images(*args, **call_kwargs)
 
 
-class BananaJimengVideoSafePyNode(_BaseJimengVideoNode):
-    CATEGORY = "TE MAN/Jimeng"
-
-    def generate_video(self, *args, **kwargs):
-        call_kwargs = dict(kwargs)
-        call_kwargs, input_routes, merged_count = _scale_named_image_kwargs(
-            call_kwargs,
-            [f"image_{i}" for i in range(1, 10)],
-            "Jimeng Safe PY 输入图",
-            log_unscaled=True,
-        )
-        if input_routes > 0:
-            logger.info(
-                f"Jimeng Safe PY 参考图数量: "
-                f"{input_routes} 路输入, 合并后 {merged_count} 张"
-            )
-        return super().generate_video(*args, **call_kwargs)
 
 
-if _BaseTEJMVideoNode is not None:
-    class BananaTEJMVideoSafePyNode(_BaseTEJMVideoNode):
-        CATEGORY = "TE MAN/Jimeng"
-
-        def generate_video(self, *args, **kwargs):
-            call_kwargs = dict(kwargs)
-            call_kwargs, input_routes, merged_count = _scale_named_image_kwargs(
-                call_kwargs,
-                ["image", "image_2", "image_3", "image_4"],
-                "TE JM Safe PY 输入图",
-                log_unscaled=True,
-            )
-            if input_routes > 0:
-                logger.info(
-                    f"TE JM Safe PY 参考图数量: "
-                    f"{input_routes} 路输入, 合并后 {merged_count} 张"
-                )
-            return super().generate_video(*args, **call_kwargs)
-else:
-    BananaTEJMVideoSafePyNode = None  # type: ignore
 
 
 if _BaseTEVeoVideoNode is not None:

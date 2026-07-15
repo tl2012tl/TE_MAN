@@ -6,9 +6,7 @@ from .Grok_Safe_PY import (
     BananaGeminiImageSafePyNode,
     BananaGrokImageSafePyNode,
     BananaGrokVideoSafePyNode,
-    BananaJimengVideoSafePyNode,
     BananaSora2VideoSafePyNode,
-    BananaTEJMVideoSafePyNode,
     BananaTEVeoVideoSafePyNode,
     TEHappyHVideoSafePyNode,
     TEGPTImage2SafePyNode,
@@ -23,11 +21,8 @@ NODE_CLASS_MAPPINGS = {
     "TE_image_pro_gpt_image_2": TEGPTImage2SafePyNode,
     "TE_image_pro_banana": BananaGeminiImageSafePyNode,
     "TE_image_pro_special_async2": BananaGeminiAsyncSafePyNode,
-    "TE_image_pro_jimeng_video": BananaJimengVideoSafePyNode,
     "TE_image_pro_sora2_video": BananaSora2VideoSafePyNode,
 }
-if BananaTEJMVideoSafePyNode is not None:
-    NODE_CLASS_MAPPINGS["TE_image_pro_te_jm_video"] = BananaTEJMVideoSafePyNode
 if BananaTEVeoVideoSafePyNode is not None:
     NODE_CLASS_MAPPINGS["TE_image_pro_te_veo_video"] = BananaTEVeoVideoSafePyNode
 if TEHappyHVideoSafePyNode is not None:
@@ -42,11 +37,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TE_image_pro_gpt_image_2": "TE MAN GPT Image 2",
     "TE_image_pro_banana": "TE MAN Gemini Image",
     "TE_image_pro_special_async2": "TE MAN Gemini 特渠",
-    "TE_image_pro_jimeng_video": "TE MAN Jimeng Video",
     "TE_image_pro_sora2_video": "TE MAN sora2 video",
 }
-if BananaTEJMVideoSafePyNode is not None:
-    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_jm_video"] = "TE JM Video"
 if BananaTEVeoVideoSafePyNode is not None:
     NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_veo_video"] = "TE veo video"
 if TEHappyHVideoSafePyNode is not None:
