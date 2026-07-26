@@ -40,6 +40,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TE_image_pro_sora2_video": "TE MAN sora2 video",
 }
 if BananaTEVeoVideoSafePyNode is not None:
-    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_veo_video"] = "TE veo video"
+    NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_te_veo_video"] = "TE MAN VEO Video"
 if TEHappyHVideoSafePyNode is not None:
     NODE_DISPLAY_NAME_MAPPINGS["TE_image_pro_happyh_video"] = "TE MAN HappyH Video"
