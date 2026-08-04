@@ -5,6 +5,22 @@ TE MAN 是首个专为 ComfyUI 打造的本地 + 在线 API 双线兼容无限�
 用了新特性，只支持 Python 3.12/3.13，可去 B 站下载我的 Py3.13 整合包https://pan.quark.cn/s/e1649b85eb60
 
 
+## v3.5.3
+
+### 1. TE MAN MiniMaxH3增强提示词Prompt TEXT 更新
+
+**TE MAN MiniMaxH3增强提示词Prompt TEXT** 现已支持 ComfyUI 自带的 MiniMax H3 视频节点，可通过输入 `@` 选择已连接的参考素材并插入对应标记。
+
+- **MiniMax H3 Reference to Video** 支持参考图片、参考视频和参考音频。
+- 参考图片按顺序插入 `<Picture N>`，参考视频插入 `<Video N>`，音频插入 `<Audio N>`。
+- **MiniMax H3 Image to Video** 支持首尾帧输入：`first_frame` 对应 `<Picture 1>`，`last_frame` 对应 `<Picture 2>`。
+
+### 2. 构想台支持多 API 供应商设置
+
+**构想台设置** 现在可以保存多个 API 供应商，方便在不同供应商、本地模型和不同接口格式之间快速切换。
+
+- 支持添加、删除和选择当前供应商，最多可保存 `50` 个供应商配置。
+
 ## v3.5
 
 ### 1. TE MAN 3D导演台新增全景图与全景模式

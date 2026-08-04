@@ -1,1 +1,2991 @@
-const a0_0x37cb7d=a0_0x232c;(function(_0x3b68d5,_0x529d9d){const _0x3ef41f=a0_0x232c,_0x3b8b3c=_0x3b68d5();while(!![]){try{const _0x1713ca=parseInt(_0x3ef41f(0xa5))/0x1*(-parseInt(_0x3ef41f(0x7b))/0x2)+-parseInt(_0x3ef41f(0x12e))/0x3+-parseInt(_0x3ef41f(0xe0))/0x4+parseInt(_0x3ef41f(0xf8))/0x5+parseInt(_0x3ef41f(0x10c))/0x6+parseInt(_0x3ef41f(0x12d))/0x7*(-parseInt(_0x3ef41f(0xb0))/0x8)+parseInt(_0x3ef41f(0x105))/0x9;if(_0x1713ca===_0x529d9d)break;else _0x3b8b3c['push'](_0x3b8b3c['shift']());}catch(_0x12511b){_0x3b8b3c['push'](_0x3b8b3c['shift']());}}}(a0_0x158c,0x7f1fe));import{app}from'../../../scripts/app.js';function a0_0x232c(_0x1efb0b,_0x31379b){const _0x158cce=a0_0x158c();return a0_0x232c=function(_0x232cf0,_0x24e9bc){_0x232cf0=_0x232cf0-0x74;let _0x2ab132=_0x158cce[_0x232cf0];return _0x2ab132;},a0_0x232c(_0x1efb0b,_0x31379b);}import{api}from'../../../scripts/api.js';const EXTENSION_NAME=a0_0x37cb7d(0x108),PANEL_ID='te-man-copilot-panel',SETTINGS_PANEL_ID=a0_0x37cb7d(0x100),TOPIC_PROMPT_PANEL_ID=a0_0x37cb7d(0x130),TOPIC_RENAME_PANEL_ID='te-man-copilot-topic-rename-panel',MENU_BUTTON_ID=a0_0x37cb7d(0xcc),STYLE_ID='te-man-copilot-style',STORAGE_KEY=a0_0x37cb7d(0x76),PANEL_SESSION_KEY='te_man_copilot_panel_id',EVENT_TURN_STARTED='teman_copilot_turn_started',EVENT_TEXT_DELTA='teman_copilot_text_delta',EVENT_TURN_COMPLETED='teman_copilot_turn_completed',EVENT_TURN_FAILED='teman_copilot_turn_failed',ROUTE_BOOTSTRAP=a0_0x37cb7d(0x9f),ROUTE_SETTINGS='/te_man/copilot/settings',ROUTE_TURN='/te_man/copilot/turn',ROUTE_STOP='/te_man/copilot/stop',ROUTE_WORKSPACE_META='/te_man/copilot/workspace/meta',ROUTE_TOPIC_UPSERT='/te_man/copilot/topic/upsert',ROUTE_TOPIC_DELETE=a0_0x37cb7d(0xe7),DEFAULT_SYSTEM_PROMPT='你是\x20TE\x20MAN\x20构想台，一个专注\x20ComfyUI、提示词创作的中文助手。可以帮助用户创作,也可以回答任何问题,回答要清晰、实用、直接。',MAX_SESSIONS=0x24,MAX_MESSAGES_PER_SESSION=0x50,LEGACY_MIGRATION_KEY='te_man_copilot_sqlite_migrated_v1',ICON_COPY='\x0a\x20\x20\x20\x20<svg\x20viewBox=\x220\x200\x2024\x2024\x22\x20aria-hidden=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M8\x208.5h10.5v10.5H8z\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M5\x2015.5H3.5V4.5h11v1.5\x22></path>\x0a\x20\x20\x20\x20</svg>\x0a',ICON_REGENERATE='\x0a\x20\x20\x20\x20<svg\x20viewBox=\x220\x200\x2024\x2024\x22\x20aria-hidden=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M19\x207.5a7.5\x207.5\x200\x200\x200-12.7-3.7L4\x206\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M4\x202.5V6h3.5\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M5\x2016.5a7.5\x207.5\x200\x200\x200\x2012.7\x203.7L20\x2018\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M20\x2021.5V18h-3.5\x22></path>\x0a\x20\x20\x20\x20</svg>\x0a',ICON_TOPIC_RENAME=a0_0x37cb7d(0xac),STARTER_PRESETS=[{'id':a0_0x37cb7d(0xd4),'label':'剧本构造','prompt':['【角色设定】',a0_0x37cb7d(0xbf),'','【核心工作规则】','','严禁包办代写：\x20绝不要在用户仅提供一句话时直接输出长篇大论的完整剧本。必须采用“共创模式”，先搭骨架，再填血肉。','',a0_0x37cb7d(0xef),'','专业剧本格式：\x20在正式进入剧本正文撰写时，必须严格使用行业标准格式（包含：场景标题[时/地/内/外]、动作与环境描写、角色名、台词对话、情绪提示）。','','极简排版与沟通：\x20采用层级分明的正常文本排版，重点内容可加粗。不要使用繁琐的\x20Markdown\x20代码块（如\x20```\x20符号）。不讲废话，不作过度寒暄，直击创作核心。','','步步为营：\x20每次只推进一个环节（如：今天只定大纲，或只写第一场戏），等待用户确认反馈后再继续。','',a0_0x37cb7d(0x111),'请在你的第一条回复中做到：','','简短欢迎用户进入“TE\x20MAN构想台剧本构造频道”。','','直接抛出三个核心提问：故事的题材类型是什么？主角是一个怎样的人且面临什么最大的困境？你想表达的核心情绪或主题是什么？','',a0_0x37cb7d(0x11f)]['join']('\x0a')},{'id':'prompt','label':'提示词探讨与生成','prompt':['【角色设定】','你是一个TE\x20MAN\x20构想台的视觉构建专家与高级提示词工程师。你的工作环境默认是为\x20ComfyUI（AI生图/生视频）提供顶级质量的文字提示词支持。','','【核心工作规则】','','严禁直接生图（最高优先级）：\x20无论用户描述的画面有多具体，哪怕你具备多模态能力，也绝对不允许直接生成或输出任何图片！你的唯一任务是输出用于描述画面的纯文本提示词。','','默认场景：\x20默认用户用于\x20ComfyUI\x20生图或生视频，绝对不要询问用户的应用场景。','','输出模式与排版：\x20每次只输出\x201\x20个中文长提示词。注意：绝对不要使用\x20Markdown\x20代码块（如\x20```\x20符号）包裹提示词，必须使用正常纯文本排版输出，方便用户直接框选复制。生成的提示词总字数绝对不能小于\x20300\x20字。','',a0_0x37cb7d(0xb6),'','【构图与镜头】：明确景别与摄影机视角（如低角度仰视、过肩镜头、前景虚化遮挡等）。','','【人物与穿着】：明确年龄、体态、神情，以及极其具体的服装质感与细节配饰（如沾着泥土的风衣、十字架耳坠）。若无人物则深挖主体的结构与岁月痕迹。','','【环境与道具】：丰满前中后景细节（如破损复古海报、生锈铁门），补充有互动或象征意义的物品。','','【光影与空气感】：设定顶级的电影光影（如伦勃朗光、丁达尔效应）及物理空气感（如漂浮的火星微尘、闷热晨雾）。','',a0_0x37cb7d(0xfa),'',a0_0x37cb7d(0x10a),'','【首条回复指令】','请在你的第一条回复中做到：','',a0_0x37cb7d(0x147),'',a0_0x37cb7d(0xf9),'','明确告知用户，你会将其转化为具备极高丰富度（不少于300字）的单条文字提示词。请直接开始引导，不要废话。']['join']('\x0a')},{'id':a0_0x37cb7d(0xa9),'label':'分镜与视觉创想','prompt':['【角色设定】','你是一个TE\x20MAN构想台的视觉构建专家与资深分镜导演。你的工作环境默认是为\x20ComfyUI（AI生图/生视频）提供顶级质量的连贯分镜文字提示词支持。','',a0_0x37cb7d(0x10f),'',a0_0x37cb7d(0xeb),'','默认场景：\x20默认用户用于\x20ComfyUI，绝对不要询问用户的应用场景。','','数量限制与排版格式：\x20每次帮用户构思分镜或视觉创想时，默认必须产出\x204\x20个画面的纯文本提示词（除非用户在对话中明确要求产出\x206\x20个、9\x20个等其他数量）。绝对不要使用\x20Markdown\x20代码块（如\x20```\x20符号），请使用明显的序号（如：【分镜\x201】、【分镜\x202】）进行换行分隔，方便直接复制。整组分镜的总字数绝对不能小于\x20300\x20字。','',a0_0x37cb7d(0xb8),'',a0_0x37cb7d(0xa2),'','每个画面提示词都要自然融入景别、摄影机视角、构图关系和画面重心，不要单独列出“构图与镜头”标题。','',a0_0x37cb7d(0x80),'','自然写入前景、中景、后景的环境层次，以及能增强叙事或氛围的道具、符号、材质和空间细节。','',a0_0x37cb7d(0xda),'','动态补充只在用户明确是视频、动画、广告片、短片、剧情式分镜或连续动作时使用：需要写明动作过程、机位运动（推拉摇移）、节奏和环境光影变化。如果用户需求是单画面、静态海报、静态视觉创想或没有动态意图，禁止强行添加镜头运动、动作过程和时间变化。','',a0_0x37cb7d(0x117),'','【首条回复指令】','请在你的第一条回复中做到：','',a0_0x37cb7d(0xcf),'','引导用户丢出一段想要转化为分镜的故事剧情、核心文案，或一个单画面视觉想法。','','明确告知用户，你会默认将其转化为\x204\x20个视觉统一、景别丰富的画面提示词；如果是剧情或视频，会做成连贯分镜，如果是静态单画面，会做成\x204\x20个静态视觉创想方向（如需其他数量可随时提出）。请直接开始引导，不要废话。'][a0_0x37cb7d(0x9d)]('\x0a')},{'id':a0_0x37cb7d(0x135),'label':'项目构想引导','prompt':[a0_0x37cb7d(0xe8),'你是一个TE构想台的首席项目执行官（COO）。你拥有极致的逻辑与落地能力，专治“想法宏大但无从下手”，负责把模糊的“想法”构造成马上能动手干的“行动清单”,比如一个香水广告项目。','','【核心工作规则】','','彻底落地（动词法则）：\x20拆解出来的每一个最小任务单元，都必须是具体、可执行的，且必须以明确的“动词”开头（如：注册、下载、撰写、联系、沟通、购买）。绝对不能有虚无缥缈的概念。','','三级结构拆解：\x20强制使用“宏观目标\x20->\x20阶段里程碑\x20->\x20每日具体行动点”的三级漏斗结构进行拆解输出。','','防焦虑机制（破冰第一步）：\x20无论计划多庞大，每次拆解的结尾，必须单独拎出一个最简单、耗时极短（如不超过10分钟）的“破冰动作”，让用户能够毫无心理负担地立刻行动。','','直白排版：\x20使用清晰的缩进和序号进行纯文本排版，禁用\x20Markdown\x20代码块。','','极简沟通：\x20只输出干货结构，不灌鸡汤，不作长篇大论的解释说明。','','【首条回复指令】','请在你的第一条回复中做到：','','简短欢迎用户进入“TE\x20MAN构想台任务拆解频道”。','','开门见山地提问：你现在脑子里那个最想落地的“大目标”或“模糊的新点子”是什么？','','告诉用户，哪怕是一团乱麻也可以直接说出来，你会帮他切分成清晰的执行清单。请直接开始提问，不要废话。'][a0_0x37cb7d(0x9d)]('\x0a')}];let panel=null,settingsPanel=null,topicPromptPanel=null,topicRenamePanel=null,messagesRoot=null,panelId='',topicRenameSessionId='';const activeTurns=new Map();let renderTimer=null,legacySessionsForMigration=[],workspaceLoadedFromBackend=![],workspaceEditVersion=0x0;const state={'visible':![],'settingsVisible':![],'sessions':[],'currentSessionId':'','model':'gpt-5.5','requestFormat':a0_0x37cb7d(0xb9),'requestFormats':{'chat_completions':'OpenAI\x20Chat\x20/v1/chat/completions','responses':a0_0x37cb7d(0x92),'gemini':a0_0x37cb7d(0xba),'claude':'Claude\x20/v1/messages','lm_studio':a0_0x37cb7d(0x10d)},'apiBaseUrl':'','apiKeyDraft':'','apiKeyHint':'','systemPrompt':DEFAULT_SYSTEM_PROMPT,'temperature':0.7,'workspaceReady':![],'status':'正在加载话题...','settingsStatus':'','hasApiKey':![]};function uid(_0x2af306='id'){const _0x196500=a0_0x232c;if(globalThis['crypto']?.[_0x196500(0x122)])return _0x2af306+'_'+globalThis['crypto']['randomUUID']();return _0x2af306+'_'+Date['now']()['toString'](0x24)+'_'+Math['random']()['toString'](0x24)['slice'](0x2);}function getPanelId(){const _0x170f3c=a0_0x232c;return!panelId&&(panelId=sessionStorage['getItem'](PANEL_SESSION_KEY)||uid('teman_panel'),sessionStorage[_0x170f3c(0x85)](PANEL_SESSION_KEY,panelId)),panelId;}function cleanTitleText(_0x5d69ee){const _0x5880ef=a0_0x232c;return String(_0x5d69ee||'')['replace'](/\s+/g,'\x20')[_0x5880ef(0x13e)]();}function titleFromText(_0x1d1245,_0x1fe906='新话题'){const _0x3b2e80=a0_0x232c,_0x45d9fe=cleanTitleText(_0x1d1245);if(!_0x45d9fe)return _0x1fe906;return _0x45d9fe[_0x3b2e80(0xc7)]>0x12?_0x45d9fe[_0x3b2e80(0xc4)](0x0,0x12)+_0x3b2e80(0x127):_0x45d9fe;}function titleFromMessages(_0x50b0f7){const _0x592d62=a0_0x232c,_0x204cc1=_0x50b0f7['find'](_0x19b7d3=>!_0x19b7d3?.['hidden']&&_0x19b7d3?.['role']===_0x592d62(0xdd)&&cleanTitleText(_0x19b7d3['text']));return _0x204cc1?titleFromText(_0x204cc1['text']):'新话题';}function normalizeMessage(_0x215a7d){const _0x26e0e3=a0_0x232c;return{'id':String(_0x215a7d?.['id']||uid(_0x26e0e3(0xc8))),'role':_0x215a7d?.['role']==='user'?'user':_0x26e0e3(0xf6),'text':String(_0x215a7d?.['text']||''),'tone':_0x215a7d?.['tone']?String(_0x215a7d[_0x26e0e3(0xb7)]):undefined,'hidden':!!_0x215a7d?.[_0x26e0e3(0x119)],'createdAt':Number(_0x215a7d?.[_0x26e0e3(0x12f)]||Date[_0x26e0e3(0x121)]())};}function normalizeSession(_0x4533ab){const _0x276fad=a0_0x232c,_0x4cec47=Array[_0x276fad(0x13c)](_0x4533ab?.['messages'])?_0x4533ab['messages']['map'](normalizeMessage)['slice'](-MAX_MESSAGES_PER_SESSION):[],_0x11bef2=cleanTitleText(_0x4533ab?.['title'])||titleFromMessages(_0x4cec47);return{'id':String(_0x4533ab?.['id']||uid('topic')),'title':_0x11bef2,'autoTitle':_0x4533ab?.[_0x276fad(0xdf)]!==![],'systemPrompt':String(_0x4533ab?.['systemPrompt']||_0x4533ab?.['system_prompt']||''),'messages':_0x4cec47,'createdAt':Number(_0x4533ab?.[_0x276fad(0x12f)]||Date['now']()),'updatedAt':Number(_0x4533ab?.['updatedAt']||Date['now']())};}function createSession(_0x2a3c53={}){const _0x4dae4a=a0_0x232c;return normalizeSession({'id':_0x2a3c53['id']||uid('topic'),'title':_0x2a3c53['title']||'新话题','autoTitle':_0x2a3c53['autoTitle']??!![],'systemPrompt':_0x2a3c53['systemPrompt']||_0x2a3c53[_0x4dae4a(0xd0)]||'','messages':_0x2a3c53[_0x4dae4a(0x141)]||[],'createdAt':_0x2a3c53['createdAt']||Date[_0x4dae4a(0x121)](),'updatedAt':_0x2a3c53[_0x4dae4a(0x139)]||Date['now']()});}function ensureSessions(){const _0x534c91=a0_0x232c;state[_0x534c91(0xc0)]=Array['isArray'](state['sessions'])?state[_0x534c91(0xc0)]['map'](normalizeSession)['filter'](_0xe415b0=>_0xe415b0['id'])[_0x534c91(0xc4)](0x0,MAX_SESSIONS):[],!state['sessions']['length']&&state['sessions']['push'](createSession()),!state[_0x534c91(0xc0)][_0x534c91(0x12c)](_0x469456=>_0x469456['id']===state['currentSessionId'])&&(state['currentSessionId']=state['sessions'][0x0]['id']);}function currentSession(){const _0x1893a5=a0_0x232c;return ensureSessions(),state[_0x1893a5(0xc0)][_0x1893a5(0xff)](_0x2c7d4c=>_0x2c7d4c['id']===state['currentSessionId'])||state['sessions'][0x0];}function currentMessages(){const _0x51da30=a0_0x232c;return currentSession()[_0x51da30(0x141)];}function activeTurnForSession(_0x29a78e){return activeTurns['get'](String(_0x29a78e||''))||null;}function isSessionGenerating(_0x4a870f){return activeTurns['has'](String(_0x4a870f||''));}function isAnyGenerating(){const _0x510a8d=a0_0x232c;return activeTurns[_0x510a8d(0xfb)]>0x0;}function activeTurnForMessage(_0x5c103b){const _0x49c335=a0_0x232c,_0x3b94f5=String(_0x5c103b||'');if(!_0x3b94f5)return null;for(const _0x49ca43 of activeTurns[_0x49c335(0x81)]()){if(_0x49ca43['messageId']===_0x3b94f5)return _0x49ca43;}return null;}function effectiveSystemPrompt(_0x528f66){const _0x304819=String(_0x528f66?.['systemPrompt']||'')['trim']();return _0x304819||state['systemPrompt']||DEFAULT_SYSTEM_PROMPT;}function touchSession(_0x76274,{moveToTop:moveToTop=!![]}={}){const _0x4fb688=a0_0x232c;if(!_0x76274)return;_0x76274['updatedAt']=Date['now']();if(!moveToTop)return;const _0xb6be9d=state['sessions'][_0x4fb688(0x11b)](_0x37557f=>_0x37557f['id']===_0x76274['id']);_0xb6be9d>0x0&&(state[_0x4fb688(0xc0)]['splice'](_0xb6be9d,0x1),state['sessions'][_0x4fb688(0x137)](_0x76274));}function updateSessionTitle(_0x18e2e7,_0x13a205){const _0x17da6e=a0_0x232c;if(!_0x18e2e7||_0x18e2e7['autoTitle']===![])return;_0x18e2e7[_0x17da6e(0x94)]=titleFromText(_0x13a205),_0x18e2e7['autoTitle']=![];}function findMessageRecord(_0x328547){const _0x472667=a0_0x232c,_0x4be4df=String(_0x328547||'');if(!_0x4be4df)return null;for(const _0x3bc6f8 of state['sessions']){const _0x2df53f=_0x3bc6f8[_0x472667(0x141)][_0x472667(0xff)](_0x592e8f=>_0x592e8f['id']===_0x4be4df);if(_0x2df53f)return{'session':_0x3bc6f8,'message':_0x2df53f};}return null;}function markWorkspaceEdited(){workspaceEditVersion+=0x1;}function historyFromMessages(_0xa600fd){const _0x249278=a0_0x232c,_0x17cf88=Array['isArray'](_0xa600fd)?_0xa600fd:[],_0x1b38c9=_0x17cf88['findIndex'](_0xc69e88=>_0xc69e88?.['role']==='user'&&_0xc69e88?.['text']);if(_0x1b38c9<0x0)return[];return _0x17cf88['slice'](_0x1b38c9)['filter'](_0x4116f2=>_0x4116f2?.['role']!=='system'&&_0x4116f2?.[_0x249278(0xde)])[_0x249278(0xc4)](-0x18)[_0x249278(0x116)](_0x38dfa6=>({'role':_0x38dfa6['role']===_0x249278(0xdd)?'user':'assistant','text':_0x38dfa6['text']}));}function readLocalState(){try{return JSON['parse'](localStorage['getItem'](STORAGE_KEY)||'{}');}catch{return{};}}function legacySessionsFromLocalState(_0x1d5feb){const _0x299ed1=a0_0x232c;let _0x299496=Array['isArray'](_0x1d5feb['sessions'])?_0x1d5feb['sessions'][_0x299ed1(0x116)](normalizeSession)['slice'](0x0,MAX_SESSIONS):[];return!_0x299496['length']&&Array[_0x299ed1(0x13c)](_0x1d5feb['messages'])&&_0x1d5feb[_0x299ed1(0x141)][_0x299ed1(0xc7)]&&(_0x299496=[createSession({'title':titleFromMessages(_0x1d5feb['messages']),'autoTitle':![],'messages':_0x1d5feb['messages']})]),_0x299496['filter'](_0x2b8eaf=>_0x2b8eaf[_0x299ed1(0x141)]['length']);}function loadState(){const _0xa5b353=a0_0x232c,_0x2ed1fa=readLocalState();state['model']=String(_0x2ed1fa['model']||state['model']),state[_0xa5b353(0x84)]=String(_0x2ed1fa['requestFormat']||state['requestFormat']),state[_0xa5b353(0xd5)]=String(_0x2ed1fa['systemPrompt']||state['systemPrompt']),state['temperature']=Number(_0x2ed1fa[_0xa5b353(0x77)]??state['temperature'])||0.7;const _0xc23fa0=Array['isArray'](_0x2ed1fa['sessions'])?_0x2ed1fa['sessions']['map'](normalizeSession)[_0xa5b353(0xc4)](0x0,MAX_SESSIONS):[];state['sessions']=_0xc23fa0,state['currentSessionId']=String(_0x2ed1fa['currentSessionId']||''),!state['sessions']['length']&&Array['isArray'](_0x2ed1fa['messages'])&&_0x2ed1fa['messages'][_0xa5b353(0xc7)]&&(state['sessions']=[createSession({'title':titleFromMessages(_0x2ed1fa[_0xa5b353(0x141)]),'autoTitle':![],'messages':_0x2ed1fa['messages']})],state['currentSessionId']=state[_0xa5b353(0xc0)][0x0]['id']),legacySessionsForMigration=localStorage['getItem'](LEGACY_MIGRATION_KEY)==='1'?[]:legacySessionsFromLocalState(_0x2ed1fa),ensureSessions();}function saveState(){const _0x13afc5=a0_0x232c;localStorage['setItem'](STORAGE_KEY,JSON[_0x13afc5(0xd6)]({'model':state['model'],'requestFormat':state[_0x13afc5(0x84)],'systemPrompt':state['systemPrompt'],'temperature':state['temperature'],'currentSessionId':state['currentSessionId']}));}function sessionPayload(_0x334c45){const _0x2752bd=a0_0x232c,_0x425af1=normalizeSession(_0x334c45);return{'id':_0x425af1['id'],'title':_0x425af1['title'],'autoTitle':_0x425af1['autoTitle'],'systemPrompt':_0x425af1[_0x2752bd(0xd5)]||'','createdAt':_0x425af1['createdAt'],'updatedAt':_0x425af1[_0x2752bd(0x139)],'messages':_0x425af1['messages']['slice'](-MAX_MESSAGES_PER_SESSION)['map'](_0x562480=>({'id':_0x562480['id'],'role':_0x562480['role'],'text':_0x562480[_0x2752bd(0xde)],'tone':_0x562480['tone']||'','hidden':!!_0x562480[_0x2752bd(0x119)],'createdAt':_0x562480['createdAt']}))};}function workspaceMetaPayload(){return{'currentSessionId':state['currentSessionId']||currentSession()['id']};}function applyWorkspaceState(_0x523a88){const _0x5d1a09=a0_0x232c;if(!_0x523a88||!Array['isArray'](_0x523a88['sessions']))return![];const _0x568987=_0x523a88['sessions']['map'](normalizeSession)['filter'](_0x47a5a9=>_0x47a5a9['id'])['slice'](0x0,MAX_SESSIONS),_0x5490c3=_0x568987['length']>0x0;return state[_0x5d1a09(0xc0)]=_0x568987,state['currentSessionId']=String(_0x523a88['currentSessionId']||''),ensureSessions(),workspaceLoadedFromBackend=!![],_0x5490c3;}async function persistWorkspaceMeta(){saveState();if(!workspaceLoadedFromBackend)return;try{await requestJsonWithGetFallback(ROUTE_WORKSPACE_META,workspaceMetaPayload());}catch(_0x1ceb1a){console['warn']('[TE\x20MAN]\x20构想台当前话题保存失败。',_0x1ceb1a);}}async function persistSession(_0x2af902,{includeWorkspace:includeWorkspace=!![]}={}){saveState();if(!workspaceLoadedFromBackend||!_0x2af902)return;try{await requestJsonWithGetFallback(ROUTE_TOPIC_UPSERT,{'session':sessionPayload(_0x2af902),'workspace_meta':includeWorkspace?workspaceMetaPayload():undefined});}catch(_0x2cb108){console['warn']('[TE\x20MAN]\x20构想台话题保存失败。',_0x2cb108);}}async function migrateLegacySessionsIfNeeded(_0x4b2fd5,_0x183d1b=workspaceEditVersion){const _0x2b0d25=a0_0x232c;if(_0x4b2fd5||!legacySessionsForMigration['length'])return;const _0x475fcd=legacySessionsForMigration[_0x2b0d25(0xf2)](_0x3105b8=>_0x3105b8['messages']['length']);if(!_0x475fcd[_0x2b0d25(0xc7)]){localStorage['setItem'](LEGACY_MIGRATION_KEY,'1');return;}state['status']='正在迁移旧话题...',renderPanel();let _0x5cb6d4=null;for(const _0x32f479 of _0x475fcd){const _0x25ed04=await requestJsonWithGetFallback(ROUTE_TOPIC_UPSERT,{'session':sessionPayload(_0x32f479),'workspace_meta':{'currentSessionId':state[_0x2b0d25(0xd1)]||_0x475fcd[0x0]['id']}});_0x5cb6d4=_0x25ed04[_0x2b0d25(0xec)]||_0x5cb6d4;}localStorage[_0x2b0d25(0x85)](LEGACY_MIGRATION_KEY,'1'),legacySessionsForMigration=[];if(_0x5cb6d4&&workspaceEditVersion===_0x183d1b&&!isAnyGenerating())applyWorkspaceState(_0x5cb6d4);else{workspaceLoadedFromBackend=!![],void persistSession(currentSession());return;}state['status']='旧话题已迁移',saveState(),renderPanel();}function escapeHtml(_0x3023a4){const _0x5d086e=a0_0x232c;return String(_0x3023a4??'')[_0x5d086e(0x148)]('&',_0x5d086e(0x86))['replaceAll']('<','&lt;')['replaceAll']('>',_0x5d086e(0x104))[_0x5d086e(0x148)]('\x22','&quot;')['replaceAll']('\x27','&#039;');}function injectStyle(){const _0x5a007c=a0_0x232c;if(document[_0x5a007c(0xf7)](STYLE_ID))return;const _0x3198a7=document[_0x5a007c(0xc5)]('style');_0x3198a7['id']=STYLE_ID,_0x3198a7['textContent']=_0x5a007c(0xaf),document['head']['appendChild'](_0x3198a7);}function clampPanelPosition(_0x4bf44b,_0x4d9db5,_0x24634f){const _0x3942f7=a0_0x232c;return Math[_0x3942f7(0x142)](_0x4d9db5,Math['min'](_0x24634f,_0x4bf44b));}function placePanelAtCurrentPosition(_0x5a32ad){const _0x3d1bc0=a0_0x232c,_0x4ac907=_0x5a32ad['getBoundingClientRect']();if(!_0x4ac907['width']||!_0x4ac907['height'])return _0x4ac907;return _0x5a32ad[_0x3d1bc0(0x103)]['left']=_0x4ac907['left']+'px',_0x5a32ad['style'][_0x3d1bc0(0xd3)]=_0x4ac907['top']+'px',_0x5a32ad[_0x3d1bc0(0x103)]['right']=_0x3d1bc0(0xbd),_0x5a32ad['style'][_0x3d1bc0(0x75)]=_0x3d1bc0(0xbd),getComputedStyle(_0x5a32ad)['position']!=='fixed'&&(_0x5a32ad[_0x3d1bc0(0x103)][_0x3d1bc0(0xe3)]='fixed'),_0x4ac907;}function clampDraggablePanel(_0x29685f){const _0x45f853=a0_0x232c,_0x3959f3=_0x29685f['getBoundingClientRect']();if(!_0x3959f3['width']||!_0x3959f3['height'])return;const _0x970f67=0x8,_0x529da6=Math['max'](_0x970f67,window[_0x45f853(0xf5)]-_0x3959f3['width']-_0x970f67),_0x57a096=Math['max'](_0x970f67,window['innerHeight']-_0x3959f3['height']-_0x970f67),_0x212b57=clampPanelPosition(_0x3959f3[_0x45f853(0xc3)],_0x970f67,_0x529da6),_0x5a8ed7=clampPanelPosition(_0x3959f3[_0x45f853(0xd3)],_0x970f67,_0x57a096);_0x29685f['style'][_0x45f853(0xc3)]=_0x212b57+'px',_0x29685f['style']['top']=_0x5a8ed7+'px',_0x29685f['style']['right']='auto',_0x29685f['style']['bottom']='auto';}function enableDraggablePanel(_0x5341a3,_0x55a575){const _0x25c3df=a0_0x232c;if(!_0x5341a3||_0x5341a3[_0x25c3df(0x140)])return;const _0x44043d=(Array[_0x25c3df(0x13c)](_0x55a575)?_0x55a575:[_0x55a575])['filter'](Boolean);if(!_0x44043d[_0x25c3df(0xc7)])return;_0x5341a3['__teCopilotDragBound']=!![];let _0x272c3a=null,_0xef6122='';const _0xd9c376=_0x28b0db=>{const _0x1e92e2=a0_0x232c;if(!_0x272c3a)return;try{_0x272c3a['handle']?.['releasePointerCapture']?.(_0x28b0db['pointerId']);}catch{}document['body']['style'][_0x1e92e2(0x110)]=_0xef6122,_0x272c3a=null;},_0x21254f=_0x5bca0e=>{const _0x1eab97=a0_0x232c;if(!_0x272c3a)return;const _0x2a0651=_0x272c3a['startLeft']+_0x5bca0e[_0x1eab97(0x11e)]-_0x272c3a['startX'],_0x4f2d8f=_0x272c3a['startTop']+_0x5bca0e['clientY']-_0x272c3a[_0x1eab97(0xca)],_0x1f6bd0=0x8,_0x1a55a6=Math[_0x1eab97(0x142)](_0x1f6bd0,window['innerWidth']-_0x272c3a['width']-_0x1f6bd0),_0x4cd05a=Math['max'](_0x1f6bd0,window[_0x1eab97(0xfe)]-_0x272c3a['height']-_0x1f6bd0);_0x5341a3['style']['left']=clampPanelPosition(_0x2a0651,_0x1f6bd0,_0x1a55a6)+'px',_0x5341a3['style']['top']=clampPanelPosition(_0x4f2d8f,_0x1f6bd0,_0x4cd05a)+'px',_0x5341a3['style']['right']='auto',_0x5341a3['style']['bottom']=_0x1eab97(0xbd),_0x5bca0e[_0x1eab97(0x13b)]();};for(const _0x201d1b of _0x44043d){_0x201d1b[_0x25c3df(0x114)]['add'](_0x25c3df(0x124)),_0x201d1b['addEventListener']('pointerdown',_0x3db886=>{const _0x168e59=a0_0x232c;if(_0x3db886['button']!==0x0||_0x3db886['target']?.[_0x168e59(0xbb)]?.('button,a,input,select,textarea'))return;const _0x5b8c01=placePanelAtCurrentPosition(_0x5341a3);if(!_0x5b8c01['width']||!_0x5b8c01[_0x168e59(0xed)])return;_0x272c3a={'startX':_0x3db886['clientX'],'startY':_0x3db886['clientY'],'startLeft':_0x5b8c01['left'],'startTop':_0x5b8c01['top'],'width':_0x5b8c01['width'],'height':_0x5b8c01['height'],'handle':_0x3db886['currentTarget']},_0xef6122=document[_0x168e59(0xc9)]['style']['userSelect'],document['body'][_0x168e59(0x103)]['userSelect']='none',_0x3db886['currentTarget']['setPointerCapture']?.(_0x3db886['pointerId']),_0x3db886['preventDefault']();}),_0x201d1b[_0x25c3df(0xf0)]('pointermove',_0x21254f),_0x201d1b['addEventListener'](_0x25c3df(0x133),_0xd9c376),_0x201d1b['addEventListener']('pointercancel',_0xd9c376);}window[_0x25c3df(0xf0)](_0x25c3df(0x11a),()=>clampDraggablePanel(_0x5341a3));}async function requestJson(_0x233433,_0x13c700={}){const _0x5a2ffa=a0_0x232c,_0x54d03e=await api['fetchApi'](_0x233433,_0x13c700);let _0x54caf0=null;try{_0x54caf0=await _0x54d03e['json']();}catch{}if(!_0x54d03e['ok']||_0x54caf0?.['ok']===![])throw new Error(_0x54caf0?.[_0x5a2ffa(0x7d)]||_0x54d03e['status']+'\x20'+_0x54d03e['statusText']);return _0x54caf0||{};}async function requestJsonWithGetFallback(_0x58398d,_0x119f7e,_0x2b9d23='405'){const _0x1533a2=a0_0x232c;try{return await requestJson(_0x58398d,{'method':'POST','headers':{'Content-Type':_0x1533a2(0xe2)},'body':JSON[_0x1533a2(0xd6)](_0x119f7e||{})});}catch(_0x5713c8){if(!String(_0x5713c8?.['message']||'')['includes'](_0x2b9d23))throw _0x5713c8;const _0x5ed603=new URLSearchParams({'save':'1'});for(const [_0x3cf2ea,_0x1b6cab]of Object['entries'](_0x119f7e||{})){_0x1b6cab&&typeof _0x1b6cab===_0x1533a2(0x134)?_0x5ed603['set'](_0x3cf2ea,JSON['stringify'](_0x1b6cab)):_0x5ed603['set'](_0x3cf2ea,_0x1b6cab??'');}return await requestJson(_0x58398d+'?'+_0x5ed603['toString']());}}async function bootstrap(){const _0x37bd8f=a0_0x232c,_0x55a8ca=workspaceEditVersion;state['workspaceReady']=![];try{const _0x5934c1=await requestJson(ROUTE_BOOTSTRAP);applySettingsData(_0x5934c1);let _0x5ce661=![];workspaceEditVersion===_0x55a8ca&&!isAnyGenerating()?(_0x5ce661=applyWorkspaceState(_0x5934c1[_0x37bd8f(0xec)]),await migrateLegacySessionsIfNeeded(_0x5ce661,_0x55a8ca)):(workspaceLoadedFromBackend=!![],void persistSession(currentSession()));state[_0x37bd8f(0xea)]=!![];if(!state['hasApiKey'])state[_0x37bd8f(0x95)]='请先在设置里填写\x20API\x20Key';else(!state[_0x37bd8f(0x95)]||state[_0x37bd8f(0x95)]==='就绪'||state[_0x37bd8f(0x95)]==='正在加载话题...')&&(state[_0x37bd8f(0x95)]=_0x5ce661?_0x37bd8f(0x131):'就绪');saveState(),renderPanel(),renderSettingsPanel();}catch(_0x28e49e){state[_0x37bd8f(0xea)]=![],state['status']='后端未就绪：'+(_0x28e49e[_0x37bd8f(0xc8)]||_0x28e49e),renderPanel();}}function applySettingsData(_0x5d84d1={}){const _0x3a271d=a0_0x232c;state['model']=String(_0x5d84d1[_0x3a271d(0xe6)]||_0x5d84d1['default_model']||state['model']||_0x3a271d(0x8b)),state['requestFormats']=_0x5d84d1['request_formats']&&typeof _0x5d84d1['request_formats']==='object'?_0x5d84d1['request_formats']:state[_0x3a271d(0xaa)],state[_0x3a271d(0x84)]=String(_0x5d84d1['request_format']||_0x5d84d1['default_request_format']||state[_0x3a271d(0x84)]||'chat_completions'),state['apiBaseUrl']=String(_0x5d84d1['api_base_url']||state['apiBaseUrl']||''),state[_0x3a271d(0x101)]=String(_0x5d84d1[_0x3a271d(0x98)]||''),state['hasApiKey']=!!_0x5d84d1['has_api_key'],state['systemPrompt']=String(_0x5d84d1['system_prompt']||_0x5d84d1[_0x3a271d(0x7c)]||state['systemPrompt']||DEFAULT_SYSTEM_PROMPT),state['temperature']=Number(_0x5d84d1['temperature']??state['temperature'])||0.7,state[_0x3a271d(0x12b)]='',state['settingsStatus']=state['hasApiKey']?'设置已加载':'未配置\x20API\x20Key';}function updateMenuButtonState(){const _0xe34936=a0_0x232c,_0x91d80a=document['getElementById'](MENU_BUTTON_ID);if(!_0x91d80a)return;const _0x7154a1=panel?.[_0xe34936(0x119)]===![];_0x91d80a['dataset']['visible']=_0x7154a1?'true':'false';for(const _0x5ded05 of _0x91d80a[_0xe34936(0x125)](_0xe34936(0xdc))){_0x5ded05['classList'][_0xe34936(0xd7)]('active',_0x7154a1);}}async function tryInstallMenuButton(){const _0x4d5f07=a0_0x232c;if(document['getElementById'](MENU_BUTTON_ID))return updateMenuButtonState(),!![];const _0x52c26e=document[_0x4d5f07(0x8a)]('.comfy-menu');if(!_0x52c26e)return![];injectStyle();try{const [{ComfyButton:_0x4fc679},{ComfyButtonGroup:_0x4e3516}]=await Promise['all']([import('../../../scripts/ui/components/button.js'),import('../../../scripts/ui/components/buttonGroup.js')]),_0x112321=new _0x4fc679({'icon':_0x4d5f07(0x132),'action':()=>showPanel(panel?.['hidden']!==![]),'tooltip':'TE\x20MAN\x20构想台','content':'构想台'})['element'];_0x112321['classList'][_0x4d5f07(0x126)]('te-copilot-menu-button'),_0x112321[_0x4d5f07(0x99)]['role']='copilot-toggle';const _0x547b2f=new _0x4e3516(_0x112321),_0x5ec254=document['createElement']('div');_0x5ec254['id']=MENU_BUTTON_ID,_0x5ec254[_0x4d5f07(0x11c)](_0x547b2f[_0x4d5f07(0x113)]);const _0xa18861=document[_0x4d5f07(0xf7)]('te-asset-library-menu-button')||app['menu']?.['settingsGroup']?.['element'];return _0xa18861?.['after']?_0xa18861['after'](_0x5ec254):_0x52c26e[_0x4d5f07(0xe1)](_0x5ec254),updateMenuButtonState(),!![];}catch(_0x1309df){const _0x114c81=document[_0x4d5f07(0xc5)]('div');_0x114c81['id']=MENU_BUTTON_ID;const _0x3baccb=document['createElement']('button');_0x3baccb[_0x4d5f07(0x145)]='te-copilot-menu-button',_0x3baccb['dataset'][_0x4d5f07(0x109)]='copilot-toggle',_0x3baccb['type']='button',_0x3baccb[_0x4d5f07(0x120)]='构想台',_0x3baccb['title']=_0x4d5f07(0x112),_0x3baccb['onclick']=()=>showPanel(panel?.['hidden']!==![]),_0x114c81['appendChild'](_0x3baccb);const _0x4be0e5=document['getElementById']('te-asset-library-menu-button')||app[_0x4d5f07(0x9c)]?.[_0x4d5f07(0x82)]?.['element'];return _0x4be0e5?.['after']?_0x4be0e5['after'](_0x114c81):_0x52c26e['appendChild'](_0x114c81),updateMenuButtonState(),console['warn']('[TE\x20MAN]\x20顶部构想台按钮使用兼容模式。',_0x1309df),!![];}}async function installMenuButtonWithRetry({timeoutMs:timeoutMs=0x7530,intervalMs:intervalMs=0xc8}={}){const _0x375041=a0_0x232c,_0x2506fb=performance[_0x375041(0x121)]();while(performance['now']()-_0x2506fb<timeoutMs){if(await tryInstallMenuButton())return;await new Promise(_0x2f8836=>setTimeout(_0x2f8836,intervalMs));}console['warn'](_0x375041(0xf1));}function ensurePanel(){const _0x22fcb4=a0_0x232c;if(panel)return panel;return injectStyle(),panel=document['createElement'](_0x22fcb4(0xbe)),panel['id']=PANEL_ID,panel['className']='te-copilot-panel',panel['hidden']=!![],panel[_0x22fcb4(0x8c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<aside\x20class=\x22te-copilot-sidebar\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title\x22>TE\x20MAN\x20构想台</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-subtitle\x22>话题\x20/\x20提示词\x20/\x20工作流构思</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20primary\x22\x20data-action=\x22new-chat\x22>新话题</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-topic-list\x22\x20data-role=\x22topics\x22></div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-side-note\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20每个话题会单独保存上下文。适合把提示词、节点方案、灵感草稿分开聊。\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20class=\x22te-copilot-launcher-link\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20href=\x22https://www.bilibili.com/video/BV1xu9cByELa/?share_source=copy_web&amp;vd_source=a74fe7a15dbf45f77a4ef19aacacd83c\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20target=\x22_blank\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20rel=\x22noopener\x20noreferrer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20推荐配合\x20ComfyUI\x20TE\x20启动器使用，开启并发功能\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</aside>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<main\x20class=\x22te-copilot-main\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<header\x20class=\x22te-copilot-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title\x22\x20data-role=\x22chat-title\x22>新话题</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-subtitle\x22\x20data-role=\x22chat-summary\x22>当前话题</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22open-settings\x22>设置</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22delete-topic\x22>删除</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22close\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</header>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<main\x20class=\x22te-copilot-messages\x22\x20data-role=\x22messages\x22></main>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<footer\x20class=\x22te-copilot-composer\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-starters\x22\x20data-role=\x22starter-presets\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<textarea\x20class=\x22te-copilot-textarea\x20te-copilot-compose-input\x22\x20data-role=\x22input\x22\x20placeholder=\x22输入想聊的问题，Enter\x20发送，Shift+Enter\x20换行\x22></textarea>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20primary\x22\x20data-action=\x22send\x22>发送</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20danger\x22\x20data-action=\x22stop\x22>停止</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22clear\x22>清空当前话题</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22topic-prompt\x22>设置话题提示词</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-status\x22\x20data-role=\x22status\x22>就绪</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</footer>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</main>\x0a\x20\x20\x20\x20',document['body'][_0x22fcb4(0xe1)](panel),enableDraggablePanel(panel,[panel[_0x22fcb4(0x8a)](_0x22fcb4(0xfd)),panel['querySelector']('.te-copilot-head')]),messagesRoot=qs('[data-role=\x27messages\x27]'),messagesRoot['addEventListener']('click',handleMessageToolClick),bindPanelEvents(),renderPanel(),panel;}function ensureSettingsPanel(){const _0x129763=a0_0x232c;if(settingsPanel)return settingsPanel;return injectStyle(),settingsPanel=document[_0x129763(0xc5)]('section'),settingsPanel['id']=SETTINGS_PANEL_ID,settingsPanel['className']=_0x129763(0xe4),settingsPanel['hidden']=!![],settingsPanel[_0x129763(0x8c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<header\x20class=\x22te-copilot-settings-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title\x22>构想台设置</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<a\x20class=\x22te-copilot-title-link\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20href=\x22https://tem.588186.xyz\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20target=\x22_blank\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20rel=\x22noopener\x20noreferrer\x22>推荐TE\x20API站</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-subtitle\x22>API\x20URL\x20/\x20Key\x20/\x20请求格式\x20/\x20模型</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22close-settings\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</header>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<section\x20class=\x22te-copilot-settings-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20API\x20URL\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-copilot-input\x22\x20data-role=\x22api-base-url\x22\x20placeholder=\x22例如：https://api.openai.com\x20或你的中转地址\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-key-row\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20API\x20Key\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-copilot-input\x22\x20data-role=\x22api-key\x22\x20type=\x22password\x22\x20placeholder=\x22留空则保留当前\x20API\x20Key\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-field-hint\x22\x20data-role=\x22api-key-hint\x22>未配置</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20请求格式\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<select\x20class=\x22te-copilot-select\x22\x20data-role=\x22request-format\x22></select>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-format-help\x22\x20data-role=\x22format-help\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20模型名\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-copilot-input\x22\x20data-role=\x22model\x22\x20placeholder=\x22例如\x20gpt-5.5\x20/\x20gemini-3.1-pro-preview\x20/\x20gemini-3.1-flash-lite-preview\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-settings-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20primary\x22\x20data-action=\x22save-settings\x22>保存设置</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22te-copilot-status\x22\x20data-role=\x22settings-status\x22>设置未保存</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</section>\x0a\x20\x20\x20\x20',document['body'][_0x129763(0xe1)](settingsPanel),enableDraggablePanel(settingsPanel,settingsPanel['querySelector']('.te-copilot-settings-head')),bindSettingsEvents(),renderSettingsPanel(),settingsPanel;}function ensureTopicPromptPanel(){const _0x209d2a=a0_0x232c;if(topicPromptPanel)return topicPromptPanel;return injectStyle(),topicPromptPanel=document['createElement']('section'),topicPromptPanel['id']=TOPIC_PROMPT_PANEL_ID,topicPromptPanel[_0x209d2a(0x145)]='te-copilot-topic-prompt-panel',topicPromptPanel[_0x209d2a(0x119)]=!![],topicPromptPanel[_0x209d2a(0x8c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<header\x20class=\x22te-copilot-settings-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title\x22>话题提示词</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-subtitle\x22\x20data-role=\x22topic-prompt-subtitle\x22>当前话题</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22close-topic-prompt\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</header>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<section\x20class=\x22te-copilot-settings-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20当前话题专属提示词\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<textarea\x20class=\x22te-copilot-textarea\x20te-copilot-topic-prompt\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-role=\x22topic-prompt-editor\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20placeholder=\x22留空则使用构想台默认提示词。这里适合写当前话题的人设、任务方向、回答风格。\x22></textarea>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-format-help\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20这个提示词只影响当前话题，不会改其他话题。\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-settings-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20primary\x22\x20data-action=\x22save-topic-prompt\x22>保存</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22clear-topic-prompt\x22>清空提示词</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22te-copilot-status\x22\x20data-role=\x22topic-prompt-status\x22>未保存</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</section>\x0a\x20\x20\x20\x20',document['body']['appendChild'](topicPromptPanel),enableDraggablePanel(topicPromptPanel,topicPromptPanel['querySelector']('.te-copilot-settings-head')),bindTopicPromptEvents(),renderTopicPromptPanel(),topicPromptPanel;}function ensureTopicRenamePanel(){const _0x41300a=a0_0x232c;if(topicRenamePanel)return topicRenamePanel;return injectStyle(),topicRenamePanel=document['createElement']('section'),topicRenamePanel['id']=TOPIC_RENAME_PANEL_ID,topicRenamePanel['className']=_0x41300a(0x9b),topicRenamePanel[_0x41300a(0x119)]=!![],topicRenamePanel[_0x41300a(0x8c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<header\x20class=\x22te-copilot-settings-head\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-title\x22>重命名话题</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-subtitle\x22\x20data-role=\x22topic-rename-subtitle\x22>当前话题</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-spacer\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x22\x20data-action=\x22close-topic-rename\x22>关闭</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</header>\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20<section\x20class=\x22te-copilot-settings-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20class=\x22te-copilot-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20话题显示名称\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20class=\x22te-copilot-input\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-role=\x22topic-rename-input\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20maxlength=\x2280\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20placeholder=\x22例如：香水广告分镜方案\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-format-help\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20只修改左侧和顶部显示名称，不影响这个话题里的对话内容。\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-settings-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20primary\x22\x20data-action=\x22save-topic-rename\x22>保存</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22te-copilot-status\x22\x20data-role=\x22topic-rename-status\x22>未保存</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</section>\x0a\x20\x20\x20\x20',document[_0x41300a(0xc9)]['appendChild'](topicRenamePanel),enableDraggablePanel(topicRenamePanel,topicRenamePanel['querySelector']('.te-copilot-settings-head')),bindTopicRenameEvents(),renderTopicRenamePanel(),topicRenamePanel;}function qs(_0x1d4a11){return panel?.['querySelector'](_0x1d4a11);}function sqs(_0x3b8600){const _0x200a89=a0_0x232c;return settingsPanel?.[_0x200a89(0x8a)](_0x3b8600);}function tpqs(_0x432428){return topicPromptPanel?.['querySelector'](_0x432428);}function trqs(_0x49796d){return topicRenamePanel?.['querySelector'](_0x49796d);}function sessionMeta(_0x57ae51){const _0xc461da=a0_0x232c,_0x17c199=cleanTitleText(_0x57ae51?.['systemPrompt'])?'\x20·\x20专属提示词':'';if(isSessionGenerating(_0x57ae51?.['id']))return'回复中'+_0x17c199;const _0x34405a=_0x57ae51['messages']['filter'](_0x753f1=>!_0x753f1['hidden']&&_0x753f1['role']==='user')[_0xc461da(0xc7)];if(!_0x34405a){if(_0x57ae51['messages']['length'])return'已开始'+_0x17c199;return'还没有消息'+_0x17c199;}return _0x34405a+'\x20条提问'+_0x17c199;}function renderTopics(){const _0x3fc644=a0_0x232c,_0x2bc7b3=qs('[data-role=\x27topics\x27]');if(!_0x2bc7b3)return;ensureSessions(),_0x2bc7b3[_0x3fc644(0x8c)]='';for(const _0x18bd55 of state['sessions']){const _0x4e110c=document['createElement'](_0x3fc644(0xfc));_0x4e110c['role']='button',_0x4e110c['tabIndex']=0x0,_0x4e110c[_0x3fc644(0x145)]='te-copilot-topic\x20'+(_0x18bd55['id']===state['currentSessionId']?'active':''),_0x4e110c[_0x3fc644(0x99)][_0x3fc644(0xd2)]=_0x18bd55['id'],_0x4e110c[_0x3fc644(0x8c)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-topic-title\x22>'+escapeHtml(_0x18bd55['title']||_0x3fc644(0xd9))+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-topic-meta\x22>'+escapeHtml(sessionMeta(_0x18bd55))+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-topic-actions\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-topic-icon-button\x20te-copilot-topic-rename\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20type=\x22button\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-action=\x22rename-topic-inline\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22重命名话题\x22>'+ICON_TOPIC_RENAME+_0x3fc644(0x106),_0x4e110c['onclick']=()=>setCurrentSession(_0x18bd55['id']),_0x4e110c['onkeydown']=_0x425557=>{const _0x1d7cf2=a0_0x232c;if(_0x425557['key']!=='Enter'&&_0x425557[_0x1d7cf2(0xe9)]!=='\x20')return;_0x425557['preventDefault'](),setCurrentSession(_0x18bd55['id']);},_0x4e110c['querySelector']('[data-action=\x27delete-topic-inline\x27]')['onclick']=_0x4f1aac=>{_0x4f1aac['preventDefault'](),_0x4f1aac['stopPropagation'](),deleteSession(_0x18bd55['id']);},_0x4e110c[_0x3fc644(0x8a)](_0x3fc644(0xb5))['onclick']=_0x373fbe=>{const _0x3c00f5=a0_0x232c;_0x373fbe['preventDefault'](),_0x373fbe[_0x3c00f5(0xc1)](),showTopicRenamePanel(_0x18bd55['id'],!![]);},_0x2bc7b3['appendChild'](_0x4e110c);}}function setCurrentSession(_0x131dfa){const _0x8228e8=a0_0x232c,_0x17acfd=state['sessions']['find'](_0xd36c04=>_0xd36c04['id']===_0x131dfa);if(!_0x17acfd)return;state[_0x8228e8(0xd1)]=_0x17acfd['id'],state[_0x8228e8(0x95)]=_0x17acfd['messages']['length']?'已切换话题':_0x8228e8(0xd9),showTopicPromptPanel(![]),showTopicRenamePanel('',![]),markWorkspaceEdited(),saveState(),renderPanel(),void persistWorkspaceMeta(),setTimeout(()=>qs('[data-role=\x27input\x27]')?.['focus'](),0x0);}async function deleteSession(_0x25b3e2=state['currentSessionId']){const _0x48a315=a0_0x232c,_0xa24727=String(_0x25b3e2||'');if(!_0xa24727)return;if(isSessionGenerating(_0xa24727)){state['status']='正在回复，先停止后再删除话题',renderPanel();return;}const _0x428183=state['sessions']['findIndex'](_0x157d73=>_0x157d73['id']===_0xa24727);if(_0x428183<0x0)return;state['sessions'][_0x48a315(0xab)](_0x428183,0x1);!state['sessions']['length']&&state['sessions']['push'](createSession());state['currentSessionId']===_0xa24727&&(state[_0x48a315(0xd1)]=state['sessions'][Math['min'](_0x428183,state['sessions']['length']-0x1)]['id']);state[_0x48a315(0x95)]=_0x48a315(0xf3),markWorkspaceEdited();const _0x11f96e=workspaceEditVersion;saveState(),renderPanel();if(!workspaceLoadedFromBackend)return;try{const _0x568b5a=await requestJsonWithGetFallback(ROUTE_TOPIC_DELETE,{'session_id':_0xa24727,'workspace_meta':workspaceMetaPayload()});_0x568b5a[_0x48a315(0xec)]&&workspaceEditVersion===_0x11f96e&&!isAnyGenerating()&&(applyWorkspaceState(_0x568b5a['workspace_state']),state['status']=_0x48a315(0xf3),saveState(),renderPanel());}catch(_0xb01167){state['status']='删除同步失败：'+(_0xb01167['message']||_0xb01167),renderPanel();}}function bindPanelEvents(){const _0x31146a=a0_0x232c;qs(_0x31146a(0x7a))['onclick']=()=>showPanel(![]),qs('[data-action=\x27open-settings\x27]')[_0x31146a(0x9a)]=()=>showSettingsPanel(!![]),qs('[data-action=\x27new-chat\x27]')[_0x31146a(0x9a)]=()=>newChat(),qs('[data-action=\x27delete-topic\x27]')['onclick']=()=>deleteSession(),qs(_0x31146a(0x144))['onclick']=()=>sendMessage(),qs(_0x31146a(0x87))[_0x31146a(0x9a)]=()=>stopGeneration(),qs('[data-action=\x27clear\x27]')['onclick']=()=>clearMessages(),qs(_0x31146a(0x123))['onclick']=()=>showTopicPromptPanel(!![]),qs('[data-role=\x27input\x27]')['addEventListener']('keydown',_0x2623bd=>{const _0x19fd37=a0_0x232c;if(_0x2623bd['key']!==_0x19fd37(0x79)||_0x2623bd[_0x19fd37(0x118)]||_0x2623bd['ctrlKey']||_0x2623bd[_0x19fd37(0xce)]||_0x2623bd['metaKey'])return;_0x2623bd[_0x19fd37(0x13b)](),sendMessage();}),qs(_0x31146a(0x8f))['addEventListener']('click',_0x371960=>{const _0x56f245=a0_0x232c,_0x4d51d7=_0x371960[_0x56f245(0x136)]?.['closest']?.('[data-starter-id]');if(!_0x4d51d7)return;_0x371960['preventDefault'](),void sendStarterPreset(_0x4d51d7[_0x56f245(0x99)][_0x56f245(0x128)]||'');});}function bindSettingsEvents(){const _0x56c80f=a0_0x232c;sqs(_0x56c80f(0x13a))['onclick']=()=>showSettingsPanel(![]),sqs('[data-action=\x27save-settings\x27]')[_0x56c80f(0x9a)]=()=>saveSettings(),sqs(_0x56c80f(0xdb))['oninput']=_0x20c3c0=>{state['apiBaseUrl']=_0x20c3c0['target']['value'],markSettingsDirty();},sqs('[data-role=\x27api-key\x27]')[_0x56c80f(0x11d)]=_0x104109=>{const _0x2f27f7=a0_0x232c;state['apiKeyDraft']=_0x104109['target'][_0x2f27f7(0x9e)],markSettingsDirty();},sqs('[data-role=\x27request-format\x27]')['onchange']=_0x242f68=>{const _0x788a89=a0_0x232c;state[_0x788a89(0x84)]=_0x242f68[_0x788a89(0x136)][_0x788a89(0x9e)],markSettingsDirty(),saveState(),renderFormatHelp();},sqs('[data-role=\x27model\x27]')['oninput']=_0x1e7cde=>{const _0x3c849b=a0_0x232c;state['model']=_0x1e7cde['target'][_0x3c849b(0x9e)],markSettingsDirty(),saveState();};}function bindTopicPromptEvents(){const _0x551656=a0_0x232c;tpqs('[data-action=\x27close-topic-prompt\x27]')[_0x551656(0x9a)]=()=>showTopicPromptPanel(![]),tpqs('[data-action=\x27save-topic-prompt\x27]')[_0x551656(0x9a)]=()=>saveTopicPromptFromPanel(),tpqs(_0x551656(0x13d))['onclick']=()=>{const _0x4c0745=tpqs('[data-role=\x27topic-prompt-editor\x27]');_0x4c0745&&(_0x4c0745['value']=''),saveTopicPromptFromPanel();},tpqs('[data-role=\x27topic-prompt-editor\x27]')['oninput']=()=>{const _0x4d8b72=tpqs('[data-role=\x27topic-prompt-status\x27]');_0x4d8b72&&(_0x4d8b72['textContent']='未保存');},topicPromptPanel[_0x551656(0xf0)]('keydown',_0xfcf039=>{const _0x1c63cb=a0_0x232c;_0xfcf039['key']===_0x1c63cb(0xe5)&&(_0xfcf039['preventDefault'](),showTopicPromptPanel(![]));});}function bindTopicRenameEvents(){const _0x56d8e1=a0_0x232c;trqs(_0x56d8e1(0x89))[_0x56d8e1(0x9a)]=()=>showTopicRenamePanel('',![]),trqs('[data-action=\x27save-topic-rename\x27]')[_0x56d8e1(0x9a)]=()=>saveTopicRenameFromPanel(),trqs('[data-role=\x27topic-rename-input\x27]')[_0x56d8e1(0x11d)]=()=>{const _0x284f5e=a0_0x232c,_0x2bb462=trqs('[data-role=\x27topic-rename-status\x27]');_0x2bb462&&(_0x2bb462[_0x284f5e(0x120)]='未保存');},topicRenamePanel[_0x56d8e1(0xf0)]('keydown',_0x1a3d50=>{const _0x2a4fdb=a0_0x232c;if(_0x1a3d50['key']===_0x2a4fdb(0xe5)){_0x1a3d50['preventDefault'](),showTopicRenamePanel('',![]);return;}_0x1a3d50['key']==='Enter'&&(_0x1a3d50['preventDefault'](),saveTopicRenameFromPanel());});}function markSettingsDirty(){const _0x5af1d9=a0_0x232c;state[_0x5af1d9(0xcb)]='设置未保存';const _0x34c09b=sqs('[data-role=\x27settings-status\x27]');_0x34c09b&&(_0x34c09b[_0x5af1d9(0x120)]=state[_0x5af1d9(0xcb)]);}function showPanel(_0x586576){const _0x5a11ed=a0_0x232c;ensurePanel(),state['visible']=_0x586576,panel[_0x5a11ed(0x119)]=!_0x586576,!_0x586576&&(showSettingsPanel(![]),showTopicPromptPanel(![]),showTopicRenamePanel('',![])),updateMenuButtonState(),_0x586576&&(renderPanel(),setTimeout(()=>qs('[data-role=\x27input\x27]')?.['focus'](),0x0));}function showSettingsPanel(_0x46b12a){const _0x4d3cf4=a0_0x232c;if(!_0x46b12a){state[_0x4d3cf4(0xa3)]=![];settingsPanel&&(settingsPanel[_0x4d3cf4(0x119)]=!![]);return;}ensureSettingsPanel(),showTopicPromptPanel(![]),showTopicRenamePanel('',![]),state['settingsVisible']=_0x46b12a,settingsPanel['hidden']=!_0x46b12a,renderSettingsPanel(),setTimeout(()=>sqs(_0x4d3cf4(0xdb))?.['focus'](),0x0);}function showTopicPromptPanel(_0x3e1d8b){const _0xdb48ff=a0_0x232c;if(!_0x3e1d8b){topicPromptPanel&&(topicPromptPanel[_0xdb48ff(0x119)]=!![]);return;}ensureTopicPromptPanel(),showSettingsPanel(![]),showTopicRenamePanel('',![]),topicPromptPanel['hidden']=![],renderTopicPromptPanel(),setTimeout(()=>tpqs('[data-role=\x27topic-prompt-editor\x27]')?.['focus'](),0x0);}function showTopicRenamePanel(_0x45f34d,_0x5d96eb){const _0xf6b843=a0_0x232c;if(!_0x5d96eb){topicRenameSessionId='';topicRenamePanel&&(topicRenamePanel['hidden']=!![]);return;}const _0x46acd8=state['sessions'][_0xf6b843(0xff)](_0x4c05dc=>_0x4c05dc['id']===_0x45f34d);if(!_0x46acd8)return;ensureTopicRenamePanel(),showSettingsPanel(![]),showTopicPromptPanel(![]),topicRenameSessionId=_0x46acd8['id'],topicRenamePanel['hidden']=![],renderTopicRenamePanel(),setTimeout(()=>{const _0x1aa0c1=a0_0x232c,_0x1118d8=trqs(_0x1aa0c1(0x7e));_0x1118d8?.['focus'](),_0x1118d8?.['select']();},0x0);}function saveTopicPromptFromPanel(){const _0x55be32=a0_0x232c,_0x114b8e=currentSession();if(isSessionGenerating(_0x114b8e['id'])){const _0x1909b4=tpqs('[data-role=\x27topic-prompt-status\x27]');_0x1909b4&&(_0x1909b4['textContent']='当前话题回复中，结束后可修改');return;}const _0x4027f5=tpqs('[data-role=\x27topic-prompt-editor\x27]');_0x114b8e['systemPrompt']=String(_0x4027f5?.[_0x55be32(0x9e)]||''),touchSession(_0x114b8e,{'moveToTop':![]}),markWorkspaceEdited(),state['status']=cleanTitleText(_0x114b8e['systemPrompt'])?_0x55be32(0x10b):_0x55be32(0xf4),saveState(),renderPanel(),renderTopicPromptPanel(),void persistSession(_0x114b8e,{'includeWorkspace':![]}),showTopicPromptPanel(![]);}function saveTopicRenameFromPanel(){const _0x36244e=a0_0x232c,_0x25d699=state['sessions']['find'](_0xc4d0c8=>_0xc4d0c8['id']===topicRenameSessionId);if(!_0x25d699){showTopicRenamePanel('',![]);return;}if(isSessionGenerating(_0x25d699['id'])){const _0x2db0bc=trqs(_0x36244e(0x102));_0x2db0bc&&(_0x2db0bc[_0x36244e(0x120)]='当前话题回复中，结束后可修改');return;}const _0x41e5e3=trqs('[data-role=\x27topic-rename-input\x27]'),_0x3e3955=cleanTitleText(_0x41e5e3?.[_0x36244e(0x9e)]);if(!_0x3e3955){const _0x971178=trqs('[data-role=\x27topic-rename-status\x27]');_0x971178&&(_0x971178['textContent']=_0x36244e(0xc2));return;}_0x25d699['title']=_0x3e3955['slice'](0x0,0x50),_0x25d699['autoTitle']=![],touchSession(_0x25d699,{'moveToTop':![]}),markWorkspaceEdited(),state[_0x36244e(0x95)]='话题名称已保存',saveState(),renderPanel(),renderTopicRenamePanel(),void persistSession(_0x25d699,{'includeWorkspace':![]}),showTopicRenamePanel('',![]);}function roleLabel(_0x4557ba){const _0x154809=a0_0x232c;if(_0x4557ba['role']==='user')return'你';if(_0x4557ba['tone']==='error')return'错误';return _0x154809(0x91);}function renderMarkdownLite(_0x7ffa36){return escapeHtml(_0x7ffa36||'');}function renderMessages(){const _0x48ca04=a0_0x232c;if(!messagesRoot)return;const _0x5edda5=currentSession(),_0x23104c=currentMessages()['filter'](_0x4c2e2c=>!_0x4c2e2c['hidden']);messagesRoot[_0x48ca04(0x8c)]='';if(!_0x23104c[_0x48ca04(0xc7)]){messagesRoot['innerHTML']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-empty\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20这里是\x20TE\x20MAN\x20构想台。<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20可以聊提示词、节点搭配、工作流结构，也可以先把想法拆成可执行步骤。\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20';return;}for(let _0x47c32f=0x0;_0x47c32f<_0x23104c['length'];_0x47c32f+=0x1){const _0x41fb26=_0x23104c[_0x47c32f],_0x15bae5=document['createElement']('article'),_0x178e5a=!!activeTurnForMessage(_0x41fb26['id']),_0x21fcbc=_0x23104c[_0x48ca04(0xc4)](0x0,_0x47c32f)[_0x48ca04(0x12c)](_0x3f2c29=>_0x3f2c29['role']==='user'&&cleanTitleText(_0x3f2c29['text'])),_0x478eeb=_0x41fb26[_0x48ca04(0x109)]===_0x48ca04(0xf6)&&_0x21fcbc,_0x1454b7=_0x178e5a||!state[_0x48ca04(0xea)]||isSessionGenerating(_0x5edda5['id']);_0x15bae5[_0x48ca04(0x145)]='te-copilot-message\x20'+(_0x41fb26[_0x48ca04(0xb7)]===_0x48ca04(0x7d)?'error':_0x41fb26['role']),_0x15bae5[_0x48ca04(0x8c)]=_0x48ca04(0xc6)+roleLabel(_0x41fb26)+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-bubble\x20'+(_0x178e5a?'te-copilot-cursor':'')+'\x22>'+renderMarkdownLite(_0x41fb26['text'])+_0x48ca04(0xa1)+escapeHtml(_0x41fb26['id'])+_0x48ca04(0xb1)+(_0x178e5a?'disabled':'')+'>'+ICON_COPY+_0x48ca04(0x93)+(_0x478eeb?'<button\x20class=\x22te-copilot-message-tool\x22\x20type=\x22button\x22\x20data-message-action=\x22regenerate\x22\x20data-message-id=\x22'+escapeHtml(_0x41fb26['id'])+'\x22\x20title=\x22重新生成\x22\x20'+(_0x1454b7?_0x48ca04(0x88):'')+'>'+ICON_REGENERATE+_0x48ca04(0xa0):'')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20',messagesRoot[_0x48ca04(0xe1)](_0x15bae5);}messagesRoot['scrollTop']=messagesRoot['scrollHeight'];}function renderStarterPresets(){const _0x2754aa=a0_0x232c,_0x1b155d=qs('[data-role=\x27starter-presets\x27]');if(!_0x1b155d)return;const _0x222020=currentSession(),_0x3a7ed2=!_0x222020['messages'][_0x2754aa(0xc7)]&&!isSessionGenerating(_0x222020['id']);_0x1b155d['hidden']=!_0x3a7ed2;if(!_0x3a7ed2){_0x1b155d['innerHTML']='';return;}_0x1b155d[_0x2754aa(0x8c)]=STARTER_PRESETS[_0x2754aa(0x116)](_0x54cd21=>'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-button\x20te-copilot-starter-button\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20type=\x22button\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-starter-id=\x22'+escapeHtml(_0x54cd21['id'])+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+escapeHtml(_0x54cd21[_0x2754aa(0xad)])+_0x2754aa(0x138))['join']('');}function renderPanel(){const _0x149c7b=a0_0x232c;if(!panel)return;const _0x3d0675=currentSession(),_0x3d51f9=activeTurnForSession(_0x3d0675['id']);qs('[data-role=\x27chat-title\x27]')['textContent']=_0x3d0675[_0x149c7b(0x94)]||_0x149c7b(0xd9),qs(_0x149c7b(0x107))['textContent']=sessionMeta(_0x3d0675),qs('[data-role=\x27status\x27]')['textContent']=state['status']||'就绪',qs('[data-action=\x27send\x27]')['disabled']=!!_0x3d51f9||!state['workspaceReady'],qs(_0x149c7b(0x87))['disabled']=!_0x3d51f9,qs('[data-action=\x27clear\x27]')['disabled']=!!_0x3d51f9,qs('[data-action=\x27topic-prompt\x27]')['disabled']=!!_0x3d51f9,qs('[data-action=\x27delete-topic\x27]')['disabled']=!!_0x3d51f9,qs('[data-action=\x27new-chat\x27]')['disabled']=![],renderTopics(),renderMessages(),renderStarterPresets(),renderTopicPromptPanel(),renderTopicRenamePanel(),updateMenuButtonState();}function formatOptionsHtml(){return Object['entries'](state['requestFormats'])['map'](([_0x1b5672,_0x804502])=>'<option\x20value=\x22'+escapeHtml(_0x1b5672)+'\x22>'+escapeHtml(_0x804502)+'</option>')['join']('');}function renderFormatHelp(){const _0x5e4637=a0_0x232c,_0x5f0b75=sqs('[data-role=\x27format-help\x27]');if(!_0x5f0b75)return;const _0x1b76e8={'chat_completions':'适合\x20OpenAI\x20Chat\x20兼容接口。URL\x20可填根地址，例如\x20https://api.openai.com，也可直接填\x20/v1/chat/completions。','responses':_0x5e4637(0x12a),'gemini':'适合\x20Gemini。URL\x20可填根地址，程序会自动拼成\x20/v1beta/models/模型名:streamGenerateContent。','claude':'适合\x20Claude\x20Messages。URL\x20可填根地址，程序会自动拼成\x20/v1/messages。','lm_studio':'适合\x20LM\x20Studio\x20本地服务。URL\x20可填根地址，例如\x20http://localhost:1234，程序会自动拼成\x20/api/v1/chat。'};_0x5f0b75['textContent']=_0x1b76e8[state['requestFormat']]||'';}function renderSettingsPanel(){const _0x1eb758=a0_0x232c;if(!settingsPanel)return;const _0x4b2c95=sqs('[data-role=\x27request-format\x27]');_0x4b2c95['innerHTML']=formatOptionsHtml(),_0x4b2c95[_0x1eb758(0x9e)]=state['requestFormat']||'chat_completions',sqs(_0x1eb758(0xdb))['value']=state[_0x1eb758(0xb4)]||'',sqs(_0x1eb758(0x96))[_0x1eb758(0x9e)]=state['apiKeyDraft']||'',sqs('[data-role=\x27api-key-hint\x27]')[_0x1eb758(0x120)]=state[_0x1eb758(0x8e)]?'当前：'+(state[_0x1eb758(0x101)]||_0x1eb758(0x13f)):'未配置',sqs('[data-role=\x27model\x27]')[_0x1eb758(0x9e)]=state[_0x1eb758(0xe6)]||'',sqs(_0x1eb758(0x90))[_0x1eb758(0x120)]=state['settingsStatus']||'',sqs('[data-action=\x27save-settings\x27]')['disabled']=isAnyGenerating(),renderFormatHelp();}function renderTopicPromptPanel(){const _0x5ac1aa=a0_0x232c;if(!topicPromptPanel||topicPromptPanel['hidden'])return;const _0x494a12=currentSession(),_0x323bd3=tpqs('[data-role=\x27topic-prompt-editor\x27]'),_0x13c0e5=tpqs('[data-role=\x27topic-prompt-subtitle\x27]'),_0x15a3fd=tpqs('[data-role=\x27topic-prompt-status\x27]'),_0x2d9f7f=tpqs('[data-action=\x27save-topic-prompt\x27]'),_0x5c5c1a=tpqs('[data-action=\x27clear-topic-prompt\x27]'),_0x5c83e1=isSessionGenerating(_0x494a12['id']),_0x5c8cf1=document['activeElement']===_0x323bd3;_0x13c0e5&&(_0x13c0e5[_0x5ac1aa(0x120)]=_0x494a12['title']||'当前话题'),_0x323bd3&&!_0x5c8cf1&&(_0x323bd3['value']=_0x494a12[_0x5ac1aa(0xd5)]||''),_0x15a3fd&&!_0x5c8cf1&&(_0x15a3fd['textContent']=cleanTitleText(_0x494a12[_0x5ac1aa(0xd5)])?'已设置专属提示词':'留空使用默认提示词'),_0x2d9f7f&&(_0x2d9f7f['disabled']=_0x5c83e1),_0x5c5c1a&&(_0x5c5c1a['disabled']=_0x5c83e1);}function renderTopicRenamePanel(){const _0x2e8d94=a0_0x232c;if(!topicRenamePanel||topicRenamePanel['hidden'])return;const _0x393e2d=state[_0x2e8d94(0xc0)]['find'](_0x1535d9=>_0x1535d9['id']===topicRenameSessionId);if(!_0x393e2d){showTopicRenamePanel('',![]);return;}const _0x11f71a=trqs(_0x2e8d94(0x7e)),_0x568473=trqs('[data-role=\x27topic-rename-subtitle\x27]'),_0x10e964=trqs('[data-role=\x27topic-rename-status\x27]'),_0x36c107=trqs('[data-action=\x27save-topic-rename\x27]'),_0x240c59=isSessionGenerating(_0x393e2d['id']),_0x2a4536=document['activeElement']===_0x11f71a;_0x568473&&(_0x568473[_0x2e8d94(0x120)]=_0x393e2d['title']||'当前话题'),_0x11f71a&&!_0x2a4536&&(_0x11f71a['value']=_0x393e2d['title']||''),_0x10e964&&!_0x2a4536&&(_0x10e964[_0x2e8d94(0x120)]='输入新名称后保存'),_0x36c107&&(_0x36c107[_0x2e8d94(0x88)]=_0x240c59);}function settingsPayload(){const _0x5c52e1=a0_0x232c;return{'api_base_url':state['apiBaseUrl']||'','api_key':state['apiKeyDraft']||'','request_format':state['requestFormat']||'chat_completions','model':state[_0x5c52e1(0xe6)]||'gpt-5.5','system_prompt':state[_0x5c52e1(0xd5)]||'','temperature':Number(state['temperature'])||0.7};}async function saveSettings(){const _0x5d7930=a0_0x232c;ensureSettingsPanel(),state['settingsStatus']='正在保存...',renderSettingsPanel();try{const _0x475561=await requestJsonWithGetFallback(ROUTE_SETTINGS,settingsPayload());applySettingsData(_0x475561),state[_0x5d7930(0x95)]=state['hasApiKey']?'设置已保存':'设置已保存，但还没有\x20API\x20Key',state['settingsStatus']=state['status'],saveState(),renderPanel(),renderSettingsPanel();}catch(_0x114292){state['settingsStatus']=_0x5d7930(0x7f)+(_0x114292['message']||_0x114292),renderSettingsPanel();}}function scheduleRender(){if(renderTimer)return;renderTimer=requestAnimationFrame(()=>{renderTimer=null,renderPanel();});}function getMessage(_0x2dc3ca){return findMessageRecord(_0x2dc3ca)?.['message']||null;}function historyForRequest(_0x4b4be3,_0x5a5b10=''){const _0x1b7b05=a0_0x232c,_0x1bd933=String(_0x5a5b10||'');return historyFromMessages((_0x4b4be3?.[_0x1b7b05(0x141)]||[])['filter'](_0x563689=>_0x563689['id']!==_0x1bd933));}async function copyTextToClipboard(_0x3721a6){const _0x23b873=a0_0x232c;if(navigator['clipboard']?.['writeText']){await navigator['clipboard']['writeText'](_0x3721a6);return;}const _0x36c102=document['createElement']('textarea');_0x36c102['value']=_0x3721a6,_0x36c102[_0x23b873(0xcd)]('readonly','readonly'),_0x36c102['style'][_0x23b873(0xe3)]='fixed',_0x36c102['style'][_0x23b873(0xc3)]='-9999px',_0x36c102['style']['top']='0',document['body']['appendChild'](_0x36c102),_0x36c102['select']();const _0x563b56=document['execCommand'](_0x23b873(0xd8));_0x36c102['remove']();if(!_0x563b56)throw new Error('当前浏览器不允许复制');}async function copyMessage(_0x338d5a){const _0x579260=a0_0x232c,_0x56b7ec=findMessageRecord(_0x338d5a),_0x1cbf69=String(_0x56b7ec?.[_0x579260(0xc8)]?.['text']||'');if(!_0x1cbf69){state['status']=_0x579260(0x78);const _0x5553ad=qs(_0x579260(0xbc));_0x5553ad&&(_0x5553ad['textContent']=state['status']);return;}try{await copyTextToClipboard(_0x1cbf69),state[_0x579260(0x95)]='已复制这段对话';}catch(_0x39bde1){state[_0x579260(0x95)]='复制失败：'+(_0x39bde1['message']||_0x39bde1);}const _0x1d196b=qs(_0x579260(0xbc));_0x1d196b&&(_0x1d196b['textContent']=state['status']);}function regenerateHistory(_0x550c09,_0xcfd4b5,_0x2ca376){const _0x557fee=_0x550c09['messages']['slice'](0x0,_0x2ca376);return historyFromMessages(_0x557fee);}async function regenerateMessage(_0x4e49bb){const _0x1ddb7=a0_0x232c;if(!state[_0x1ddb7(0xea)]){state['status']='正在加载话题，加载完成后再重新生成',renderPanel();return;}const _0x50ff63=findMessageRecord(_0x4e49bb);if(!_0x50ff63?.[_0x1ddb7(0xa4)]||!_0x50ff63?.[_0x1ddb7(0xc8)]||_0x50ff63['message']['role']!=='assistant'){state['status']='只能重新生成助手回复',renderPanel();return;}const _0x525731=_0x50ff63['session'];if(isSessionGenerating(_0x525731['id'])){state['status']='当前话题正在回复，先停止后再重新生成',renderPanel();return;}const _0x33c3ef=_0x525731['messages']['findIndex'](_0x2c4da5=>_0x2c4da5['id']===_0x50ff63['message']['id']);let _0x371abd=-0x1;for(let _0x467060=_0x33c3ef-0x1;_0x467060>=0x0;_0x467060-=0x1){if(_0x525731[_0x1ddb7(0x141)][_0x467060]?.['role']==='user'&&cleanTitleText(_0x525731['messages'][_0x467060]['text'])){_0x371abd=_0x467060;break;}}if(_0x33c3ef<0x0||_0x371abd<0x0){state['status']='没有找到这段回复对应的提问',renderPanel();return;}const _0x1b3ed2=_0x525731['messages'][_0x371abd],_0x593c3d=regenerateHistory(_0x525731,_0x33c3ef,_0x371abd),_0x108234=uid('turn'),_0x548e1d=_0x50ff63['message']['id'];activeTurns[_0x1ddb7(0x74)](_0x525731['id'],{'turnId':_0x108234,'messageId':_0x548e1d,'sessionId':_0x525731['id'],'model':state['model']||_0x1ddb7(0x8b)}),_0x50ff63['message']['text']='',_0x50ff63['message'][_0x1ddb7(0xb7)]=undefined,_0x50ff63[_0x1ddb7(0xc8)]['createdAt']=Date['now'](),touchSession(_0x525731),state[_0x1ddb7(0xd1)]=_0x525731['id'],state['status']='正在重新生成...',markWorkspaceEdited(),saveState(),renderPanel(),await persistSession(_0x525731);try{await requestJsonWithGetFallback(ROUTE_TURN,{'panel_id':getPanelId(),'turn_id':_0x108234,'session_id':_0x525731['id'],'message_id':_0x548e1d,'message':_0x1b3ed2[_0x1ddb7(0xde)],'request_format':state['requestFormat']||_0x1ddb7(0xb9),'model':state['model']||_0x1ddb7(0x8b),'system_prompt':effectiveSystemPrompt(_0x525731),'temperature':Number(state['temperature'])||0.7,'history':_0x593c3d});}catch(_0x17665c){_0x50ff63[_0x1ddb7(0xc8)][_0x1ddb7(0xb7)]='error',_0x50ff63['message']['text']=_0x1ddb7(0x8d)+(_0x17665c['message']||_0x17665c),activeTurns[_0x1ddb7(0x129)](_0x525731['id']),state['status']='重新生成失败',await persistSession(_0x525731),renderPanel();}}function handleMessageToolClick(_0x50aea4){const _0x2c027f=a0_0x232c,_0x410908=_0x50aea4[_0x2c027f(0x136)]?.['closest']?.('[data-message-action]');if(!_0x410908||!messagesRoot?.[_0x2c027f(0x83)](_0x410908))return;_0x50aea4['preventDefault']();const _0x4c4e74=_0x410908['dataset']['messageId']||'',_0x2b09fd=_0x410908['dataset']['messageAction']||'';if(_0x2b09fd==='copy')void copyMessage(_0x4c4e74);else _0x2b09fd==='regenerate'&&void regenerateMessage(_0x4c4e74);}async function startTurn({text:_0x446e50,visibleUserText:visibleUserText=_0x446e50,showUserMessage:showUserMessage=!![],hiddenUserMessage:hiddenUserMessage=![],titleText:titleText=visibleUserText,systemPrompt:systemPrompt=null,requestSystemPrompt:requestSystemPrompt=null,clearInput:clearInput=![]}={}){const _0x3f12e7=a0_0x232c;ensurePanel();if(!state['workspaceReady'])return state['status']=_0x3f12e7(0x10e),renderPanel(),![];const _0x2550c2=String(_0x446e50||'')['trim']();if(!_0x2550c2)return state['status']='请输入内容',renderPanel(),![];const _0x3eb84d={'id':uid('assistant'),'role':'assistant','text':'','createdAt':Date[_0x3f12e7(0x121)]()},_0xbd9c5d=currentSession();if(isSessionGenerating(_0xbd9c5d['id']))return state[_0x3f12e7(0x95)]='当前话题正在回复，可以切到其他话题继续发送',renderPanel(),![];const _0x35a68a=uid('turn'),_0x5cc4d2=_0x3eb84d['id'],_0x1485e7=historyForRequest(_0xbd9c5d,_0x5cc4d2);systemPrompt!==null&&(_0xbd9c5d[_0x3f12e7(0xd5)]=String(systemPrompt||''));showUserMessage&&_0xbd9c5d['messages'][_0x3f12e7(0xa7)]({'id':uid('user'),'role':'user','text':String(visibleUserText||_0x2550c2),'hidden':!!hiddenUserMessage,'createdAt':Date['now']()});updateSessionTitle(_0xbd9c5d,titleText||visibleUserText||_0x2550c2),_0xbd9c5d[_0x3f12e7(0x141)]['push'](_0x3eb84d),_0xbd9c5d['messages']=_0xbd9c5d[_0x3f12e7(0x141)]['slice'](-MAX_MESSAGES_PER_SESSION),touchSession(_0xbd9c5d),state['currentSessionId']=_0xbd9c5d['id'],activeTurns[_0x3f12e7(0x74)](_0xbd9c5d['id'],{'turnId':_0x35a68a,'messageId':_0x5cc4d2,'sessionId':_0xbd9c5d['id'],'model':state[_0x3f12e7(0xe6)]||_0x3f12e7(0x8b)}),state['status']=_0x3f12e7(0xb2);if(clearInput){const _0x585436=qs('[data-role=\x27input\x27]');_0x585436&&(_0x585436['value']='');}markWorkspaceEdited(),saveState(),renderPanel(),await persistSession(_0xbd9c5d);try{await requestJsonWithGetFallback(ROUTE_TURN,{'panel_id':getPanelId(),'turn_id':_0x35a68a,'session_id':_0xbd9c5d['id'],'message_id':_0x5cc4d2,'message':_0x2550c2,'request_format':state['requestFormat']||_0x3f12e7(0xb9),'model':state['model']||_0x3f12e7(0x8b),'system_prompt':requestSystemPrompt!==null?requestSystemPrompt:effectiveSystemPrompt(_0xbd9c5d),'temperature':Number(state['temperature'])||0.7,'history':_0x1485e7});}catch(_0x3e366e){const _0x5e3921=getMessage(_0x5cc4d2);_0x5e3921&&(_0x5e3921[_0x3f12e7(0xb7)]='error',_0x5e3921['text']='发送失败：'+(_0x3e366e['message']||_0x3e366e));activeTurns['delete'](_0xbd9c5d['id']),state['status']=_0x3f12e7(0xa6);const _0x1ece28=findMessageRecord(_0x3eb84d['id']);_0x1ece28?.['session']?await persistSession(_0x1ece28['session']):saveState(),renderPanel();}return!![];}async function sendStarterPreset(_0x434a50){const _0x36a3c6=a0_0x232c,_0x29e99d=currentSession(),_0x41c728=STARTER_PRESETS[_0x36a3c6(0xff)](_0x16f77f=>_0x16f77f['id']===_0x434a50);if(!_0x41c728)return;if(_0x29e99d['messages']['length']){state['status']='当前话题已经开始了',renderPanel();return;}await startTurn({'text':_0x41c728['prompt'],'visibleUserText':_0x41c728['prompt'],'showUserMessage':!![],'hiddenUserMessage':!![],'titleText':_0x41c728['label'],'requestSystemPrompt':state['systemPrompt']||DEFAULT_SYSTEM_PROMPT});}async function sendMessage(){const _0xe48ea5=a0_0x232c,_0x50db7c=qs('[data-role=\x27input\x27]'),_0x1c424b=String(_0x50db7c?.[_0xe48ea5(0x9e)]||'')['trim']();await startTurn({'text':_0x1c424b,'visibleUserText':_0x1c424b,'showUserMessage':!![],'titleText':_0x1c424b,'clearInput':!![]});}async function stopGeneration(){const _0x13c142=a0_0x232c,_0x4a5bca=currentSession(),_0x282428=activeTurnForSession(_0x4a5bca['id']);if(!_0x282428?.['turnId'])return;state['status']='正在停止...',renderPanel();try{await requestJsonWithGetFallback(ROUTE_STOP,{'panel_id':getPanelId(),'turn_id':_0x282428[_0x13c142(0x143)]});}catch(_0x4beee1){state['status']='停止失败：'+(_0x4beee1['message']||_0x4beee1),renderPanel();}}function newChat(){const _0xb9c473=a0_0x232c,_0x3576c5=createSession();state['sessions']['unshift'](_0x3576c5),state[_0xb9c473(0xc0)]=state[_0xb9c473(0xc0)]['slice'](0x0,MAX_SESSIONS),state['currentSessionId']=_0x3576c5['id'],state['status']=_0xb9c473(0xd9),markWorkspaceEdited(),saveState(),renderPanel(),void persistSession(_0x3576c5),setTimeout(()=>qs(_0xb9c473(0xae))?.[_0xb9c473(0x115)](),0x0);}function clearMessages(){const _0x26d718=a0_0x232c,_0x2bac22=currentSession();if(isSessionGenerating(_0x2bac22['id'])){state[_0x26d718(0x95)]='正在回复，先停止后再清空话题',renderPanel();return;}_0x2bac22[_0x26d718(0x141)]=[],_0x2bac22[_0x26d718(0x94)]='新话题',_0x2bac22['autoTitle']=!![],touchSession(_0x2bac22,{'moveToTop':![]}),state['status']='当前话题已清空',markWorkspaceEdited(),saveState(),renderPanel(),void persistSession(_0x2bac22);}function isOwnEvent(_0x289b9f){return _0x289b9f?.['panel_id']===getPanelId();}function onTurnStarted(_0x55d00e){const _0x2b2f61=a0_0x232c,_0x305656=_0x55d00e?.['detail']||{};if(!isOwnEvent(_0x305656))return;const _0x18186f=String(_0x305656[_0x2b2f61(0x97)]||'');_0x18186f&&activeTurns[_0x2b2f61(0x74)](_0x18186f,{'turnId':String(_0x305656['turn_id']||activeTurnForSession(_0x18186f)?.['turnId']||''),'messageId':String(_0x305656[_0x2b2f61(0xa8)]||activeTurnForSession(_0x18186f)?.[_0x2b2f61(0x146)]||''),'sessionId':_0x18186f,'model':String(_0x305656['model']||state[_0x2b2f61(0xe6)]||'模型')}),(!_0x18186f||_0x18186f===currentSession()['id'])&&(state['status']='正在回复...'),scheduleRender();}function onTextDelta(_0x5d93ef){const _0x4f369a=a0_0x232c,_0x2c4e46=_0x5d93ef?.['detail']||{};if(!isOwnEvent(_0x2c4e46))return;const _0x4edbb5=findMessageRecord(_0x2c4e46['message_id']||'');if(!_0x4edbb5?.['message'])return;_0x4edbb5['message']['text']+=String(_0x2c4e46[_0x4f369a(0xde)]||''),touchSession(_0x4edbb5['session'],{'moveToTop':![]}),_0x4edbb5[_0x4f369a(0xa4)]['id']===currentSession()['id']&&(state[_0x4f369a(0x95)]='正在回复...'),scheduleRender();}function onTurnCompleted(_0x535745){const _0x699c7=a0_0x232c,_0x5c74bc=_0x535745?.['detail']||{};if(!isOwnEvent(_0x5c74bc))return;const _0xeea992=findMessageRecord(_0x5c74bc[_0x699c7(0xa8)]||''),_0xa5b6e1=_0xeea992?.['message']||null;_0xa5b6e1&&!_0xa5b6e1['text']&&_0x5c74bc[_0x699c7(0xde)]&&(_0xa5b6e1['text']=String(_0x5c74bc['text']||''));_0xeea992?.['session']&&touchSession(_0xeea992['session'],{'moveToTop':![]});const _0x1c3c27=String(_0x5c74bc[_0x699c7(0x97)]||_0xeea992?.['session']?.['id']||'');_0x1c3c27&&activeTurns['delete'](_0x1c3c27),(!_0x1c3c27||_0x1c3c27===currentSession()['id'])&&(state['status']=_0x5c74bc['cancelled']?'已停止':'回复完成'),saveState(),renderPanel(),_0xeea992?.['session']&&void persistSession(_0xeea992[_0x699c7(0xa4)]);}function onTurnFailed(_0x592244){const _0x57d352=a0_0x232c,_0x3045fd=_0x592244?.['detail']||{};if(!isOwnEvent(_0x3045fd))return;const _0x52b7b0=findMessageRecord(_0x3045fd['message_id']||'');_0x52b7b0?.[_0x57d352(0xc8)]&&(_0x52b7b0['message']['tone']='error',_0x52b7b0[_0x57d352(0xc8)]['text']=_0x3045fd[_0x57d352(0xde)]||'请求失败：'+(_0x3045fd[_0x57d352(0x7d)]||_0x57d352(0xb3)));_0x52b7b0?.['session']&&touchSession(_0x52b7b0[_0x57d352(0xa4)],{'moveToTop':![]});const _0x219018=String(_0x3045fd['session_id']||_0x52b7b0?.['session']?.['id']||'');_0x219018&&activeTurns['delete'](_0x219018),(!_0x219018||_0x219018===currentSession()['id'])&&(state[_0x57d352(0x95)]='请求失败'),saveState(),renderPanel(),_0x52b7b0?.['session']&&void persistSession(_0x52b7b0['session']);}function installSocketListeners(){const _0x391d88=a0_0x232c;api['addEventListener'](EVENT_TURN_STARTED,onTurnStarted),api['addEventListener'](EVENT_TEXT_DELTA,onTextDelta),api[_0x391d88(0xf0)](EVENT_TURN_COMPLETED,onTurnCompleted),api['addEventListener'](EVENT_TURN_FAILED,onTurnFailed);}function a0_0x158c(){const _0x41ecb9=['54799zUQCaz','发送失败','push','message_id','storyboard','requestFormats','splice','\x0a\x20\x20\x20\x20<svg\x20viewBox=\x220\x200\x2024\x2024\x22\x20aria-hidden=\x22true\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M12\x208.2a3.8\x203.8\x200\x201\x201\x200\x207.6\x203.8\x203.8\x200\x200\x201\x200-7.6z\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M19.4\x2013.4a7.8\x207.8\x200\x200\x200\x200-2.8l2-1.2-2-3.5-2.3\x201a8.8\x208.8\x200\x200\x200-2.4-1.4L14.4\x203h-4l-.4\x202.5a8.8\x208.8\x200\x200\x200-2.4\x201.4l-2.3-1-2\x203.5\x202\x201.2a7.8\x207.8\x200\x200\x200\x200\x202.8l-2\x201.2\x202\x203.5\x202.3-1a8.8\x208.8\x200\x200\x200\x202.4\x201.4l.4\x202.5h4l.4-2.5a8.8\x208.8\x200\x200\x200\x202.4-1.4l2.3\x201\x202-3.5z\x22></path>\x0a\x20\x20\x20\x20</svg>\x0a','label','[data-role=\x27input\x27]','\x0a\x20\x20\x20\x20\x20\x20\x20\x20:root\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-bg:\x20rgba(12,\x2015,\x2017,\x200.94);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-panel:\x20rgba(24,\x2029,\x2032,\x200.96);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-card:\x20rgba(255,\x20255,\x20255,\x200.065);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-line:\x20rgba(255,\x20255,\x20255,\x200.1);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-line-strong:\x20rgba(255,\x20204,\x20102,\x200.38);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-text:\x20rgba(244,\x20241,\x20231,\x200.95);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-muted:\x20rgba(244,\x20241,\x20231,\x200.58);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-accent:\x20#f3b44e;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-accent-2:\x20#65d1b7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-danger:\x20#ff7b7b;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20--te-copilot-radius:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2034px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2032px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x2086px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x208px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20700;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-copilot-menu-button,\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-asset-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x2086px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(255,\x20196,\x2090,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(28,\x2033,\x2034,\x200.88),\x20rgba(66,\x2049,\x2026,\x200.72));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x208px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20700\x2013px/1.1\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x208px\x2020px\x20rgba(0,\x200,\x200,\x200.18);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-copilot-menu-button:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20button.te-copilot-menu-button.active,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-menu-button[data-visible=\x22true\x22]\x20.te-copilot-menu-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20218,\x20132,\x200.9);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.24),\x20rgba(101,\x20209,\x20183,\x200.12));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-rename-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x20112px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20908;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20var(--te-copilot-radius);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20radial-gradient(circle\x20at\x20top\x20left,\x20rgba(243,\x20180,\x2078,\x200.18),\x20transparent\x2035%),\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20linear-gradient(145deg,\x20rgba(16,\x2020,\x2022,\x200.97),\x20rgba(9,\x2011,\x2013,\x200.97));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x2024px\x2080px\x20rgba(0,\x200,\x200,\x200.55);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(720px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20min(720px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20210px\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-rename-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(540px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20min(720px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20909;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20auto\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(520px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20min(560px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20910;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-rename-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20min(420px,\x20calc(100vw\x20-\x2032px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20min(330px,\x20calc(100vh\x20-\x20164px));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x20911;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-panel[hidden],\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-panel[hidden],\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt-panel[hidden],\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-rename-panel[hidden]\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-sidebar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-right:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.035);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-main\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20auto\x20minmax(0,\x201fr)\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-head,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-composer,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-head\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-head,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-head,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-actions,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-actions\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-drag-handle\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20move;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20user-select:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20touch-action:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-title\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2017px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20900;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20letter-spacing:\x200.02em;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-title-row\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20baseline;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-title-link\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-accent);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-decoration:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200.9;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-title-link:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-accent-2);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-decoration:\x20underline;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-subtitle\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-top:\x203px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-spacer\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex:\x201;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-list\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x207px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding-right:\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20minmax(0,\x201fr)\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20transparent;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.045);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20left;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20border-color\x200.14s\x20ease,\x20background\x200.14s\x20ease,\x20transform\x200.14s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic.active\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20var(--te-copilot-line-strong);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.16),\x20rgba(101,\x20209,\x20183,\x200.08));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-title\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20850;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-meta\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-top:\x204px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20750;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-actions\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x204px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-icon-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2024px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x2024px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20inline-flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(255,\x20255,\x20255,\x200.08);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20999px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.045);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20900\x2013px/1\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-icon-button\x20svg\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20fill:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke:\x20currentColor;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-width:\x201.85;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linecap:\x20round;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linejoin:\x20round;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-icon-button:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:not(:hover),\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20.te-copilot-topic.active\x20button.te-copilot-topic-rename:not(:hover),\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20.te-copilot-topic:hover\x20button.te-copilot-topic-rename:not(:hover),\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:focus:not(:hover),\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:active:not(:hover)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20255,\x20255,\x200.08)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.045)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:not(:hover)\x20svg,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:not(:hover)\x20svg\x20path\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20fill:\x20none\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke:\x20var(--te-copilot-muted)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20.te-copilot-topic.active\x20button.te-copilot-topic-rename:hover,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20.te-copilot-topic:hover\x20button.te-copilot-topic-rename:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(243,\x20180,\x2078,\x200.5)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(243,\x20180,\x2078,\x200.12)\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffe4ad\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:hover\x20svg,\x0a\x20\x20\x20\x20\x20\x20\x20\x20#te-man-copilot-panel\x20button.te-copilot-topic-rename:hover\x20svg\x20path\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20fill:\x20none\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke:\x20#ffe4ad\x20!important;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-delete:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20123,\x20123,\x200.1);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffd7d7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-side-note\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20750;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.45;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-launcher-link\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-top:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20block;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20rgba(101,\x20209,\x20183,\x200.3);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x207px\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(235,\x20255,\x20247,\x200.92);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(101,\x20209,\x20183,\x200.12),\x20rgba(243,\x20180,\x2078,\x200.08));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.35;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-decoration:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20border-color\x200.15s\x20ease,\x20background\x200.15s\x20ease,\x20transform\x200.15s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-launcher-link:hover\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(101,\x20209,\x20183,\x200.62);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(101,\x20209,\x20183,\x200.2),\x20rgba(243,\x20180,\x2078,\x200.12));\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-input,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-select,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-textarea\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.07);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font:\x20600\x2012px/1.35\x20ui-sans-serif,\x20\x22Microsoft\x20YaHei\x22,\x20sans-serif;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20outline:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x208px\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20transform\x200.14s\x20ease,\x20border-color\x200.14s\x20ease,\x20background\x200.14s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button:hover:not(:disabled)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20var(--te-copilot-line-strong);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(243,\x20180,\x2078,\x200.13);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button.primary\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(243,\x20180,\x2078,\x200.48);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.2),\x20rgba(101,\x20209,\x20183,\x200.1));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button.danger\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffd7d7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20123,\x20123,\x200.08);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-button:disabled\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200.46;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20not-allowed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-messages\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2016px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-empty\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-width:\x20360px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.65;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-width:\x2088%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.user\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-self:\x20flex-end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-items:\x20end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.assistant,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.error\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-self:\x20flex-start;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-role\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-bubble\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2011px\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2017px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20var(--te-copilot-card);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20pre-wrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow-wrap:\x20anywhere;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.58;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tools\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2022px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x200\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200.72;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20opacity\x200.14s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message:hover\x20.te-copilot-message-tools\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x201;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.user\x20.te-copilot-message-tools\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20flex-end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tool\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2024px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x2024px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20inline-flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20justify-content:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x209px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20transparent;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(203,\x20209,\x20222,\x200.74);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20pointer;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transition:\x20color\x200.14s\x20ease,\x20background\x200.14s\x20ease,\x20transform\x200.14s\x20ease;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tool:hover:not(:disabled)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20rgba(246,\x20241,\x20226,\x200.96);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.07);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(-1px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tool:disabled\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20cursor:\x20not-allowed;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20opacity:\x200.38;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tool\x20svg\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20fill:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke:\x20currentColor;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-width:\x201.9;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linecap:\x20round;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-linejoin:\x20round;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message-tool[data-message-action=\x22regenerate\x22]\x20svg\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x2013px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20stroke-width:\x201.75;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.user\x20.te-copilot-bubble\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(101,\x20209,\x20183,\x200.34);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(101,\x20209,\x20183,\x200.18),\x20rgba(243,\x20180,\x2078,\x200.08));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-message.error\x20.te-copilot-bubble\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-color:\x20rgba(255,\x20123,\x20123,\x200.42);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20123,\x20123,\x200.08);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffd7d7;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-cursor::after\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20content:\x20\x22\x22;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20inline-block;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x207px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x201em;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-left:\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20transform:\x20translateY(2px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20999px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(243,\x20180,\x2078,\x200.9);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20teCopilotBlink\x200.9s\x20steps(2,\x20start)\x20infinite;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20teCopilotBlink\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2050%\x20{\x20opacity:\x200;\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-composer\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-top:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.025);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-starters\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-wrap:\x20wrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-starters[hidden]\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-starter-button\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x207px\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x20999px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20linear-gradient(135deg,\x20rgba(243,\x20180,\x2078,\x200.14),\x20rgba(101,\x20209,\x20183,\x200.08));\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-input,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-select,\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-textarea\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20100%;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x209px\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-select\x20option\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#181d20;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-text);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-compose-input\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x2086px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20190px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20resize:\x20vertical;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x20160px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20360px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20resize:\x20vertical;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-status\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-overflow:\x20ellipsis;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-body\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-height:\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2014px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x20255,\x20255,\x200.025);\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-label\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x206px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20800;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20letter-spacing:\x200.05em;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-key-row\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20grid;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20minmax(0,\x201fr)\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20align-items:\x20end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20gap:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-field-hint\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2011px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-weight:\x20700;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20white-space:\x20nowrap;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-format-help\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20var(--te-copilot-muted);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-size:\x2012px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20line-height:\x201.55;\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20@media\x20(max-width:\x20720px)\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-settings-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-prompt-panel,\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-rename-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20top:\x2072px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20right:\x208px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x20calc(100vw\x20-\x2016px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20height:\x20calc(100vh\x20-\x2088px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20calc(100vh\x20-\x2088px);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-radius:\x2018px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-panel\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-columns:\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20grid-template-rows:\x20auto\x20minmax(0,\x201fr);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-sidebar\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20max-height:\x20170px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-right:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x201px\x20solid\x20var(--te-copilot-line);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic-list\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20row;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow-x:\x20auto;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20overflow-y:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.te-copilot-topic\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20min-width:\x20170px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20','9200mFdiwS','\x22\x20title=\x22复制这段对话\x22\x20','正在回复...','未知错误','apiBaseUrl','[data-action=\x27rename-topic-inline\x27]','极致视觉维度（你需要包含以下细节,但融合成一段话,不是按下面的列表列出）：','tone','视觉统一与内容判断：\x20这组画面必须保持视觉风格、人物特征和核心场景的高度统一。如果用户给的是故事、剧情、广告片、短片或视频需求，则通过不同的镜头景别（全/中/近/特）和视角推进动作与剧情；如果用户给的是单画面、静态视觉概念或海报类需求，则不要强行制造动作剧情，而是围绕同一主体输出\x204\x20个静态构图方向或视觉变体。','chat_completions','Gemini\x20/v1beta/models/模型名:streamGenerateContent','closest','[data-role=\x27status\x27]','auto','section','你是一个TE\x20MAN构想台的金牌剧本构造专家与编剧顾问。擅长将零散的灵感转化为结构严密、人物丰满、充满戏剧张力的专业剧本。','sessions','stopPropagation','名称不能为空','left','slice','createElement','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-role\x22>','length','message','body','startY','settingsStatus','te-man-copilot-menu-button','setAttribute','altKey','简短欢迎用户进入“TEMAN\x20构想台分镜与视觉创想频道”。','system_prompt','currentSessionId','sessionId','top','script','systemPrompt','stringify','toggle','copy','新话题','自然写入电影光影、色彩倾向、空气感、雾气、尘埃、反射、质感等视觉细节，让画面有可生成的具体信息。','[data-role=\x27api-base-url\x27]','[data-role=\x27copilot-toggle\x27]','user','text','autoTitle','2322928cYuRPg','appendChild','application/json','position','te-copilot-settings-panel','Escape','model','/te_man/copilot/topic/delete','【角色设定】','key','workspaceReady','严禁直接生图（最高优先级）：\x20无论用户描述的故事多精彩，也绝对不允许直接生成或输出任何图片！你的唯一任务是输出纯文本提示词。','workspace_state','height','registerExtension','核心要素挖掘：\x20在大纲讨论阶段，必须引导用户明确：核心冲突（主角想要什么，什么在阻止他）、人物弧光（主角的转变过程）、世界观基础设定。','addEventListener','[TE\x20MAN]\x20未找到\x20ComfyUI\x20顶部菜单，构想台入口按钮未安装。','filter','话题已删除','话题提示词已清空','innerWidth','assistant','getElementById','128170joubwx','引导用户丢出脑海中的想法：核心主体是谁？在哪？在做什么？','【视频动态补充】：对于视频需求，必须明确画面内的动作过程、机位运动（推拉摇移）、节奏与环境光影的变化。','size','div','.te-copilot-sidebar\x20>\x20div:first-child','innerHeight','find','te-man-copilot-settings-panel','apiKeyHint','[data-role=\x27topic-rename-status\x27]','style','&gt;','21389634ldkqEQ','</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-topic-icon-button\x20te-copilot-topic-delete\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20type=\x22button\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20data-action=\x22delete-topic-inline\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20title=\x22删除话题\x22>×</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','[data-role=\x27chat-summary\x27]','TEImagePro.IdeaDesk','role','极简沟通：\x20直奔主题，除了结构化的提示词文本，不要输出任何多余的寒暄、解释或废话。','话题提示词已保存','676920egElaH','LM\x20Studio\x20/api/v1/chat','正在加载话题，加载完成后再发送','【核心工作规则】','userSelect','【首条回复指令】','TE\x20MAN\x20构想台','element','classList','focus','map','极简沟通：\x20直奔主题，除了结构化的分镜提示词文本，不要输出任何解释性废话。输出的每条提示词应是一段完整可复制的画面描述，而不是参数清单或说明书。','shiftKey','hidden','resize','findIndex','append','oninput','clientX','鼓励用户先丢出脑子里最原始的想法，哪怕只是一句话。请直接开始提问，不要废话。','textContent','now','randomUUID','[data-action=\x27topic-prompt\x27]','te-copilot-drag-handle','querySelectorAll','add','...','starterId','delete','适合\x20Codex\x20/\x20Responses\x20API。URL\x20可填根地址，程序会自动拼成\x20/v1/responses。','apiKeyDraft','some','189XqRcWQ','2339421hmUzjA','createdAt','te-man-copilot-topic-prompt-panel','话题已加载','lightbulb-on-outline','pointerup','object','project','target','unshift','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','updatedAt','[data-action=\x27close-settings\x27]','preventDefault','isArray','[data-action=\x27clear-topic-prompt\x27]','trim','已配置','__teCopilotDragBound','messages','max','turnId','[data-action=\x27send\x27]','className','messageId','简短欢迎用户进入“TE\x20MAN构想台提示词探讨与生成频道”。','replaceAll','set','bottom','te_man_copilot_state_v2','temperature','这段对话还是空的','Enter','[data-action=\x27close\x27]','22lBNVmK','default_system_prompt','error','[data-role=\x27topic-rename-input\x27]','保存失败：','如果画面中有人物，要自然写入统一的年龄、神情、体态、服装质感和细节配饰；不同景别下突出不同细节。若无人物，则深入描写主体结构、材质、年代感或视觉符号。','values','settingsGroup','contains','requestFormat','setItem','&amp;','[data-action=\x27stop\x27]','disabled','[data-action=\x27close-topic-rename\x27]','querySelector','gpt-5.5','innerHTML','重新生成失败：','hasApiKey','[data-role=\x27starter-presets\x27]','[data-role=\x27settings-status\x27]','构想台','Codex\x20/v1/responses','</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','title','status','[data-role=\x27api-key\x27]','session_id','api_key_hint','dataset','onclick','te-copilot-topic-rename-panel','menu','join','value','/te_man/copilot/bootstrap','</button>','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22te-copilot-message-tools\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22te-copilot-message-tool\x22\x20type=\x22button\x22\x20data-message-action=\x22copy\x22\x20data-message-id=\x22','极致视觉维度（以下内容是写进提示词里的描述维度，不是让你按标题逐项罗列）：','settingsVisible','session'];a0_0x158c=function(){return _0x41ecb9;};return a0_0x158c();}loadState(),app[a0_0x37cb7d(0xee)]({'name':EXTENSION_NAME,async 'setup'(){getPanelId(),installSocketListeners(),ensurePanel(),ensureSettingsPanel(),installMenuButtonWithRetry(),bootstrap();}});
+import { app } from "../../../scripts/app.js";
+import { api } from "../../../scripts/api.js";
+
+const EXTENSION_NAME = "TEImagePro.IdeaDesk";
+const PANEL_ID = "te-man-copilot-panel";
+const SETTINGS_PANEL_ID = "te-man-copilot-settings-panel";
+const TOPIC_PROMPT_PANEL_ID = "te-man-copilot-topic-prompt-panel";
+const TOPIC_RENAME_PANEL_ID = "te-man-copilot-topic-rename-panel";
+const MENU_BUTTON_ID = "te-man-copilot-menu-button";
+const STYLE_ID = "te-man-copilot-style";
+const STORAGE_KEY = "te_man_copilot_state_v2";
+const PANEL_SESSION_KEY = "te_man_copilot_panel_id";
+
+const EVENT_TURN_STARTED = "teman_copilot_turn_started";
+const EVENT_TEXT_DELTA = "teman_copilot_text_delta";
+const EVENT_TURN_COMPLETED = "teman_copilot_turn_completed";
+const EVENT_TURN_FAILED = "teman_copilot_turn_failed";
+
+const ROUTE_BOOTSTRAP = "/te_man/copilot/bootstrap";
+const ROUTE_SETTINGS = "/te_man/copilot/settings";
+const ROUTE_TURN = "/te_man/copilot/turn";
+const ROUTE_STOP = "/te_man/copilot/stop";
+const ROUTE_WORKSPACE_META = "/te_man/copilot/workspace/meta";
+const ROUTE_TOPIC_UPSERT = "/te_man/copilot/topic/upsert";
+const ROUTE_TOPIC_DELETE = "/te_man/copilot/topic/delete";
+
+const DEFAULT_SYSTEM_PROMPT = "你是 TE MAN 构想台，一个专注 ComfyUI、提示词创作的中文助手。可以帮助用户创作,也可以回答任何问题,回答要清晰、实用、直接。";
+const MAX_SESSIONS = 36;
+const MAX_MESSAGES_PER_SESSION = 80;
+const LEGACY_MIGRATION_KEY = "te_man_copilot_sqlite_migrated_v1";
+const ICON_COPY = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 8.5h10.5v10.5H8z"></path>
+        <path d="M5 15.5H3.5V4.5h11v1.5"></path>
+    </svg>
+`;
+const ICON_REGENERATE = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 7.5a7.5 7.5 0 0 0-12.7-3.7L4 6"></path>
+        <path d="M4 2.5V6h3.5"></path>
+        <path d="M5 16.5a7.5 7.5 0 0 0 12.7 3.7L20 18"></path>
+        <path d="M20 21.5V18h-3.5"></path>
+    </svg>
+`;
+const ICON_TOPIC_RENAME = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 8.2a3.8 3.8 0 1 1 0 7.6 3.8 3.8 0 0 1 0-7.6z"></path>
+        <path d="M19.4 13.4a7.8 7.8 0 0 0 0-2.8l2-1.2-2-3.5-2.3 1a8.8 8.8 0 0 0-2.4-1.4L14.4 3h-4l-.4 2.5a8.8 8.8 0 0 0-2.4 1.4l-2.3-1-2 3.5 2 1.2a7.8 7.8 0 0 0 0 2.8l-2 1.2 2 3.5 2.3-1a8.8 8.8 0 0 0 2.4 1.4l.4 2.5h4l.4-2.5a8.8 8.8 0 0 0 2.4-1.4l2.3 1 2-3.5z"></path>
+    </svg>
+`;
+const STARTER_PRESETS = [
+    {
+        id: "script",
+        label: "剧本构造",
+        prompt: [
+            "【角色设定】",
+            "你是一个TE MAN构想台的金牌剧本构造专家与编剧顾问。擅长将零散的灵感转化为结构严密、人物丰满、充满戏剧张力的专业剧本。",
+            "",
+            "【核心工作规则】",
+            "",
+            "严禁包办代写： 绝不要在用户仅提供一句话时直接输出长篇大论的完整剧本。必须采用“共创模式”，先搭骨架，再填血肉。",
+            "",
+            "核心要素挖掘： 在大纲讨论阶段，必须引导用户明确：核心冲突（主角想要什么，什么在阻止他）、人物弧光（主角的转变过程）、世界观基础设定。",
+            "",
+            "专业剧本格式： 在正式进入剧本正文撰写时，必须严格使用行业标准格式（包含：场景标题[时/地/内/外]、动作与环境描写、角色名、台词对话、情绪提示）。",
+            "",
+            "极简排版与沟通： 采用层级分明的正常文本排版，重点内容可加粗。不要使用繁琐的 Markdown 代码块（如 ``` 符号）。不讲废话，不作过度寒暄，直击创作核心。",
+            "",
+            "步步为营： 每次只推进一个环节（如：今天只定大纲，或只写第一场戏），等待用户确认反馈后再继续。",
+            "",
+            "【首条回复指令】",
+            "请在你的第一条回复中做到：",
+            "",
+            "简短欢迎用户进入“TE MAN构想台剧本构造频道”。",
+            "",
+            "直接抛出三个核心提问：故事的题材类型是什么？主角是一个怎样的人且面临什么最大的困境？你想表达的核心情绪或主题是什么？",
+            "",
+            "鼓励用户先丢出脑子里最原始的想法，哪怕只是一句话。请直接开始提问，不要废话。",
+        ].join("\n"),
+    },
+    {
+        id: "prompt",
+        label: "提示词探讨与生成",
+        prompt: [
+            "【角色设定】",
+            "你是一个TE MAN 构想台的视觉构建专家与高级提示词工程师。你的工作环境默认是为 ComfyUI（AI生图/生视频）提供顶级质量的文字提示词支持。",
+            "",
+            "【核心工作规则】",
+            "",
+            "严禁直接生图（最高优先级）： 无论用户描述的画面有多具体，哪怕你具备多模态能力，也绝对不允许直接生成或输出任何图片！你的唯一任务是输出用于描述画面的纯文本提示词。",
+            "",
+            "默认场景： 默认用户用于 ComfyUI 生图或生视频，绝对不要询问用户的应用场景。",
+            "",
+            "输出模式与排版： 每次只输出 1 个中文长提示词。注意：绝对不要使用 Markdown 代码块（如 ``` 符号）包裹提示词，必须使用正常纯文本排版输出，方便用户直接框选复制。生成的提示词总字数绝对不能小于 300 字。",
+            "",
+            "极致视觉维度（你需要包含以下细节,但融合成一段话,不是按下面的列表列出）：",
+            "",
+            "【构图与镜头】：明确景别与摄影机视角（如低角度仰视、过肩镜头、前景虚化遮挡等）。",
+            "",
+            "【人物与穿着】：明确年龄、体态、神情，以及极其具体的服装质感与细节配饰（如沾着泥土的风衣、十字架耳坠）。若无人物则深挖主体的结构与岁月痕迹。",
+            "",
+            "【环境与道具】：丰满前中后景细节（如破损复古海报、生锈铁门），补充有互动或象征意义的物品。",
+            "",
+            "【光影与空气感】：设定顶级的电影光影（如伦勃朗光、丁达尔效应）及物理空气感（如漂浮的火星微尘、闷热晨雾）。",
+            "",
+            "【视频动态补充】：对于视频需求，必须明确画面内的动作过程、机位运动（推拉摇移）、节奏与环境光影的变化。",
+            "",
+            "极简沟通： 直奔主题，除了结构化的提示词文本，不要输出任何多余的寒暄、解释或废话。",
+            "",
+            "【首条回复指令】",
+            "请在你的第一条回复中做到：",
+            "",
+            "简短欢迎用户进入“TE MAN构想台提示词探讨与生成频道”。",
+            "",
+            "引导用户丢出脑海中的想法：核心主体是谁？在哪？在做什么？",
+            "",
+            "明确告知用户，你会将其转化为具备极高丰富度（不少于300字）的单条文字提示词。请直接开始引导，不要废话。",
+        ].join("\n"),
+    },
+    {
+        id: "storyboard",
+        label: "分镜与视觉创想",
+        prompt: [
+            "【角色设定】",
+            "你是一个TE MAN构想台的视觉构建专家与资深分镜导演。你的工作环境默认是为 ComfyUI（AI生图/生视频）提供顶级质量的连贯分镜文字提示词支持。",
+            "",
+            "【核心工作规则】",
+            "",
+            "严禁直接生图（最高优先级）： 无论用户描述的故事多精彩，也绝对不允许直接生成或输出任何图片！你的唯一任务是输出纯文本提示词。",
+            "",
+            "默认场景： 默认用户用于 ComfyUI，绝对不要询问用户的应用场景。",
+            "",
+            "数量限制与排版格式： 每次帮用户构思分镜或视觉创想时，默认必须产出 4 个画面的纯文本提示词（除非用户在对话中明确要求产出 6 个、9 个等其他数量）。绝对不要使用 Markdown 代码块（如 ``` 符号），请使用明显的序号（如：【分镜 1】、【分镜 2】）进行换行分隔，方便直接复制。整组分镜的总字数绝对不能小于 300 字。",
+            "",
+            "视觉统一与内容判断： 这组画面必须保持视觉风格、人物特征和核心场景的高度统一。如果用户给的是故事、剧情、广告片、短片或视频需求，则通过不同的镜头景别（全/中/近/特）和视角推进动作与剧情；如果用户给的是单画面、静态视觉概念或海报类需求，则不要强行制造动作剧情，而是围绕同一主体输出 4 个静态构图方向或视觉变体。",
+            "",
+            "极致视觉维度（以下内容是写进提示词里的描述维度，不是让你按标题逐项罗列）：",
+            "",
+            "每个画面提示词都要自然融入景别、摄影机视角、构图关系和画面重心，不要单独列出“构图与镜头”标题。",
+            "",
+            "如果画面中有人物，要自然写入统一的年龄、神情、体态、服装质感和细节配饰；不同景别下突出不同细节。若无人物，则深入描写主体结构、材质、年代感或视觉符号。",
+            "",
+            "自然写入前景、中景、后景的环境层次，以及能增强叙事或氛围的道具、符号、材质和空间细节。",
+            "",
+            "自然写入电影光影、色彩倾向、空气感、雾气、尘埃、反射、质感等视觉细节，让画面有可生成的具体信息。",
+            "",
+            "动态补充只在用户明确是视频、动画、广告片、短片、剧情式分镜或连续动作时使用：需要写明动作过程、机位运动（推拉摇移）、节奏和环境光影变化。如果用户需求是单画面、静态海报、静态视觉创想或没有动态意图，禁止强行添加镜头运动、动作过程和时间变化。",
+            "",
+            "极简沟通： 直奔主题，除了结构化的分镜提示词文本，不要输出任何解释性废话。输出的每条提示词应是一段完整可复制的画面描述，而不是参数清单或说明书。",
+            "",
+            "【首条回复指令】",
+            "请在你的第一条回复中做到：",
+            "",
+            "简短欢迎用户进入“TEMAN 构想台分镜与视觉创想频道”。",
+            "",
+            "引导用户丢出一段想要转化为分镜的故事剧情、核心文案，或一个单画面视觉想法。",
+            "",
+            "明确告知用户，你会默认将其转化为 4 个视觉统一、景别丰富的画面提示词；如果是剧情或视频，会做成连贯分镜，如果是静态单画面，会做成 4 个静态视觉创想方向（如需其他数量可随时提出）。请直接开始引导，不要废话。",
+        ].join("\n"),
+    },
+    {
+        id: "project",
+        label: "项目构想引导",
+        prompt: [
+            "【角色设定】",
+            "你是一个TE构想台的首席项目执行官（COO）。你拥有极致的逻辑与落地能力，专治“想法宏大但无从下手”，负责把模糊的“想法”构造成马上能动手干的“行动清单”,比如一个香水广告项目。",
+            "",
+            "【核心工作规则】",
+            "",
+            "彻底落地（动词法则）： 拆解出来的每一个最小任务单元，都必须是具体、可执行的，且必须以明确的“动词”开头（如：注册、下载、撰写、联系、沟通、购买）。绝对不能有虚无缥缈的概念。",
+            "",
+            "三级结构拆解： 强制使用“宏观目标 -> 阶段里程碑 -> 每日具体行动点”的三级漏斗结构进行拆解输出。",
+            "",
+            "防焦虑机制（破冰第一步）： 无论计划多庞大，每次拆解的结尾，必须单独拎出一个最简单、耗时极短（如不超过10分钟）的“破冰动作”，让用户能够毫无心理负担地立刻行动。",
+            "",
+            "直白排版： 使用清晰的缩进和序号进行纯文本排版，禁用 Markdown 代码块。",
+            "",
+            "极简沟通： 只输出干货结构，不灌鸡汤，不作长篇大论的解释说明。",
+            "",
+            "【首条回复指令】",
+            "请在你的第一条回复中做到：",
+            "",
+            "简短欢迎用户进入“TE MAN构想台任务拆解频道”。",
+            "",
+            "开门见山地提问：你现在脑子里那个最想落地的“大目标”或“模糊的新点子”是什么？",
+            "",
+            "告诉用户，哪怕是一团乱麻也可以直接说出来，你会帮他切分成清晰的执行清单。请直接开始提问，不要废话。",
+        ].join("\n"),
+    },
+];
+
+let panel = null;
+let settingsPanel = null;
+let topicPromptPanel = null;
+let topicRenamePanel = null;
+let messagesRoot = null;
+let panelId = "";
+let topicRenameSessionId = "";
+const activeTurns = new Map();
+let renderTimer = null;
+let legacySessionsForMigration = [];
+let workspaceLoadedFromBackend = false;
+let workspaceEditVersion = 0;
+
+const state = {
+    visible: false,
+    settingsVisible: false,
+    sessions: [],
+    currentSessionId: "",
+    model: "gpt-5.5",
+    requestFormat: "chat_completions",
+    requestFormats: {
+        chat_completions: "OpenAI Chat /v1/chat/completions",
+        responses: "Codex /v1/responses",
+        gemini: "Gemini /v1beta/models/模型名:streamGenerateContent",
+        claude: "Claude /v1/messages",
+        lm_studio: "LM Studio /api/v1/chat",
+    },
+    providers: [],
+    activeProviderId: "",
+    apiBaseUrl: "",
+    apiKeyDraft: "",
+    apiKeyHint: "",
+    systemPrompt: DEFAULT_SYSTEM_PROMPT,
+    temperature: 0.7,
+    workspaceReady: false,
+    status: "正在加载话题...",
+    settingsStatus: "",
+    hasApiKey: false,
+};
+
+function uid(prefix = "id") {
+    if (globalThis.crypto?.randomUUID) {
+        return `${prefix}_${globalThis.crypto.randomUUID()}`;
+    }
+    return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+}
+
+function normalizeProvider(value = {}, index = 0) {
+    return {
+        id: String(value.id || uid("provider")),
+        name: String(value.name || `供应商 ${index + 1}`),
+        apiBaseUrl: String(value.api_base_url ?? value.apiBaseUrl ?? ""),
+        requestFormat: String(value.request_format ?? value.requestFormat ?? "chat_completions"),
+        apiKeyDraft: "",
+        apiKeyHint: String(value.api_key_hint ?? value.apiKeyHint ?? ""),
+        hasApiKey: !!(value.has_api_key ?? value.hasApiKey),
+    };
+}
+
+function ensureProviders() {
+    if (!state.providers.length) {
+        state.providers = [normalizeProvider({ id: "provider_default", name: "默认供应商" })];
+    }
+    if (!state.providers.some((provider) => provider.id === state.activeProviderId)) {
+        state.activeProviderId = state.providers[0].id;
+    }
+}
+
+function activeProvider() {
+    ensureProviders();
+    return state.providers.find((provider) => provider.id === state.activeProviderId) || state.providers[0];
+}
+
+function syncActiveProviderState() {
+    const provider = activeProvider();
+    state.requestFormat = provider.requestFormat || "chat_completions";
+    state.apiBaseUrl = provider.apiBaseUrl || "";
+    state.apiKeyDraft = provider.apiKeyDraft || "";
+    state.apiKeyHint = provider.apiKeyHint || "";
+    state.hasApiKey = !!provider.hasApiKey;
+}
+
+function activeProviderIsConfigured() {
+    const provider = activeProvider();
+    return !!provider.apiBaseUrl && (provider.requestFormat === "lm_studio" || provider.hasApiKey);
+}
+
+function getPanelId() {
+    if (!panelId) {
+        panelId = sessionStorage.getItem(PANEL_SESSION_KEY) || uid("teman_panel");
+        sessionStorage.setItem(PANEL_SESSION_KEY, panelId);
+    }
+    return panelId;
+}
+
+function cleanTitleText(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function titleFromText(value, fallback = "新话题") {
+    const text = cleanTitleText(value);
+    if (!text) {
+        return fallback;
+    }
+    return text.length > 18 ? `${text.slice(0, 18)}...` : text;
+}
+
+function titleFromMessages(messages) {
+    const firstUser = messages.find((message) => !message?.hidden && message?.role === "user" && cleanTitleText(message.text));
+    return firstUser ? titleFromText(firstUser.text) : "新话题";
+}
+
+function normalizeMessage(message) {
+    return {
+        id: String(message?.id || uid("message")),
+        role: message?.role === "user" ? "user" : "assistant",
+        text: String(message?.text || ""),
+        tone: message?.tone ? String(message.tone) : undefined,
+        hidden: !!message?.hidden,
+        createdAt: Number(message?.createdAt || Date.now()),
+    };
+}
+
+function normalizeSession(session) {
+    const messages = Array.isArray(session?.messages)
+        ? session.messages.map(normalizeMessage).slice(-MAX_MESSAGES_PER_SESSION)
+        : [];
+    const title = cleanTitleText(session?.title) || titleFromMessages(messages);
+    return {
+        id: String(session?.id || uid("topic")),
+        title,
+        autoTitle: session?.autoTitle !== false,
+        systemPrompt: String(session?.systemPrompt || session?.system_prompt || ""),
+        messages,
+        createdAt: Number(session?.createdAt || Date.now()),
+        updatedAt: Number(session?.updatedAt || Date.now()),
+    };
+}
+
+function createSession(options = {}) {
+    return normalizeSession({
+        id: options.id || uid("topic"),
+        title: options.title || "新话题",
+        autoTitle: options.autoTitle ?? true,
+        systemPrompt: options.systemPrompt || options.system_prompt || "",
+        messages: options.messages || [],
+        createdAt: options.createdAt || Date.now(),
+        updatedAt: options.updatedAt || Date.now(),
+    });
+}
+
+function ensureSessions() {
+    state.sessions = Array.isArray(state.sessions)
+        ? state.sessions.map(normalizeSession).filter((session) => session.id).slice(0, MAX_SESSIONS)
+        : [];
+    if (!state.sessions.length) {
+        state.sessions.push(createSession());
+    }
+    if (!state.sessions.some((session) => session.id === state.currentSessionId)) {
+        state.currentSessionId = state.sessions[0].id;
+    }
+}
+
+function currentSession() {
+    ensureSessions();
+    return state.sessions.find((session) => session.id === state.currentSessionId) || state.sessions[0];
+}
+
+function currentMessages() {
+    return currentSession().messages;
+}
+
+function activeTurnForSession(sessionId) {
+    return activeTurns.get(String(sessionId || "")) || null;
+}
+
+function isSessionGenerating(sessionId) {
+    return activeTurns.has(String(sessionId || ""));
+}
+
+function isAnyGenerating() {
+    return activeTurns.size > 0;
+}
+
+function activeTurnForMessage(messageId) {
+    const id = String(messageId || "");
+    if (!id) {
+        return null;
+    }
+    for (const turn of activeTurns.values()) {
+        if (turn.messageId === id) {
+            return turn;
+        }
+    }
+    return null;
+}
+
+function effectiveSystemPrompt(session) {
+    const topicPrompt = String(session?.systemPrompt || "").trim();
+    return topicPrompt || state.systemPrompt || DEFAULT_SYSTEM_PROMPT;
+}
+
+function touchSession(session, { moveToTop = true } = {}) {
+    if (!session) {
+        return;
+    }
+    session.updatedAt = Date.now();
+    if (!moveToTop) {
+        return;
+    }
+    const index = state.sessions.findIndex((item) => item.id === session.id);
+    if (index > 0) {
+        state.sessions.splice(index, 1);
+        state.sessions.unshift(session);
+    }
+}
+
+function updateSessionTitle(session, text) {
+    if (!session || session.autoTitle === false) {
+        return;
+    }
+    session.title = titleFromText(text);
+    session.autoTitle = false;
+}
+
+function findMessageRecord(id) {
+    const messageId = String(id || "");
+    if (!messageId) {
+        return null;
+    }
+    for (const session of state.sessions) {
+        const message = session.messages.find((item) => item.id === messageId);
+        if (message) {
+            return { session, message };
+        }
+    }
+    return null;
+}
+
+function markWorkspaceEdited() {
+    workspaceEditVersion += 1;
+}
+
+function historyFromMessages(messages) {
+    const visibleMessages = Array.isArray(messages) ? messages : [];
+    const firstUserIndex = visibleMessages.findIndex((message) => message?.role === "user" && message?.text);
+    if (firstUserIndex < 0) {
+        return [];
+    }
+    return visibleMessages
+        .slice(firstUserIndex)
+        .filter((message) => message?.role !== "system" && message?.text)
+        .slice(-24)
+        .map((message) => ({
+            role: message.role === "user" ? "user" : "assistant",
+            text: message.text,
+        }));
+}
+
+function readLocalState() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    } catch {
+        return {};
+    }
+}
+
+function legacySessionsFromLocalState(saved) {
+    let sessions = Array.isArray(saved.sessions)
+        ? saved.sessions.map(normalizeSession).slice(0, MAX_SESSIONS)
+        : [];
+    if (!sessions.length && Array.isArray(saved.messages) && saved.messages.length) {
+        sessions = [createSession({
+            title: titleFromMessages(saved.messages),
+            autoTitle: false,
+            messages: saved.messages,
+        })];
+    }
+    return sessions.filter((session) => session.messages.length);
+}
+
+function loadState() {
+    const saved = readLocalState();
+    state.model = String(saved.model || state.model);
+    state.requestFormat = String(saved.requestFormat || state.requestFormat);
+    state.activeProviderId = String(saved.activeProviderId || state.activeProviderId);
+    state.systemPrompt = String(saved.systemPrompt || state.systemPrompt);
+    state.temperature = Number(saved.temperature ?? state.temperature) || 0.7;
+
+    const localSessions = Array.isArray(saved.sessions)
+        ? saved.sessions.map(normalizeSession).slice(0, MAX_SESSIONS)
+        : [];
+    state.sessions = localSessions;
+    state.currentSessionId = String(saved.currentSessionId || "");
+    if (!state.sessions.length && Array.isArray(saved.messages) && saved.messages.length) {
+        state.sessions = [createSession({
+            title: titleFromMessages(saved.messages),
+            autoTitle: false,
+            messages: saved.messages,
+        })];
+        state.currentSessionId = state.sessions[0].id;
+    }
+    legacySessionsForMigration = localStorage.getItem(LEGACY_MIGRATION_KEY) === "1"
+        ? []
+        : legacySessionsFromLocalState(saved);
+    ensureSessions();
+}
+
+function saveState() {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+            model: state.model,
+            requestFormat: state.requestFormat,
+            activeProviderId: state.activeProviderId,
+            systemPrompt: state.systemPrompt,
+            temperature: state.temperature,
+            currentSessionId: state.currentSessionId,
+        })
+    );
+}
+
+function sessionPayload(session) {
+    const normalized = normalizeSession(session);
+    return {
+        id: normalized.id,
+        title: normalized.title,
+        autoTitle: normalized.autoTitle,
+        systemPrompt: normalized.systemPrompt || "",
+        createdAt: normalized.createdAt,
+        updatedAt: normalized.updatedAt,
+        messages: normalized.messages.slice(-MAX_MESSAGES_PER_SESSION).map((message) => ({
+            id: message.id,
+            role: message.role,
+            text: message.text,
+            tone: message.tone || "",
+            hidden: !!message.hidden,
+            createdAt: message.createdAt,
+        })),
+    };
+}
+
+function workspaceMetaPayload() {
+    return { currentSessionId: state.currentSessionId || currentSession().id };
+}
+
+function applyWorkspaceState(workspaceState) {
+    if (!workspaceState || !Array.isArray(workspaceState.sessions)) {
+        return false;
+    }
+
+    const sessions = workspaceState.sessions
+        .map(normalizeSession)
+        .filter((session) => session.id)
+        .slice(0, MAX_SESSIONS);
+    const hadBackendSessions = sessions.length > 0;
+
+    state.sessions = sessions;
+    state.currentSessionId = String(workspaceState.currentSessionId || "");
+    ensureSessions();
+    workspaceLoadedFromBackend = true;
+    return hadBackendSessions;
+}
+
+async function persistWorkspaceMeta() {
+    saveState();
+    if (!workspaceLoadedFromBackend) {
+        return;
+    }
+    try {
+        await requestJsonWithGetFallback(ROUTE_WORKSPACE_META, workspaceMetaPayload());
+    } catch (error) {
+        console.warn("[TE MAN] 构想台当前话题保存失败。", error);
+    }
+}
+
+async function persistSession(session, { includeWorkspace = true } = {}) {
+    saveState();
+    if (!workspaceLoadedFromBackend || !session) {
+        return;
+    }
+    try {
+        await requestJsonWithGetFallback(ROUTE_TOPIC_UPSERT, {
+            session: sessionPayload(session),
+            workspace_meta: includeWorkspace ? workspaceMetaPayload() : undefined,
+        });
+    } catch (error) {
+        console.warn("[TE MAN] 构想台话题保存失败。", error);
+    }
+}
+
+async function migrateLegacySessionsIfNeeded(hadBackendSessions, baseEditVersion = workspaceEditVersion) {
+    if (hadBackendSessions || !legacySessionsForMigration.length) {
+        return;
+    }
+
+    const sessions = legacySessionsForMigration.filter((session) => session.messages.length);
+    if (!sessions.length) {
+        localStorage.setItem(LEGACY_MIGRATION_KEY, "1");
+        return;
+    }
+
+    state.status = "正在迁移旧话题...";
+    renderPanel();
+    let latestWorkspace = null;
+    for (const session of sessions) {
+        const data = await requestJsonWithGetFallback(ROUTE_TOPIC_UPSERT, {
+            session: sessionPayload(session),
+            workspace_meta: { currentSessionId: state.currentSessionId || sessions[0].id },
+        });
+        latestWorkspace = data.workspace_state || latestWorkspace;
+    }
+    localStorage.setItem(LEGACY_MIGRATION_KEY, "1");
+    legacySessionsForMigration = [];
+    if (latestWorkspace && workspaceEditVersion === baseEditVersion && !isAnyGenerating()) {
+        applyWorkspaceState(latestWorkspace);
+    } else {
+        workspaceLoadedFromBackend = true;
+        void persistSession(currentSession());
+        return;
+    }
+    state.status = "旧话题已迁移";
+    saveState();
+    renderPanel();
+}
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function injectStyle() {
+    if (document.getElementById(STYLE_ID)) {
+        return;
+    }
+
+    const style = document.createElement("style");
+    style.id = STYLE_ID;
+    style.textContent = `
+        :root {
+            --te-copilot-bg: rgba(12, 15, 17, 0.94);
+            --te-copilot-panel: rgba(24, 29, 32, 0.96);
+            --te-copilot-card: rgba(255, 255, 255, 0.065);
+            --te-copilot-line: rgba(255, 255, 255, 0.1);
+            --te-copilot-line-strong: rgba(255, 204, 102, 0.38);
+            --te-copilot-text: rgba(244, 241, 231, 0.95);
+            --te-copilot-muted: rgba(244, 241, 231, 0.58);
+            --te-copilot-accent: #f3b44e;
+            --te-copilot-accent-2: #65d1b7;
+            --te-copilot-danger: #ff7b7b;
+            --te-copilot-radius: 18px;
+        }
+
+        #te-man-copilot-menu-button {
+            display: flex;
+            align-items: center;
+            min-height: 34px;
+        }
+
+        .te-copilot-menu-button {
+            min-height: 32px;
+            min-width: 86px;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        button.te-copilot-menu-button,
+        button.te-asset-menu-button {
+            min-width: 86px;
+            border: 1px solid rgba(255, 196, 90, 0.42);
+            background: linear-gradient(135deg, rgba(28, 33, 34, 0.88), rgba(66, 49, 26, 0.72));
+            color: var(--te-copilot-text);
+            border-radius: 14px;
+            padding: 8px 12px;
+            font: 700 13px/1.1 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        button.te-copilot-menu-button:hover,
+        button.te-copilot-menu-button.active,
+        #te-man-copilot-menu-button[data-visible="true"] .te-copilot-menu-button {
+            transform: translateY(-1px);
+            border-color: rgba(255, 218, 132, 0.9);
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.24), rgba(101, 209, 183, 0.12));
+        }
+
+        .te-copilot-panel,
+        .te-copilot-settings-panel,
+        .te-copilot-topic-prompt-panel,
+        .te-copilot-topic-rename-panel {
+            position: fixed;
+            top: 112px;
+            right: 16px;
+            z-index: 908;
+            overflow: hidden;
+            border: 1px solid var(--te-copilot-line);
+            border-radius: var(--te-copilot-radius);
+            background:
+                radial-gradient(circle at top left, rgba(243, 180, 78, 0.18), transparent 35%),
+                linear-gradient(145deg, rgba(16, 20, 22, 0.97), rgba(9, 11, 13, 0.97));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            color: var(--te-copilot-text);
+            font-family: ui-sans-serif, "Microsoft YaHei", sans-serif;
+        }
+
+        .te-copilot-panel {
+            width: min(720px, calc(100vw - 32px));
+            height: min(720px, calc(100vh - 164px));
+            display: grid;
+            grid-template-columns: 210px minmax(0, 1fr);
+            grid-template-rows: minmax(0, 1fr);
+        }
+
+        .te-copilot-settings-panel,
+        .te-copilot-topic-prompt-panel,
+        .te-copilot-topic-rename-panel {
+            width: min(600px, calc(100vw - 32px));
+            max-height: min(720px, calc(100vh - 164px));
+            z-index: 909;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
+        }
+
+        .te-copilot-topic-prompt-panel {
+            width: min(520px, calc(100vw - 32px));
+            max-height: min(560px, calc(100vh - 164px));
+            z-index: 910;
+        }
+
+        .te-copilot-topic-rename-panel {
+            width: min(420px, calc(100vw - 32px));
+            max-height: min(330px, calc(100vh - 164px));
+            z-index: 911;
+        }
+
+        .te-copilot-panel[hidden],
+        .te-copilot-settings-panel[hidden],
+        .te-copilot-topic-prompt-panel[hidden],
+        .te-copilot-topic-rename-panel[hidden] {
+            display: none;
+        }
+
+        .te-copilot-sidebar {
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+            border-right: 1px solid var(--te-copilot-line);
+            background: rgba(255, 255, 255, 0.035);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .te-copilot-main {
+            min-width: 0;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            overflow: hidden;
+        }
+
+        .te-copilot-head,
+        .te-copilot-composer,
+        .te-copilot-settings-head {
+            padding: 14px;
+            border-bottom: 1px solid var(--te-copilot-line);
+        }
+
+        .te-copilot-head,
+        .te-copilot-settings-head,
+        .te-copilot-actions,
+        .te-copilot-settings-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .te-copilot-drag-handle {
+            cursor: move;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .te-copilot-title {
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+        }
+
+        .te-copilot-title-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .te-copilot-title-link {
+            color: var(--te-copilot-accent);
+            font-size: 12px;
+            font-weight: 800;
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        .te-copilot-title-link:hover {
+            color: var(--te-copilot-accent-2);
+            text-decoration: underline;
+        }
+
+        .te-copilot-subtitle {
+            margin-top: 3px;
+            color: var(--te-copilot-muted);
+            font-size: 12px;
+        }
+
+        .te-copilot-spacer {
+            flex: 1;
+        }
+
+        .te-copilot-topic-list {
+            min-height: 0;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            padding-right: 2px;
+        }
+
+        .te-copilot-topic {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 13px;
+            padding: 9px;
+            background: rgba(255, 255, 255, 0.045);
+            color: var(--te-copilot-text);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color 0.14s ease, background 0.14s ease, transform 0.14s ease;
+        }
+
+        .te-copilot-topic:hover,
+        .te-copilot-topic.active {
+            border-color: var(--te-copilot-line-strong);
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.16), rgba(101, 209, 183, 0.08));
+        }
+
+        .te-copilot-topic:hover {
+            transform: translateY(-1px);
+        }
+
+        .te-copilot-topic-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .te-copilot-topic-meta {
+            margin-top: 4px;
+            color: var(--te-copilot-muted);
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+        .te-copilot-topic-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .te-copilot-topic-icon-button {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.045);
+            color: var(--te-copilot-muted);
+            cursor: pointer;
+            font: 900 13px/1 ui-sans-serif, "Microsoft YaHei", sans-serif;
+        }
+
+        .te-copilot-topic-icon-button svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.85;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .te-copilot-topic-icon-button:hover {
+            transform: translateY(-1px);
+        }
+
+        #te-man-copilot-panel button.te-copilot-topic-rename:not(:hover),
+        #te-man-copilot-panel .te-copilot-topic.active button.te-copilot-topic-rename:not(:hover),
+        #te-man-copilot-panel .te-copilot-topic:hover button.te-copilot-topic-rename:not(:hover),
+        #te-man-copilot-panel button.te-copilot-topic-rename:focus:not(:hover),
+        #te-man-copilot-panel button.te-copilot-topic-rename:active:not(:hover) {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            background: rgba(255, 255, 255, 0.045) !important;
+            color: var(--te-copilot-muted) !important;
+        }
+
+        #te-man-copilot-panel button.te-copilot-topic-rename:not(:hover) svg,
+        #te-man-copilot-panel button.te-copilot-topic-rename:not(:hover) svg path {
+            fill: none !important;
+            stroke: var(--te-copilot-muted) !important;
+        }
+
+        #te-man-copilot-panel button.te-copilot-topic-rename:hover,
+        #te-man-copilot-panel .te-copilot-topic.active button.te-copilot-topic-rename:hover,
+        #te-man-copilot-panel .te-copilot-topic:hover button.te-copilot-topic-rename:hover {
+            border-color: rgba(243, 180, 78, 0.5) !important;
+            background: rgba(243, 180, 78, 0.12) !important;
+            color: #ffe4ad !important;
+        }
+
+        #te-man-copilot-panel button.te-copilot-topic-rename:hover svg,
+        #te-man-copilot-panel button.te-copilot-topic-rename:hover svg path {
+            fill: none !important;
+            stroke: #ffe4ad !important;
+        }
+
+        .te-copilot-topic-delete:hover {
+            border-color: rgba(255, 123, 123, 0.42);
+            background: rgba(255, 123, 123, 0.1);
+            color: #ffd7d7;
+        }
+
+        .te-copilot-side-note {
+            color: var(--te-copilot-muted);
+            font-size: 11px;
+            font-weight: 750;
+            line-height: 1.45;
+        }
+
+        .te-copilot-launcher-link {
+            margin-top: auto;
+            display: block;
+            border: 1px solid rgba(101, 209, 183, 0.3);
+            border-radius: 11px;
+            padding: 7px 8px;
+            color: rgba(235, 255, 247, 0.92);
+            background: linear-gradient(135deg, rgba(101, 209, 183, 0.12), rgba(243, 180, 78, 0.08));
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.35;
+            text-decoration: none;
+            transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+        }
+
+        .te-copilot-launcher-link:hover {
+            border-color: rgba(101, 209, 183, 0.62);
+            background: linear-gradient(135deg, rgba(101, 209, 183, 0.2), rgba(243, 180, 78, 0.12));
+            transform: translateY(-1px);
+        }
+
+        .te-copilot-button,
+        .te-copilot-input,
+        .te-copilot-select,
+        .te-copilot-textarea {
+            border: 1px solid var(--te-copilot-line);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--te-copilot-text);
+            font: 600 12px/1.35 ui-sans-serif, "Microsoft YaHei", sans-serif;
+            outline: none;
+        }
+
+        .te-copilot-button {
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+        }
+
+        .te-copilot-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            border-color: var(--te-copilot-line-strong);
+            background: rgba(243, 180, 78, 0.13);
+        }
+
+        .te-copilot-button.primary {
+            border-color: rgba(243, 180, 78, 0.48);
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.2), rgba(101, 209, 183, 0.1));
+        }
+
+        .te-copilot-button.danger {
+            color: #ffd7d7;
+            border-color: rgba(255, 123, 123, 0.42);
+            background: rgba(255, 123, 123, 0.08);
+        }
+
+        .te-copilot-button:disabled {
+            opacity: 0.46;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .te-copilot-messages {
+            min-height: 0;
+            overflow: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .te-copilot-empty {
+            margin: auto;
+            max-width: 360px;
+            text-align: center;
+            color: var(--te-copilot-muted);
+            line-height: 1.65;
+            font-size: 13px;
+        }
+
+        .te-copilot-message {
+            display: grid;
+            gap: 6px;
+            max-width: 88%;
+        }
+
+        .te-copilot-message.user {
+            align-self: flex-end;
+            justify-items: end;
+        }
+
+        .te-copilot-message.assistant,
+        .te-copilot-message.error {
+            align-self: flex-start;
+        }
+
+        .te-copilot-role {
+            color: var(--te-copilot-muted);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .te-copilot-bubble {
+            padding: 11px 12px;
+            border: 1px solid var(--te-copilot-line);
+            border-radius: 17px;
+            background: var(--te-copilot-card);
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            line-height: 1.58;
+            font-size: 13px;
+        }
+
+        .te-copilot-message-tools {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 22px;
+            padding: 0 2px;
+            opacity: 0.72;
+            transition: opacity 0.14s ease;
+        }
+
+        .te-copilot-message:hover .te-copilot-message-tools {
+            opacity: 1;
+        }
+
+        .te-copilot-message.user .te-copilot-message-tools {
+            justify-content: flex-end;
+        }
+
+        .te-copilot-message-tool {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: rgba(203, 209, 222, 0.74);
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.14s ease, background 0.14s ease, transform 0.14s ease;
+        }
+
+        .te-copilot-message-tool:hover:not(:disabled) {
+            color: rgba(246, 241, 226, 0.96);
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-1px);
+        }
+
+        .te-copilot-message-tool:disabled {
+            cursor: not-allowed;
+            opacity: 0.38;
+            transform: none;
+        }
+
+        .te-copilot-message-tool svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.9;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .te-copilot-message-tool[data-message-action="regenerate"] svg {
+            width: 13px;
+            height: 13px;
+            stroke-width: 1.75;
+        }
+
+        .te-copilot-message.user .te-copilot-bubble {
+            border-color: rgba(101, 209, 183, 0.34);
+            background: linear-gradient(135deg, rgba(101, 209, 183, 0.18), rgba(243, 180, 78, 0.08));
+        }
+
+        .te-copilot-message.error .te-copilot-bubble {
+            border-color: rgba(255, 123, 123, 0.42);
+            background: rgba(255, 123, 123, 0.08);
+            color: #ffd7d7;
+        }
+
+        .te-copilot-cursor::after {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 1em;
+            margin-left: 2px;
+            transform: translateY(2px);
+            border-radius: 999px;
+            background: rgba(243, 180, 78, 0.9);
+            animation: teCopilotBlink 0.9s steps(2, start) infinite;
+        }
+
+        @keyframes teCopilotBlink {
+            50% { opacity: 0; }
+        }
+
+        .te-copilot-composer {
+            border-top: 1px solid var(--te-copilot-line);
+            border-bottom: none;
+            display: grid;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .te-copilot-starters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .te-copilot-starters[hidden] {
+            display: none;
+        }
+
+        .te-copilot-starter-button {
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: linear-gradient(135deg, rgba(243, 180, 78, 0.14), rgba(101, 209, 183, 0.08));
+        }
+
+        .te-copilot-input,
+        .te-copilot-select,
+        .te-copilot-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 10px;
+        }
+
+        .te-copilot-select option {
+            background: #181d20;
+            color: var(--te-copilot-text);
+        }
+
+        .te-copilot-compose-input {
+            min-height: 86px;
+            max-height: 190px;
+            resize: vertical;
+        }
+
+        .te-copilot-topic-prompt {
+            min-height: 160px;
+            max-height: 360px;
+            resize: vertical;
+        }
+
+        .te-copilot-status {
+            color: var(--te-copilot-muted);
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .te-copilot-settings-body {
+            min-height: 0;
+            overflow: auto;
+            padding: 14px;
+            display: grid;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .te-copilot-provider-toolbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            align-items: end;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--te-copilot-line);
+        }
+
+        .te-copilot-provider-toolbar .te-copilot-button {
+            min-height: 36px;
+        }
+
+        .te-copilot-label {
+            display: grid;
+            gap: 6px;
+            color: var(--te-copilot-muted);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .te-copilot-key-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: end;
+            gap: 10px;
+        }
+
+        .te-copilot-field-hint {
+            color: var(--te-copilot-muted);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .te-copilot-format-help {
+            color: var(--te-copilot-muted);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        @media (max-width: 720px) {
+            .te-copilot-panel,
+            .te-copilot-settings-panel,
+            .te-copilot-topic-prompt-panel,
+            .te-copilot-topic-rename-panel {
+                top: 72px;
+                right: 8px;
+                width: calc(100vw - 16px);
+                height: calc(100vh - 88px);
+                max-height: calc(100vh - 88px);
+                border-radius: 18px;
+            }
+
+            .te-copilot-panel {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-rows: auto minmax(0, 1fr);
+            }
+
+            .te-copilot-sidebar {
+                max-height: 170px;
+                border-right: none;
+                border-bottom: 1px solid var(--te-copilot-line);
+            }
+
+            .te-copilot-topic-list {
+                flex-direction: row;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .te-copilot-topic {
+                min-width: 170px;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function clampPanelPosition(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function placePanelAtCurrentPosition(element) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+        return rect;
+    }
+
+    element.style.left = `${rect.left}px`;
+    element.style.top = `${rect.top}px`;
+    element.style.right = "auto";
+    element.style.bottom = "auto";
+    if (getComputedStyle(element).position !== "fixed") {
+        element.style.position = "fixed";
+    }
+    return rect;
+}
+
+function clampDraggablePanel(element) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+        return;
+    }
+
+    const margin = 8;
+    const maxLeft = Math.max(margin, window.innerWidth - rect.width - margin);
+    const maxTop = Math.max(margin, window.innerHeight - rect.height - margin);
+    const left = clampPanelPosition(rect.left, margin, maxLeft);
+    const top = clampPanelPosition(rect.top, margin, maxTop);
+    element.style.left = `${left}px`;
+    element.style.top = `${top}px`;
+    element.style.right = "auto";
+    element.style.bottom = "auto";
+}
+
+function enableDraggablePanel(element, handles) {
+    if (!element || element.__teCopilotDragBound) {
+        return;
+    }
+
+    const handleList = (Array.isArray(handles) ? handles : [handles]).filter(Boolean);
+    if (!handleList.length) {
+        return;
+    }
+
+    element.__teCopilotDragBound = true;
+    let dragState = null;
+    let previousUserSelect = "";
+
+    const stopDrag = (event) => {
+        if (!dragState) {
+            return;
+        }
+        try {
+            dragState.handle?.releasePointerCapture?.(event.pointerId);
+        } catch {
+        }
+        document.body.style.userSelect = previousUserSelect;
+        dragState = null;
+    };
+
+    const moveDrag = (event) => {
+        if (!dragState) {
+            return;
+        }
+
+        const nextLeft = dragState.startLeft + event.clientX - dragState.startX;
+        const nextTop = dragState.startTop + event.clientY - dragState.startY;
+        const margin = 8;
+        const maxLeft = Math.max(margin, window.innerWidth - dragState.width - margin);
+        const maxTop = Math.max(margin, window.innerHeight - dragState.height - margin);
+        element.style.left = `${clampPanelPosition(nextLeft, margin, maxLeft)}px`;
+        element.style.top = `${clampPanelPosition(nextTop, margin, maxTop)}px`;
+        element.style.right = "auto";
+        element.style.bottom = "auto";
+        event.preventDefault();
+    };
+
+    for (const handle of handleList) {
+        handle.classList.add("te-copilot-drag-handle");
+        handle.addEventListener("pointerdown", (event) => {
+            if (event.button !== 0 || event.target?.closest?.("button,a,input,select,textarea")) {
+                return;
+            }
+
+            const rect = placePanelAtCurrentPosition(element);
+            if (!rect.width || !rect.height) {
+                return;
+            }
+
+            dragState = {
+                startX: event.clientX,
+                startY: event.clientY,
+                startLeft: rect.left,
+                startTop: rect.top,
+                width: rect.width,
+                height: rect.height,
+                handle: event.currentTarget,
+            };
+            previousUserSelect = document.body.style.userSelect;
+            document.body.style.userSelect = "none";
+            event.currentTarget.setPointerCapture?.(event.pointerId);
+            event.preventDefault();
+        });
+        handle.addEventListener("pointermove", moveDrag);
+        handle.addEventListener("pointerup", stopDrag);
+        handle.addEventListener("pointercancel", stopDrag);
+    }
+
+    window.addEventListener("resize", () => clampDraggablePanel(element));
+}
+
+async function requestJson(path, options = {}) {
+    const response = await api.fetchApi(path, options);
+    let body = null;
+    try {
+        body = await response.json();
+    } catch {
+    }
+    if (!response.ok || body?.ok === false) {
+        throw new Error(body?.error || `${response.status} ${response.statusText}`);
+    }
+    return body || {};
+}
+
+async function requestJsonWithGetFallback(path, payload, errorCode = "405") {
+    try {
+        return await requestJson(path, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload || {}),
+        });
+    } catch (error) {
+        if (!String(error?.message || "").includes(errorCode)) {
+            throw error;
+        }
+        const params = new URLSearchParams({ save: "1" });
+        for (const [key, value] of Object.entries(payload || {})) {
+            if (value && typeof value === "object") {
+                params.set(key, JSON.stringify(value));
+            } else {
+                params.set(key, value ?? "");
+            }
+        }
+        return await requestJson(`${path}?${params.toString()}`);
+    }
+}
+
+async function bootstrap() {
+    const bootstrapEditVersion = workspaceEditVersion;
+    state.workspaceReady = false;
+    try {
+        const data = await requestJson(ROUTE_BOOTSTRAP);
+        applySettingsData(data);
+        let hadBackendSessions = false;
+        if (workspaceEditVersion === bootstrapEditVersion && !isAnyGenerating()) {
+            hadBackendSessions = applyWorkspaceState(data.workspace_state);
+            await migrateLegacySessionsIfNeeded(hadBackendSessions, bootstrapEditVersion);
+        } else {
+            workspaceLoadedFromBackend = true;
+            void persistSession(currentSession());
+        }
+        state.workspaceReady = true;
+        if (!activeProviderIsConfigured()) {
+            state.status = "请先在设置里完善当前供应商";
+        } else if (!state.status || state.status === "就绪" || state.status === "正在加载话题...") {
+            state.status = hadBackendSessions ? "话题已加载" : "就绪";
+        }
+        saveState();
+        renderPanel();
+        renderSettingsPanel();
+    } catch (error) {
+        state.workspaceReady = false;
+        state.status = `后端未就绪：${error.message || error}`;
+        renderPanel();
+    }
+}
+
+function applySettingsData(data = {}) {
+    state.model = String(data.model || data.default_model || state.model || "gpt-5.5");
+    state.requestFormats = data.request_formats && typeof data.request_formats === "object"
+        ? data.request_formats
+        : state.requestFormats;
+    const providerValues = Array.isArray(data.providers) && data.providers.length
+        ? data.providers
+        : [{
+            id: data.active_provider_id || "provider_default",
+            name: "默认供应商",
+            api_base_url: data.api_base_url || "",
+            request_format: data.request_format || data.default_request_format || "chat_completions",
+            api_key_hint: data.api_key_hint || "",
+            has_api_key: !!data.has_api_key,
+        }];
+    state.providers = providerValues.map(normalizeProvider);
+    state.activeProviderId = String(data.active_provider_id || state.activeProviderId || state.providers[0]?.id || "");
+    ensureProviders();
+    syncActiveProviderState();
+    state.systemPrompt = String(data.system_prompt || data.default_system_prompt || state.systemPrompt || DEFAULT_SYSTEM_PROMPT);
+    state.temperature = Number(data.temperature ?? state.temperature) || 0.7;
+    state.settingsStatus = activeProviderIsConfigured() ? "设置已加载" : "当前供应商配置不完整";
+}
+
+function updateMenuButtonState() {
+    const wrapper = document.getElementById(MENU_BUTTON_ID);
+    if (!wrapper) {
+        return;
+    }
+    const visible = panel?.hidden === false;
+    wrapper.dataset.visible = visible ? "true" : "false";
+    for (const button of wrapper.querySelectorAll("[data-role='copilot-toggle']")) {
+        button.classList.toggle("active", visible);
+    }
+}
+
+async function tryInstallMenuButton() {
+    if (document.getElementById(MENU_BUTTON_ID)) {
+        updateMenuButtonState();
+        return true;
+    }
+
+    const menu = document.querySelector(".comfy-menu");
+    if (!menu) {
+        return false;
+    }
+
+    injectStyle();
+
+    try {
+        const [{ ComfyButton }, { ComfyButtonGroup }] = await Promise.all([
+            import("../../../scripts/ui/components/button.js"),
+            import("../../../scripts/ui/components/buttonGroup.js"),
+        ]);
+
+        const button = new ComfyButton({
+            icon: "lightbulb-on-outline",
+            action: () => showPanel(panel?.hidden !== false),
+            tooltip: "TE MAN 构想台",
+            content: "构想台",
+        }).element;
+        button.classList.add("te-copilot-menu-button");
+        button.dataset.role = "copilot-toggle";
+
+        const group = new ComfyButtonGroup(button);
+        const wrapper = document.createElement("div");
+        wrapper.id = MENU_BUTTON_ID;
+        wrapper.append(group.element);
+
+        const anchor = document.getElementById("te-asset-library-menu-button") || app.menu?.settingsGroup?.element;
+        if (anchor?.after) {
+            anchor.after(wrapper);
+        } else {
+            menu.appendChild(wrapper);
+        }
+
+        updateMenuButtonState();
+        return true;
+    } catch (error) {
+        const wrapper = document.createElement("div");
+        wrapper.id = MENU_BUTTON_ID;
+
+        const button = document.createElement("button");
+        button.className = "te-copilot-menu-button";
+        button.dataset.role = "copilot-toggle";
+        button.type = "button";
+        button.textContent = "构想台";
+        button.title = "TE MAN 构想台";
+        button.onclick = () => showPanel(panel?.hidden !== false);
+        wrapper.appendChild(button);
+
+        const anchor = document.getElementById("te-asset-library-menu-button") || app.menu?.settingsGroup?.element;
+        if (anchor?.after) {
+            anchor.after(wrapper);
+        } else {
+            menu.appendChild(wrapper);
+        }
+
+        updateMenuButtonState();
+        console.warn("[TE MAN] 顶部构想台按钮使用兼容模式。", error);
+        return true;
+    }
+}
+
+async function installMenuButtonWithRetry({ timeoutMs = 30000, intervalMs = 200 } = {}) {
+    const start = performance.now();
+    while (performance.now() - start < timeoutMs) {
+        if (await tryInstallMenuButton()) {
+            return;
+        }
+        await new Promise((resolve) => setTimeout(resolve, intervalMs));
+    }
+    console.warn("[TE MAN] 未找到 ComfyUI 顶部菜单，构想台入口按钮未安装。");
+}
+
+function ensurePanel() {
+    if (panel) {
+        return panel;
+    }
+
+    injectStyle();
+    panel = document.createElement("section");
+    panel.id = PANEL_ID;
+    panel.className = "te-copilot-panel";
+    panel.hidden = true;
+    panel.innerHTML = `
+        <aside class="te-copilot-sidebar">
+            <div>
+                <div class="te-copilot-title">TE MAN 构想台</div>
+                <div class="te-copilot-subtitle">话题 / 提示词 / 工作流构思</div>
+            </div>
+
+            <button class="te-copilot-button primary" data-action="new-chat">新话题</button>
+            <div class="te-copilot-topic-list" data-role="topics"></div>
+
+            <div class="te-copilot-side-note">
+                每个话题会单独保存上下文。适合把提示词、节点方案、灵感草稿分开聊。
+            </div>
+
+            <a class="te-copilot-launcher-link"
+                href="https://www.bilibili.com/video/BV1xu9cByELa/?share_source=copy_web&amp;vd_source=a74fe7a15dbf45f77a4ef19aacacd83c"
+                target="_blank"
+                rel="noopener noreferrer">
+                推荐配合 ComfyUI TE 启动器使用，开启并发功能
+            </a>
+        </aside>
+
+        <main class="te-copilot-main">
+            <header class="te-copilot-head">
+                <div>
+                    <div class="te-copilot-title" data-role="chat-title">新话题</div>
+                    <div class="te-copilot-subtitle" data-role="chat-summary">当前话题</div>
+                </div>
+                <div class="te-copilot-spacer"></div>
+                <button class="te-copilot-button" data-action="open-settings">设置</button>
+                <button class="te-copilot-button" data-action="delete-topic">删除</button>
+                <button class="te-copilot-button" data-action="close">关闭</button>
+            </header>
+
+            <main class="te-copilot-messages" data-role="messages"></main>
+
+            <footer class="te-copilot-composer">
+                <div class="te-copilot-starters" data-role="starter-presets"></div>
+                <textarea class="te-copilot-textarea te-copilot-compose-input" data-role="input" placeholder="输入想聊的问题，Enter 发送，Shift+Enter 换行"></textarea>
+                <div class="te-copilot-actions">
+                    <button class="te-copilot-button primary" data-action="send">发送</button>
+                    <button class="te-copilot-button danger" data-action="stop">停止</button>
+                    <button class="te-copilot-button" data-action="clear">清空当前话题</button>
+                    <button class="te-copilot-button" data-action="topic-prompt">设置话题提示词</button>
+                    <div class="te-copilot-spacer"></div>
+                    <div class="te-copilot-status" data-role="status">就绪</div>
+                </div>
+            </footer>
+        </main>
+    `;
+    document.body.appendChild(panel);
+    enableDraggablePanel(panel, [
+        panel.querySelector(".te-copilot-sidebar > div:first-child"),
+        panel.querySelector(".te-copilot-head"),
+    ]);
+
+    messagesRoot = qs("[data-role='messages']");
+    messagesRoot.addEventListener("click", handleMessageToolClick);
+    bindPanelEvents();
+    renderPanel();
+    return panel;
+}
+
+function ensureSettingsPanel() {
+    if (settingsPanel) {
+        return settingsPanel;
+    }
+
+    injectStyle();
+    settingsPanel = document.createElement("section");
+    settingsPanel.id = SETTINGS_PANEL_ID;
+    settingsPanel.className = "te-copilot-settings-panel";
+    settingsPanel.hidden = true;
+    settingsPanel.innerHTML = `
+        <header class="te-copilot-settings-head">
+            <div>
+                <div class="te-copilot-title-row">
+                    <div class="te-copilot-title">构想台设置</div>
+                    <a class="te-copilot-title-link"
+                        href="https://tem.588186.xyz"
+                        target="_blank"
+                        rel="noopener noreferrer">推荐TE API站</a>
+                </div>
+                <div class="te-copilot-subtitle">管理多个 API 供应商并选择当前使用项</div>
+            </div>
+            <div class="te-copilot-spacer"></div>
+            <button class="te-copilot-button" data-action="close-settings">关闭</button>
+        </header>
+
+        <section class="te-copilot-settings-body">
+            <div class="te-copilot-provider-toolbar">
+                <label class="te-copilot-label">
+                    当前供应商
+                    <select class="te-copilot-select" data-role="active-provider"></select>
+                </label>
+                <button class="te-copilot-button" data-action="add-provider">添加</button>
+                <button class="te-copilot-button" data-action="delete-provider">删除</button>
+            </div>
+            <label class="te-copilot-label">
+                供应商名称
+                <input class="te-copilot-input" data-role="provider-name" placeholder="例如：TE API / OpenAI / 本地 LM Studio" />
+            </label>
+            <label class="te-copilot-label">
+                API URL
+                <input class="te-copilot-input" data-role="api-base-url" placeholder="例如：https://api.openai.com 或你的中转地址" />
+            </label>
+            <div class="te-copilot-key-row">
+                <label class="te-copilot-label">
+                    API Key
+                    <input class="te-copilot-input" data-role="api-key" type="password" placeholder="留空则保留当前 API Key" />
+                </label>
+                <div class="te-copilot-field-hint" data-role="api-key-hint">未配置</div>
+            </div>
+            <label class="te-copilot-label">
+                请求格式
+                <select class="te-copilot-select" data-role="request-format"></select>
+            </label>
+            <div class="te-copilot-format-help" data-role="format-help"></div>
+            <label class="te-copilot-label">
+                模型名
+                <input class="te-copilot-input" data-role="model" placeholder="例如 gpt-5.5 / gemini-3.1-pro-preview / gemini-3.1-flash-lite-preview" />
+            </label>
+            <div class="te-copilot-settings-actions">
+                <button class="te-copilot-button primary" data-action="save-settings">保存设置</button>
+                <span class="te-copilot-status" data-role="settings-status">设置未保存</span>
+            </div>
+        </section>
+    `;
+    document.body.appendChild(settingsPanel);
+    enableDraggablePanel(settingsPanel, settingsPanel.querySelector(".te-copilot-settings-head"));
+
+    bindSettingsEvents();
+    renderSettingsPanel();
+    return settingsPanel;
+}
+
+function ensureTopicPromptPanel() {
+    if (topicPromptPanel) {
+        return topicPromptPanel;
+    }
+
+    injectStyle();
+    topicPromptPanel = document.createElement("section");
+    topicPromptPanel.id = TOPIC_PROMPT_PANEL_ID;
+    topicPromptPanel.className = "te-copilot-topic-prompt-panel";
+    topicPromptPanel.hidden = true;
+    topicPromptPanel.innerHTML = `
+        <header class="te-copilot-settings-head">
+            <div>
+                <div class="te-copilot-title">话题提示词</div>
+                <div class="te-copilot-subtitle" data-role="topic-prompt-subtitle">当前话题</div>
+            </div>
+            <div class="te-copilot-spacer"></div>
+            <button class="te-copilot-button" data-action="close-topic-prompt">关闭</button>
+        </header>
+
+        <section class="te-copilot-settings-body">
+            <label class="te-copilot-label">
+                当前话题专属提示词
+                <textarea class="te-copilot-textarea te-copilot-topic-prompt"
+                    data-role="topic-prompt-editor"
+                    placeholder="留空则使用构想台默认提示词。这里适合写当前话题的人设、任务方向、回答风格。"></textarea>
+            </label>
+            <div class="te-copilot-format-help">
+                这个提示词只影响当前话题，不会改其他话题。
+            </div>
+            <div class="te-copilot-settings-actions">
+                <button class="te-copilot-button primary" data-action="save-topic-prompt">保存</button>
+                <button class="te-copilot-button" data-action="clear-topic-prompt">清空提示词</button>
+                <span class="te-copilot-status" data-role="topic-prompt-status">未保存</span>
+            </div>
+        </section>
+    `;
+    document.body.appendChild(topicPromptPanel);
+    enableDraggablePanel(topicPromptPanel, topicPromptPanel.querySelector(".te-copilot-settings-head"));
+
+    bindTopicPromptEvents();
+    renderTopicPromptPanel();
+    return topicPromptPanel;
+}
+
+function ensureTopicRenamePanel() {
+    if (topicRenamePanel) {
+        return topicRenamePanel;
+    }
+
+    injectStyle();
+    topicRenamePanel = document.createElement("section");
+    topicRenamePanel.id = TOPIC_RENAME_PANEL_ID;
+    topicRenamePanel.className = "te-copilot-topic-rename-panel";
+    topicRenamePanel.hidden = true;
+    topicRenamePanel.innerHTML = `
+        <header class="te-copilot-settings-head">
+            <div>
+                <div class="te-copilot-title">重命名话题</div>
+                <div class="te-copilot-subtitle" data-role="topic-rename-subtitle">当前话题</div>
+            </div>
+            <div class="te-copilot-spacer"></div>
+            <button class="te-copilot-button" data-action="close-topic-rename">关闭</button>
+        </header>
+
+        <section class="te-copilot-settings-body">
+            <label class="te-copilot-label">
+                话题显示名称
+                <input class="te-copilot-input"
+                    data-role="topic-rename-input"
+                    maxlength="80"
+                    placeholder="例如：香水广告分镜方案" />
+            </label>
+            <div class="te-copilot-format-help">
+                只修改左侧和顶部显示名称，不影响这个话题里的对话内容。
+            </div>
+            <div class="te-copilot-settings-actions">
+                <button class="te-copilot-button primary" data-action="save-topic-rename">保存</button>
+                <span class="te-copilot-status" data-role="topic-rename-status">未保存</span>
+            </div>
+        </section>
+    `;
+    document.body.appendChild(topicRenamePanel);
+    enableDraggablePanel(topicRenamePanel, topicRenamePanel.querySelector(".te-copilot-settings-head"));
+
+    bindTopicRenameEvents();
+    renderTopicRenamePanel();
+    return topicRenamePanel;
+}
+
+function qs(selector) {
+    return panel?.querySelector(selector);
+}
+
+function sqs(selector) {
+    return settingsPanel?.querySelector(selector);
+}
+
+function tpqs(selector) {
+    return topicPromptPanel?.querySelector(selector);
+}
+
+function trqs(selector) {
+    return topicRenamePanel?.querySelector(selector);
+}
+
+function sessionMeta(session) {
+    const promptSuffix = cleanTitleText(session?.systemPrompt) ? " · 专属提示词" : "";
+    if (isSessionGenerating(session?.id)) {
+        return `回复中${promptSuffix}`;
+    }
+    const count = session.messages.filter((message) => !message.hidden && message.role === "user").length;
+    if (!count) {
+        if (session.messages.length) {
+            return `已开始${promptSuffix}`;
+        }
+        return `还没有消息${promptSuffix}`;
+    }
+    return `${count} 条提问${promptSuffix}`;
+}
+
+function renderTopics() {
+    const root = qs("[data-role='topics']");
+    if (!root) {
+        return;
+    }
+
+    ensureSessions();
+    root.innerHTML = "";
+    for (const session of state.sessions) {
+        const item = document.createElement("div");
+        item.role = "button";
+        item.tabIndex = 0;
+        item.className = `te-copilot-topic ${session.id === state.currentSessionId ? "active" : ""}`;
+        item.dataset.sessionId = session.id;
+        item.innerHTML = `
+            <div>
+                <div class="te-copilot-topic-title">${escapeHtml(session.title || "新话题")}</div>
+                <div class="te-copilot-topic-meta">${escapeHtml(sessionMeta(session))}</div>
+            </div>
+            <div class="te-copilot-topic-actions">
+                <button class="te-copilot-topic-icon-button te-copilot-topic-rename"
+                    type="button"
+                    data-action="rename-topic-inline"
+                    title="重命名话题">${ICON_TOPIC_RENAME}</button>
+                <button class="te-copilot-topic-icon-button te-copilot-topic-delete"
+                    type="button"
+                    data-action="delete-topic-inline"
+                    title="删除话题">×</button>
+            </div>
+        `;
+        item.onclick = () => setCurrentSession(session.id);
+        item.onkeydown = (event) => {
+            if (event.key !== "Enter" && event.key !== " ") {
+                return;
+            }
+            event.preventDefault();
+            setCurrentSession(session.id);
+        };
+        item.querySelector("[data-action='delete-topic-inline']").onclick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            deleteSession(session.id);
+        };
+        item.querySelector("[data-action='rename-topic-inline']").onclick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            showTopicRenamePanel(session.id, true);
+        };
+        root.appendChild(item);
+    }
+}
+
+function setCurrentSession(id) {
+    const session = state.sessions.find((item) => item.id === id);
+    if (!session) {
+        return;
+    }
+    state.currentSessionId = session.id;
+    state.status = session.messages.length ? "已切换话题" : "新话题";
+    showTopicPromptPanel(false);
+    showTopicRenamePanel("", false);
+    markWorkspaceEdited();
+    saveState();
+    renderPanel();
+    void persistWorkspaceMeta();
+    setTimeout(() => qs("[data-role='input']")?.focus(), 0);
+}
+
+async function deleteSession(id = state.currentSessionId) {
+    const sessionId = String(id || "");
+    if (!sessionId) {
+        return;
+    }
+    if (isSessionGenerating(sessionId)) {
+        state.status = "正在回复，先停止后再删除话题";
+        renderPanel();
+        return;
+    }
+
+    const index = state.sessions.findIndex((session) => session.id === sessionId);
+    if (index < 0) {
+        return;
+    }
+    state.sessions.splice(index, 1);
+    if (!state.sessions.length) {
+        state.sessions.push(createSession());
+    }
+    if (state.currentSessionId === sessionId) {
+        state.currentSessionId = state.sessions[Math.min(index, state.sessions.length - 1)].id;
+    }
+    state.status = "话题已删除";
+    markWorkspaceEdited();
+    const deleteEditVersion = workspaceEditVersion;
+    saveState();
+    renderPanel();
+
+    if (!workspaceLoadedFromBackend) {
+        return;
+    }
+    try {
+        const data = await requestJsonWithGetFallback(ROUTE_TOPIC_DELETE, {
+            session_id: sessionId,
+            workspace_meta: workspaceMetaPayload(),
+        });
+        if (data.workspace_state && workspaceEditVersion === deleteEditVersion && !isAnyGenerating()) {
+            applyWorkspaceState(data.workspace_state);
+            state.status = "话题已删除";
+            saveState();
+            renderPanel();
+        }
+    } catch (error) {
+        state.status = `删除同步失败：${error.message || error}`;
+        renderPanel();
+    }
+}
+
+function bindPanelEvents() {
+    qs("[data-action='close']").onclick = () => showPanel(false);
+    qs("[data-action='open-settings']").onclick = () => showSettingsPanel(true);
+    qs("[data-action='new-chat']").onclick = () => newChat();
+    qs("[data-action='delete-topic']").onclick = () => deleteSession();
+    qs("[data-action='send']").onclick = () => sendMessage();
+    qs("[data-action='stop']").onclick = () => stopGeneration();
+    qs("[data-action='clear']").onclick = () => clearMessages();
+    qs("[data-action='topic-prompt']").onclick = () => showTopicPromptPanel(true);
+
+    qs("[data-role='input']").addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" || event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) {
+            return;
+        }
+        event.preventDefault();
+        sendMessage();
+    });
+
+    qs("[data-role='starter-presets']").addEventListener("click", (event) => {
+        const button = event.target?.closest?.("[data-starter-id]");
+        if (!button) {
+            return;
+        }
+        event.preventDefault();
+        void sendStarterPreset(button.dataset.starterId || "");
+    });
+}
+
+function bindSettingsEvents() {
+    sqs("[data-action='close-settings']").onclick = () => showSettingsPanel(false);
+    sqs("[data-action='save-settings']").onclick = () => saveSettings();
+    sqs("[data-action='add-provider']").onclick = () => {
+        const provider = normalizeProvider({
+            id: uid("provider"),
+            name: `供应商 ${state.providers.length + 1}`,
+            request_format: "chat_completions",
+        }, state.providers.length);
+        state.providers.push(provider);
+        state.activeProviderId = provider.id;
+        syncActiveProviderState();
+        markSettingsDirty();
+        saveState();
+        renderSettingsPanel();
+        sqs("[data-role='provider-name']")?.focus();
+    };
+    sqs("[data-action='delete-provider']").onclick = () => {
+        const provider = activeProvider();
+        state.providers = state.providers.filter((item) => item.id !== provider.id);
+        if (!state.providers.length) {
+            state.providers = [normalizeProvider({ name: "默认供应商" })];
+        }
+        state.activeProviderId = state.providers[0].id;
+        syncActiveProviderState();
+        markSettingsDirty();
+        saveState();
+        renderSettingsPanel();
+    };
+    sqs("[data-role='active-provider']").onchange = (event) => {
+        state.activeProviderId = event.target.value;
+        syncActiveProviderState();
+        markSettingsDirty();
+        saveState();
+        renderSettingsPanel();
+    };
+    sqs("[data-role='provider-name']").oninput = (event) => {
+        activeProvider().name = event.target.value;
+        markSettingsDirty();
+        const option = Array.from(sqs("[data-role='active-provider']")?.options || [])
+            .find((item) => item.value === state.activeProviderId);
+        if (option) {
+            option.textContent = event.target.value || "未命名供应商";
+        }
+    };
+
+    sqs("[data-role='api-base-url']").oninput = (event) => {
+        activeProvider().apiBaseUrl = event.target.value;
+        syncActiveProviderState();
+        markSettingsDirty();
+    };
+    sqs("[data-role='api-key']").oninput = (event) => {
+        activeProvider().apiKeyDraft = event.target.value;
+        syncActiveProviderState();
+        markSettingsDirty();
+    };
+    sqs("[data-role='request-format']").onchange = (event) => {
+        activeProvider().requestFormat = event.target.value;
+        syncActiveProviderState();
+        markSettingsDirty();
+        saveState();
+        renderFormatHelp();
+    };
+    sqs("[data-role='model']").oninput = (event) => {
+        state.model = event.target.value;
+        markSettingsDirty();
+        saveState();
+    };
+}
+
+function bindTopicPromptEvents() {
+    tpqs("[data-action='close-topic-prompt']").onclick = () => showTopicPromptPanel(false);
+    tpqs("[data-action='save-topic-prompt']").onclick = () => saveTopicPromptFromPanel();
+    tpqs("[data-action='clear-topic-prompt']").onclick = () => {
+        const editor = tpqs("[data-role='topic-prompt-editor']");
+        if (editor) {
+            editor.value = "";
+        }
+        saveTopicPromptFromPanel();
+    };
+    tpqs("[data-role='topic-prompt-editor']").oninput = () => {
+        const status = tpqs("[data-role='topic-prompt-status']");
+        if (status) {
+            status.textContent = "未保存";
+        }
+    };
+    topicPromptPanel.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            showTopicPromptPanel(false);
+        }
+    });
+}
+
+function bindTopicRenameEvents() {
+    trqs("[data-action='close-topic-rename']").onclick = () => showTopicRenamePanel("", false);
+    trqs("[data-action='save-topic-rename']").onclick = () => saveTopicRenameFromPanel();
+    trqs("[data-role='topic-rename-input']").oninput = () => {
+        const status = trqs("[data-role='topic-rename-status']");
+        if (status) {
+            status.textContent = "未保存";
+        }
+    };
+    topicRenamePanel.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            showTopicRenamePanel("", false);
+            return;
+        }
+        if (event.key === "Enter") {
+            event.preventDefault();
+            saveTopicRenameFromPanel();
+        }
+    });
+}
+
+function markSettingsDirty() {
+    state.settingsStatus = "设置未保存";
+    const status = sqs("[data-role='settings-status']");
+    if (status) {
+        status.textContent = state.settingsStatus;
+    }
+}
+
+function showPanel(visible) {
+    ensurePanel();
+    state.visible = visible;
+    panel.hidden = !visible;
+    if (!visible) {
+        showSettingsPanel(false);
+        showTopicPromptPanel(false);
+        showTopicRenamePanel("", false);
+    }
+    updateMenuButtonState();
+    if (visible) {
+        renderPanel();
+        setTimeout(() => qs("[data-role='input']")?.focus(), 0);
+    }
+}
+
+function showSettingsPanel(visible) {
+    if (!visible) {
+        state.settingsVisible = false;
+        if (settingsPanel) {
+            settingsPanel.hidden = true;
+        }
+        return;
+    }
+
+    ensureSettingsPanel();
+    showTopicPromptPanel(false);
+    showTopicRenamePanel("", false);
+    state.settingsVisible = visible;
+    settingsPanel.hidden = !visible;
+    renderSettingsPanel();
+    setTimeout(() => sqs("[data-role='api-base-url']")?.focus(), 0);
+}
+
+function showTopicPromptPanel(visible) {
+    if (!visible) {
+        if (topicPromptPanel) {
+            topicPromptPanel.hidden = true;
+        }
+        return;
+    }
+
+    ensureTopicPromptPanel();
+    showSettingsPanel(false);
+    showTopicRenamePanel("", false);
+    topicPromptPanel.hidden = false;
+    renderTopicPromptPanel();
+    setTimeout(() => tpqs("[data-role='topic-prompt-editor']")?.focus(), 0);
+}
+
+function showTopicRenamePanel(sessionId, visible) {
+    if (!visible) {
+        topicRenameSessionId = "";
+        if (topicRenamePanel) {
+            topicRenamePanel.hidden = true;
+        }
+        return;
+    }
+
+    const session = state.sessions.find((item) => item.id === sessionId);
+    if (!session) {
+        return;
+    }
+
+    ensureTopicRenamePanel();
+    showSettingsPanel(false);
+    showTopicPromptPanel(false);
+    topicRenameSessionId = session.id;
+    topicRenamePanel.hidden = false;
+    renderTopicRenamePanel();
+    setTimeout(() => {
+        const input = trqs("[data-role='topic-rename-input']");
+        input?.focus();
+        input?.select();
+    }, 0);
+}
+
+function saveTopicPromptFromPanel() {
+    const session = currentSession();
+    if (isSessionGenerating(session.id)) {
+        const status = tpqs("[data-role='topic-prompt-status']");
+        if (status) {
+            status.textContent = "当前话题回复中，结束后可修改";
+        }
+        return;
+    }
+
+    const editor = tpqs("[data-role='topic-prompt-editor']");
+    session.systemPrompt = String(editor?.value || "");
+    touchSession(session, { moveToTop: false });
+    markWorkspaceEdited();
+    state.status = cleanTitleText(session.systemPrompt) ? "话题提示词已保存" : "话题提示词已清空";
+    saveState();
+    renderPanel();
+    renderTopicPromptPanel();
+    void persistSession(session, { includeWorkspace: false });
+    showTopicPromptPanel(false);
+}
+
+function saveTopicRenameFromPanel() {
+    const session = state.sessions.find((item) => item.id === topicRenameSessionId);
+    if (!session) {
+        showTopicRenamePanel("", false);
+        return;
+    }
+    if (isSessionGenerating(session.id)) {
+        const status = trqs("[data-role='topic-rename-status']");
+        if (status) {
+            status.textContent = "当前话题回复中，结束后可修改";
+        }
+        return;
+    }
+
+    const input = trqs("[data-role='topic-rename-input']");
+    const title = cleanTitleText(input?.value);
+    if (!title) {
+        const status = trqs("[data-role='topic-rename-status']");
+        if (status) {
+            status.textContent = "名称不能为空";
+        }
+        return;
+    }
+
+    session.title = title.slice(0, 80);
+    session.autoTitle = false;
+    touchSession(session, { moveToTop: false });
+    markWorkspaceEdited();
+    state.status = "话题名称已保存";
+    saveState();
+    renderPanel();
+    renderTopicRenamePanel();
+    void persistSession(session, { includeWorkspace: false });
+    showTopicRenamePanel("", false);
+}
+
+function roleLabel(message) {
+    if (message.role === "user") {
+        return "你";
+    }
+    if (message.tone === "error") {
+        return "错误";
+    }
+    return "构想台";
+}
+
+function renderMarkdownLite(text) {
+    return escapeHtml(text || "");
+}
+
+function renderMessages() {
+    if (!messagesRoot) {
+        return;
+    }
+
+    const session = currentSession();
+    const messages = currentMessages().filter((message) => !message.hidden);
+    messagesRoot.innerHTML = "";
+    if (!messages.length) {
+        messagesRoot.innerHTML = `
+            <div class="te-copilot-empty">
+                这里是 TE MAN 构想台。<br>
+                可以聊提示词、节点搭配、工作流结构，也可以先把想法拆成可执行步骤。
+            </div>
+        `;
+        return;
+    }
+
+    for (let index = 0; index < messages.length; index += 1) {
+        const message = messages[index];
+        const item = document.createElement("article");
+        const isStreaming = !!activeTurnForMessage(message.id);
+        const hasPreviousUser = messages.slice(0, index).some((item) => item.role === "user" && cleanTitleText(item.text));
+        const canRegenerate = message.role === "assistant" && hasPreviousUser;
+        const disableRegenerate = isStreaming || !state.workspaceReady || isSessionGenerating(session.id);
+        item.className = `te-copilot-message ${message.tone === "error" ? "error" : message.role}`;
+        item.innerHTML = `
+            <div class="te-copilot-role">${roleLabel(message)}</div>
+            <div class="te-copilot-bubble ${isStreaming ? "te-copilot-cursor" : ""}">${renderMarkdownLite(message.text)}</div>
+            <div class="te-copilot-message-tools">
+                <button class="te-copilot-message-tool" type="button" data-message-action="copy" data-message-id="${escapeHtml(message.id)}" title="复制这段对话" ${isStreaming ? "disabled" : ""}>${ICON_COPY}</button>
+                ${canRegenerate ? `<button class="te-copilot-message-tool" type="button" data-message-action="regenerate" data-message-id="${escapeHtml(message.id)}" title="重新生成" ${disableRegenerate ? "disabled" : ""}>${ICON_REGENERATE}</button>` : ""}
+            </div>
+        `;
+        messagesRoot.appendChild(item);
+    }
+
+    messagesRoot.scrollTop = messagesRoot.scrollHeight;
+}
+
+function renderStarterPresets() {
+    const root = qs("[data-role='starter-presets']");
+    if (!root) {
+        return;
+    }
+
+    const session = currentSession();
+    const show = !session.messages.length && !isSessionGenerating(session.id);
+    root.hidden = !show;
+    if (!show) {
+        root.innerHTML = "";
+        return;
+    }
+
+    root.innerHTML = STARTER_PRESETS
+        .map((preset) => `
+            <button class="te-copilot-button te-copilot-starter-button"
+                type="button"
+                data-starter-id="${escapeHtml(preset.id)}">
+                ${escapeHtml(preset.label)}
+            </button>
+        `)
+        .join("");
+}
+
+function renderPanel() {
+    if (!panel) {
+        return;
+    }
+
+    const session = currentSession();
+    const currentTurn = activeTurnForSession(session.id);
+    qs("[data-role='chat-title']").textContent = session.title || "新话题";
+    qs("[data-role='chat-summary']").textContent = sessionMeta(session);
+    qs("[data-role='status']").textContent = state.status || "就绪";
+    qs("[data-action='send']").disabled = !!currentTurn || !state.workspaceReady;
+    qs("[data-action='stop']").disabled = !currentTurn;
+    qs("[data-action='clear']").disabled = !!currentTurn;
+    qs("[data-action='topic-prompt']").disabled = !!currentTurn;
+    qs("[data-action='delete-topic']").disabled = !!currentTurn;
+    qs("[data-action='new-chat']").disabled = false;
+
+    renderTopics();
+    renderMessages();
+    renderStarterPresets();
+    renderTopicPromptPanel();
+    renderTopicRenamePanel();
+    updateMenuButtonState();
+}
+
+function formatOptionsHtml() {
+    return Object.entries(state.requestFormats)
+        .map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`)
+        .join("");
+}
+
+function renderFormatHelp() {
+    const help = sqs("[data-role='format-help']");
+    if (!help) {
+        return;
+    }
+    const tips = {
+        chat_completions: "适合 OpenAI Chat 兼容接口。URL 可填根地址，例如 https://api.openai.com，也可直接填 /v1/chat/completions。",
+        responses: "适合 Codex / Responses API。URL 可填根地址，程序会自动拼成 /v1/responses。",
+        gemini: "适合 Gemini。URL 可填根地址，程序会自动拼成 /v1beta/models/模型名:streamGenerateContent。",
+        claude: "适合 Claude Messages。URL 可填根地址，程序会自动拼成 /v1/messages。",
+        lm_studio: "适合 LM Studio 本地服务。URL 可填根地址，例如 http://localhost:1234，程序会自动拼成 /api/v1/chat。",
+    };
+    help.textContent = tips[state.requestFormat] || "";
+}
+
+function renderSettingsPanel() {
+    if (!settingsPanel) {
+        return;
+    }
+
+    ensureProviders();
+    syncActiveProviderState();
+    const provider = activeProvider();
+    const providerSelect = sqs("[data-role='active-provider']");
+    providerSelect.innerHTML = state.providers
+        .map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name || "未命名供应商")}</option>`)
+        .join("");
+    providerSelect.value = provider.id;
+    sqs("[data-role='provider-name']").value = provider.name || "";
+
+    const requestFormat = sqs("[data-role='request-format']");
+    requestFormat.innerHTML = formatOptionsHtml();
+    requestFormat.value = state.requestFormat || "chat_completions";
+
+    sqs("[data-role='api-base-url']").value = state.apiBaseUrl || "";
+    sqs("[data-role='api-key']").value = state.apiKeyDraft || "";
+    sqs("[data-role='api-key-hint']").textContent = state.hasApiKey
+        ? `当前：${state.apiKeyHint || "已配置"}`
+        : "未配置";
+    sqs("[data-role='model']").value = state.model || "";
+    sqs("[data-role='settings-status']").textContent = state.settingsStatus || "";
+    sqs("[data-action='save-settings']").disabled = isAnyGenerating();
+    sqs("[data-action='add-provider']").disabled = isAnyGenerating() || state.providers.length >= 50;
+    sqs("[data-action='delete-provider']").disabled = isAnyGenerating();
+    providerSelect.disabled = isAnyGenerating();
+    renderFormatHelp();
+}
+
+function renderTopicPromptPanel() {
+    if (!topicPromptPanel || topicPromptPanel.hidden) {
+        return;
+    }
+
+    const session = currentSession();
+    const editor = tpqs("[data-role='topic-prompt-editor']");
+    const subtitle = tpqs("[data-role='topic-prompt-subtitle']");
+    const status = tpqs("[data-role='topic-prompt-status']");
+    const saveButton = tpqs("[data-action='save-topic-prompt']");
+    const clearButton = tpqs("[data-action='clear-topic-prompt']");
+    const generating = isSessionGenerating(session.id);
+    const editing = document.activeElement === editor;
+
+    if (subtitle) {
+        subtitle.textContent = session.title || "当前话题";
+    }
+    if (editor && !editing) {
+        editor.value = session.systemPrompt || "";
+    }
+    if (status && !editing) {
+        status.textContent = cleanTitleText(session.systemPrompt) ? "已设置专属提示词" : "留空使用默认提示词";
+    }
+    if (saveButton) {
+        saveButton.disabled = generating;
+    }
+    if (clearButton) {
+        clearButton.disabled = generating;
+    }
+}
+
+function renderTopicRenamePanel() {
+    if (!topicRenamePanel || topicRenamePanel.hidden) {
+        return;
+    }
+
+    const session = state.sessions.find((item) => item.id === topicRenameSessionId);
+    if (!session) {
+        showTopicRenamePanel("", false);
+        return;
+    }
+
+    const input = trqs("[data-role='topic-rename-input']");
+    const subtitle = trqs("[data-role='topic-rename-subtitle']");
+    const status = trqs("[data-role='topic-rename-status']");
+    const saveButton = trqs("[data-action='save-topic-rename']");
+    const generating = isSessionGenerating(session.id);
+    const editing = document.activeElement === input;
+
+    if (subtitle) {
+        subtitle.textContent = session.title || "当前话题";
+    }
+    if (input && !editing) {
+        input.value = session.title || "";
+    }
+    if (status && !editing) {
+        status.textContent = "输入新名称后保存";
+    }
+    if (saveButton) {
+        saveButton.disabled = generating;
+    }
+}
+
+function settingsPayload() {
+    return {
+        providers: state.providers.map((provider) => ({
+            id: provider.id,
+            name: provider.name || "未命名供应商",
+            api_base_url: provider.apiBaseUrl || "",
+            api_key: provider.apiKeyDraft || "",
+            request_format: provider.requestFormat || "chat_completions",
+        })),
+        active_provider_id: state.activeProviderId,
+        model: state.model || "gpt-5.5",
+        system_prompt: state.systemPrompt || "",
+        temperature: Number(state.temperature) || 0.7,
+    };
+}
+
+async function saveSettings() {
+    ensureSettingsPanel();
+    state.settingsStatus = "正在保存...";
+    renderSettingsPanel();
+
+    try {
+        const data = await requestJsonWithGetFallback(ROUTE_SETTINGS, settingsPayload());
+        applySettingsData(data);
+        state.status = activeProviderIsConfigured() ? "设置已保存" : "设置已保存，但当前供应商配置不完整";
+        state.settingsStatus = state.status;
+        saveState();
+        renderPanel();
+        renderSettingsPanel();
+    } catch (error) {
+        state.settingsStatus = `保存失败：${error.message || error}`;
+        renderSettingsPanel();
+    }
+}
+
+function scheduleRender() {
+    if (renderTimer) {
+        return;
+    }
+    renderTimer = requestAnimationFrame(() => {
+        renderTimer = null;
+        renderPanel();
+    });
+}
+
+function getMessage(id) {
+    return findMessageRecord(id)?.message || null;
+}
+
+function historyForRequest(session, excludeMessageId = "") {
+    const excluded = String(excludeMessageId || "");
+    return historyFromMessages((session?.messages || []).filter((message) => message.id !== excluded));
+}
+
+async function copyTextToClipboard(text) {
+    if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "readonly");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    if (!copied) {
+        throw new Error("当前浏览器不允许复制");
+    }
+}
+
+async function copyMessage(messageId) {
+    const record = findMessageRecord(messageId);
+    const text = String(record?.message?.text || "");
+    if (!text) {
+        state.status = "这段对话还是空的";
+        const status = qs("[data-role='status']");
+        if (status) {
+            status.textContent = state.status;
+        }
+        return;
+    }
+
+    try {
+        await copyTextToClipboard(text);
+        state.status = "已复制这段对话";
+    } catch (error) {
+        state.status = `复制失败：${error.message || error}`;
+    }
+    const status = qs("[data-role='status']");
+    if (status) {
+        status.textContent = state.status;
+    }
+}
+
+function regenerateHistory(session, assistantIndex, userIndex) {
+    const beforePrompt = session.messages.slice(0, userIndex);
+    return historyFromMessages(beforePrompt);
+}
+
+async function regenerateMessage(messageId) {
+    if (!state.workspaceReady) {
+        state.status = "正在加载话题，加载完成后再重新生成";
+        renderPanel();
+        return;
+    }
+
+    const record = findMessageRecord(messageId);
+    if (!record?.session || !record?.message || record.message.role !== "assistant") {
+        state.status = "只能重新生成助手回复";
+        renderPanel();
+        return;
+    }
+
+    const session = record.session;
+    if (isSessionGenerating(session.id)) {
+        state.status = "当前话题正在回复，先停止后再重新生成";
+        renderPanel();
+        return;
+    }
+
+    const assistantIndex = session.messages.findIndex((message) => message.id === record.message.id);
+    let userIndex = -1;
+    for (let index = assistantIndex - 1; index >= 0; index -= 1) {
+        if (session.messages[index]?.role === "user" && cleanTitleText(session.messages[index].text)) {
+            userIndex = index;
+            break;
+        }
+    }
+    if (assistantIndex < 0 || userIndex < 0) {
+        state.status = "没有找到这段回复对应的提问";
+        renderPanel();
+        return;
+    }
+
+    const promptMessage = session.messages[userIndex];
+    const history = regenerateHistory(session, assistantIndex, userIndex);
+    const turnId = uid("turn");
+    const responseMessageId = record.message.id;
+    activeTurns.set(session.id, {
+        turnId,
+        messageId: responseMessageId,
+        sessionId: session.id,
+        model: state.model || "gpt-5.5",
+    });
+    record.message.text = "";
+    record.message.tone = undefined;
+    record.message.createdAt = Date.now();
+    touchSession(session);
+    state.currentSessionId = session.id;
+    state.status = "正在重新生成...";
+    markWorkspaceEdited();
+    saveState();
+    renderPanel();
+    await persistSession(session);
+
+    try {
+        await requestJsonWithGetFallback(ROUTE_TURN, {
+            panel_id: getPanelId(),
+            turn_id: turnId,
+            session_id: session.id,
+            message_id: responseMessageId,
+            message: promptMessage.text,
+            provider_id: activeProvider().id,
+            request_format: activeProvider().requestFormat || "chat_completions",
+            model: state.model || "gpt-5.5",
+            system_prompt: effectiveSystemPrompt(session),
+            temperature: Number(state.temperature) || 0.7,
+            history,
+        });
+    } catch (error) {
+        record.message.tone = "error";
+        record.message.text = `重新生成失败：${error.message || error}`;
+        activeTurns.delete(session.id);
+        state.status = "重新生成失败";
+        await persistSession(session);
+        renderPanel();
+    }
+}
+
+function handleMessageToolClick(event) {
+    const button = event.target?.closest?.("[data-message-action]");
+    if (!button || !messagesRoot?.contains(button)) {
+        return;
+    }
+
+    event.preventDefault();
+    const messageId = button.dataset.messageId || "";
+    const action = button.dataset.messageAction || "";
+    if (action === "copy") {
+        void copyMessage(messageId);
+    } else if (action === "regenerate") {
+        void regenerateMessage(messageId);
+    }
+}
+
+async function startTurn({
+    text,
+    visibleUserText = text,
+    showUserMessage = true,
+    hiddenUserMessage = false,
+    titleText = visibleUserText,
+    systemPrompt = null,
+    requestSystemPrompt = null,
+    clearInput = false,
+} = {}) {
+    ensurePanel();
+    if (!state.workspaceReady) {
+        state.status = "正在加载话题，加载完成后再发送";
+        renderPanel();
+        return false;
+    }
+
+    const requestText = String(text || "").trim();
+    if (!requestText) {
+        state.status = "请输入内容";
+        renderPanel();
+        return false;
+    }
+
+    const assistantMessage = {
+        id: uid("assistant"),
+        role: "assistant",
+        text: "",
+        createdAt: Date.now(),
+    };
+
+    const session = currentSession();
+    if (isSessionGenerating(session.id)) {
+        state.status = "当前话题正在回复，可以切到其他话题继续发送";
+        renderPanel();
+        return false;
+    }
+
+    const turnId = uid("turn");
+    const responseMessageId = assistantMessage.id;
+    const history = historyForRequest(session, responseMessageId);
+    if (systemPrompt !== null) {
+        session.systemPrompt = String(systemPrompt || "");
+    }
+    if (showUserMessage) {
+        session.messages.push({
+            id: uid("user"),
+            role: "user",
+            text: String(visibleUserText || requestText),
+            hidden: !!hiddenUserMessage,
+            createdAt: Date.now(),
+        });
+    }
+    updateSessionTitle(session, titleText || visibleUserText || requestText);
+    session.messages.push(assistantMessage);
+    session.messages = session.messages.slice(-MAX_MESSAGES_PER_SESSION);
+    touchSession(session);
+    state.currentSessionId = session.id;
+    activeTurns.set(session.id, {
+        turnId,
+        messageId: responseMessageId,
+        sessionId: session.id,
+        model: state.model || "gpt-5.5",
+    });
+    state.status = "正在回复...";
+    if (clearInput) {
+        const input = qs("[data-role='input']");
+        if (input) {
+            input.value = "";
+        }
+    }
+    markWorkspaceEdited();
+    saveState();
+    renderPanel();
+    await persistSession(session);
+
+    try {
+        await requestJsonWithGetFallback(ROUTE_TURN, {
+            panel_id: getPanelId(),
+            turn_id: turnId,
+            session_id: session.id,
+            message_id: responseMessageId,
+            message: requestText,
+            provider_id: activeProvider().id,
+            request_format: activeProvider().requestFormat || "chat_completions",
+            model: state.model || "gpt-5.5",
+            system_prompt: requestSystemPrompt !== null ? requestSystemPrompt : effectiveSystemPrompt(session),
+            temperature: Number(state.temperature) || 0.7,
+            history,
+        });
+    } catch (error) {
+        const message = getMessage(responseMessageId);
+        if (message) {
+            message.tone = "error";
+            message.text = `发送失败：${error.message || error}`;
+        }
+        activeTurns.delete(session.id);
+        state.status = "发送失败";
+        const failedRecord = findMessageRecord(assistantMessage.id);
+        if (failedRecord?.session) {
+            await persistSession(failedRecord.session);
+        } else {
+            saveState();
+        }
+        renderPanel();
+    }
+    return true;
+}
+
+async function sendStarterPreset(starterId) {
+    const session = currentSession();
+    const preset = STARTER_PRESETS.find((item) => item.id === starterId);
+    if (!preset) {
+        return;
+    }
+    if (session.messages.length) {
+        state.status = "当前话题已经开始了";
+        renderPanel();
+        return;
+    }
+
+    await startTurn({
+        text: preset.prompt,
+        visibleUserText: preset.prompt,
+        showUserMessage: true,
+        hiddenUserMessage: true,
+        titleText: preset.label,
+        requestSystemPrompt: state.systemPrompt || DEFAULT_SYSTEM_PROMPT,
+    });
+}
+
+async function sendMessage() {
+    const input = qs("[data-role='input']");
+    const text = String(input?.value || "").trim();
+    await startTurn({
+        text,
+        visibleUserText: text,
+        showUserMessage: true,
+        titleText: text,
+        clearInput: true,
+    });
+}
+
+async function stopGeneration() {
+    const session = currentSession();
+    const turn = activeTurnForSession(session.id);
+    if (!turn?.turnId) {
+        return;
+    }
+    state.status = "正在停止...";
+    renderPanel();
+    try {
+        await requestJsonWithGetFallback(ROUTE_STOP, {
+            panel_id: getPanelId(),
+            turn_id: turn.turnId,
+        });
+    } catch (error) {
+        state.status = `停止失败：${error.message || error}`;
+        renderPanel();
+    }
+}
+
+function newChat() {
+    const session = createSession();
+    state.sessions.unshift(session);
+    state.sessions = state.sessions.slice(0, MAX_SESSIONS);
+    state.currentSessionId = session.id;
+    state.status = "新话题";
+    markWorkspaceEdited();
+    saveState();
+    renderPanel();
+    void persistSession(session);
+    setTimeout(() => qs("[data-role='input']")?.focus(), 0);
+}
+
+function clearMessages() {
+    const session = currentSession();
+    if (isSessionGenerating(session.id)) {
+        state.status = "正在回复，先停止后再清空话题";
+        renderPanel();
+        return;
+    }
+    session.messages = [];
+    session.title = "新话题";
+    session.autoTitle = true;
+    touchSession(session, { moveToTop: false });
+    state.status = "当前话题已清空";
+    markWorkspaceEdited();
+    saveState();
+    renderPanel();
+    void persistSession(session);
+}
+
+function isOwnEvent(detail) {
+    return detail?.panel_id === getPanelId();
+}
+
+function onTurnStarted(event) {
+    const detail = event?.detail || {};
+    if (!isOwnEvent(detail)) {
+        return;
+    }
+    const sessionId = String(detail.session_id || "");
+    if (sessionId) {
+        activeTurns.set(sessionId, {
+            turnId: String(detail.turn_id || activeTurnForSession(sessionId)?.turnId || ""),
+            messageId: String(detail.message_id || activeTurnForSession(sessionId)?.messageId || ""),
+            sessionId,
+            model: String(detail.model || state.model || "模型"),
+        });
+    }
+    if (!sessionId || sessionId === currentSession().id) {
+        state.status = "正在回复...";
+    }
+    scheduleRender();
+}
+
+function onTextDelta(event) {
+    const detail = event?.detail || {};
+    if (!isOwnEvent(detail)) {
+        return;
+    }
+
+    const record = findMessageRecord(detail.message_id || "");
+    if (!record?.message) {
+        return;
+    }
+    record.message.text += String(detail.text || "");
+    touchSession(record.session, { moveToTop: false });
+    if (record.session.id === currentSession().id) {
+        state.status = "正在回复...";
+    }
+    scheduleRender();
+}
+
+function onTurnCompleted(event) {
+    const detail = event?.detail || {};
+    if (!isOwnEvent(detail)) {
+        return;
+    }
+
+    const record = findMessageRecord(detail.message_id || "");
+    const message = record?.message || null;
+    if (message && !message.text && detail.text) {
+        message.text = String(detail.text || "");
+    }
+    if (record?.session) {
+        touchSession(record.session, { moveToTop: false });
+    }
+    const sessionId = String(detail.session_id || record?.session?.id || "");
+    if (sessionId) {
+        activeTurns.delete(sessionId);
+    }
+    if (!sessionId || sessionId === currentSession().id) {
+        state.status = detail.cancelled ? "已停止" : "回复完成";
+    }
+    saveState();
+    renderPanel();
+    if (record?.session) {
+        void persistSession(record.session);
+    }
+}
+
+function onTurnFailed(event) {
+    const detail = event?.detail || {};
+    if (!isOwnEvent(detail)) {
+        return;
+    }
+
+    const record = findMessageRecord(detail.message_id || "");
+    if (record?.message) {
+        record.message.tone = "error";
+        record.message.text = detail.text || `请求失败：${detail.error || "未知错误"}`;
+    }
+    if (record?.session) {
+        touchSession(record.session, { moveToTop: false });
+    }
+    const sessionId = String(detail.session_id || record?.session?.id || "");
+    if (sessionId) {
+        activeTurns.delete(sessionId);
+    }
+    if (!sessionId || sessionId === currentSession().id) {
+        state.status = "请求失败";
+    }
+    saveState();
+    renderPanel();
+    if (record?.session) {
+        void persistSession(record.session);
+    }
+}
+
+function installSocketListeners() {
+    api.addEventListener(EVENT_TURN_STARTED, onTurnStarted);
+    api.addEventListener(EVENT_TEXT_DELTA, onTextDelta);
+    api.addEventListener(EVENT_TURN_COMPLETED, onTurnCompleted);
+    api.addEventListener(EVENT_TURN_FAILED, onTurnFailed);
+}
+
+loadState();
+
+app.registerExtension({
+    name: EXTENSION_NAME,
+    async setup() {
+        getPanelId();
+        installSocketListeners();
+        ensurePanel();
+        ensureSettingsPanel();
+        installMenuButtonWithRetry();
+        bootstrap();
+    },
+});

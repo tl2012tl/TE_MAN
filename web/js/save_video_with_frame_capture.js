@@ -1,1 +1,1188 @@
-const a0_0x364916=a0_0x561a;(function(_0x56fb33,_0x3c14a6){const _0x164da9=a0_0x561a,_0xf50c55=_0x56fb33();while(!![]){try{const _0x555694=parseInt(_0x164da9(0x244))/0x1+parseInt(_0x164da9(0x20f))/0x2+parseInt(_0x164da9(0x21e))/0x3+parseInt(_0x164da9(0x20d))/0x4*(-parseInt(_0x164da9(0x225))/0x5)+-parseInt(_0x164da9(0x20c))/0x6+parseInt(_0x164da9(0x24d))/0x7+-parseInt(_0x164da9(0x22e))/0x8;if(_0x555694===_0x3c14a6)break;else _0xf50c55['push'](_0xf50c55['shift']());}catch(_0x22d196){_0xf50c55['push'](_0xf50c55['shift']());}}}(a0_0x16f9,0x751a7));import{app}from'../../../scripts/app.js';import{api}from'../../../scripts/api.js';const VIDEO_NODE_CLASS='TE_image_pro_save_video',IMAGE_NODE_CLASS=a0_0x364916(0x1df),SERIALIZED_VIDEO_KEY='te_saved_preview_videos',SERIALIZED_PROMPT_KEY='te_saved_prompt_text',DEFAULT_PROMPT_TEXT='',PLAY_BUTTON_TEXT='暂停预览',RESUME_BUTTON_TEXT='播放预览',CAPTURE_BUTTON_TEXT=a0_0x364916(0x1ee),CAPTURE_BUSY_TEXT=a0_0x364916(0x231),LOCAL_UPLOAD_BUTTON_TEXT='加载视频',TE_VIDEO_ACTION_BAR_NAME='te_video_action_bar',TE_VIDEO_ACTION_BAR_HEIGHT=0x22,TE_VIDEO_ACTION_BAR_SIDE_MARGIN=0xa,TE_VIDEO_ACTION_BAR_PADDING_X=0x5,TE_VIDEO_ACTION_BAR_GAP=0x6,MIN_NODE_WIDTH=0x168,MIN_NODE_HEIGHT=0x168,MIN_PREVIEW_HEIGHT=0x78,NEW_IMAGE_NODE_GAP_X=0x30,NEW_IMAGE_NODE_GAP_Y=0x18,NEW_IMAGE_NODE_MIN_WIDTH=0x168,NEW_IMAGE_NODE_MIN_HEIGHT=0x168;function markCanvasDirty(){app['graph']?.['setDirtyCanvas']?.(!![],![]),app['canvas']?.['setDirty']?.(!![],![]);}function applyNodeSize(_0x46511e,_0xb128c4){if(!_0x46511e||!Array['isArray'](_0xb128c4))return;_0x46511e['__teInternalResize']=!![],_0x46511e['__teLastManagedSize']=[_0xb128c4[0x0],_0xb128c4[0x1]];try{_0x46511e['setSize']?.(_0xb128c4);}finally{_0x46511e['__teInternalResize']=![];}}function buildViewUrl(_0x584cff){const _0x35880e=a0_0x561a,_0x2dbdc0=new URLSearchParams({'filename':_0x584cff['filename'],'type':_0x584cff['type']||'output'});return _0x584cff['subfolder']&&_0x2dbdc0['set'](_0x35880e(0x249),_0x584cff['subfolder']),_0x2dbdc0[_0x35880e(0x23a)]('rand',String(Date['now']())),api['apiURL']('/view?'+_0x2dbdc0['toString']());}function getWidgetByName(_0x4d2b7c,_0x37b79d){const _0x4b85e7=a0_0x561a;if(!Array['isArray'](_0x4d2b7c?.['widgets']))return null;return _0x4d2b7c[_0x4b85e7(0x252)]['find'](_0x26b2d4=>_0x26b2d4?.[_0x4b85e7(0x22b)]===_0x37b79d)||null;}function setWidgetValue(_0x285893,_0x4637cb,_0x397d09){const _0xc570cf=a0_0x561a,_0x5d8a25=getWidgetByName(_0x285893,_0x4637cb);if(!_0x5d8a25)return![];Array['isArray'](_0x5d8a25['options']?.['values'])&&!_0x5d8a25['options']['values']['includes'](_0x397d09)&&_0x5d8a25[_0xc570cf(0x230)]['values']['push'](_0x397d09);_0x5d8a25['value']=_0x397d09;const _0x38bd5a=_0x285893[_0xc570cf(0x252)][_0xc570cf(0x258)](_0x5d8a25);return _0x38bd5a>=0x0&&(_0x285893['widgets_values']??=[],_0x285893[_0xc570cf(0x20b)][_0x38bd5a]=_0x397d09),_0x5d8a25['callback']?.(_0x397d09),!![];}function normalizePromptText(_0x12b520){if(Array['isArray'](_0x12b520))return _0x12b520['join']('');if(typeof _0x12b520==='string')return _0x12b520;return'';}function getStoredPromptText(_0x36f7ee){const _0x33edd1=a0_0x561a;return normalizePromptText(_0x36f7ee?.[_0x33edd1(0x201)]?.[SERIALIZED_PROMPT_KEY])['trim']()||DEFAULT_PROMPT_TEXT;}function setStoredPromptText(_0x189e09,_0x4741ea){_0x189e09['properties']={..._0x189e09['properties']??{},[SERIALIZED_PROMPT_KEY]:normalizePromptText(_0x4741ea)['trim']()||DEFAULT_PROMPT_TEXT};}function ensureMinNodeSize(_0x4cb365){const _0x2d0f3a=a0_0x561a;if(_0x4cb365?.[_0x2d0f3a(0x245)])return;const _0xa19e44=_0x4cb365['computeSize']?.();if(!_0xa19e44)return;applyNodeSize(_0x4cb365,[Math['max'](_0xa19e44[0x0],MIN_NODE_WIDTH),Math['max'](_0xa19e44[0x1],MIN_NODE_HEIGHT)]),markCanvasDirty();}function ensureImageNodeSize(_0x3ae832){const _0x538cd7=a0_0x561a,_0x3635b1=_0x3ae832['computeSize']?.();if(!_0x3635b1)return;applyNodeSize(_0x3ae832,[Math['max'](_0x3635b1[0x0],NEW_IMAGE_NODE_MIN_WIDTH),Math[_0x538cd7(0x21d)](_0x3635b1[0x1],NEW_IMAGE_NODE_MIN_HEIGHT)]);}function removeLegacyCustomPreview(_0x3222c8){const _0xe17536=a0_0x561a;if(!Array['isArray'](_0x3222c8?.['widgets']))return;for(let _0x3559dc=_0x3222c8['widgets']['length']-0x1;_0x3559dc>=0x0;_0x3559dc-=0x1){const _0x4f3a35=_0x3222c8['widgets'][_0x3559dc];if(_0x4f3a35?.['name']!=='te_videopreview')continue;if(_0x4f3a35===_0x3222c8['__teVideoPreviewWidget'])continue;_0x4f3a35?.['onRemove']?.(),_0x3222c8['widgets']['splice'](_0x3559dc,0x1),Array['isArray'](_0x3222c8[_0xe17536(0x20b)])&&_0x3559dc<_0x3222c8['widgets_values']['length']&&_0x3222c8['widgets_values']['splice'](_0x3559dc,0x1);}}function setNodeImageState(_0x22b1f9,_0x422efb){const _0x5518a6=a0_0x561a,_0xf16a58=String(_0x22b1f9['id']);_0x22b1f9[_0x5518a6(0x257)]=_0x422efb,app['nodeOutputs']??={},app[_0x5518a6(0x250)][_0xf16a58]={...app['nodeOutputs'][_0xf16a58]??{},'images':_0x422efb};}function setOfficialPreviewState(_0x2d093c,_0x15d89b){const _0x2cf94f=a0_0x561a,_0x94cf25=Array['isArray'](_0x15d89b)?_0x15d89b['filter'](_0x3d81bb=>_0x3d81bb?.[_0x2cf94f(0x233)]):[],_0x472197=String(_0x2d093c['id']);app['nodeOutputs']??={},app['nodeOutputs'][_0x472197]={...app['nodeOutputs'][_0x472197]??{}};if(!_0x94cf25[_0x2cf94f(0x23b)]){_0x2d093c['images']=[],_0x2d093c['imageIndex']=0x0,_0x2d093c['overIndex']=0x0,delete app[_0x2cf94f(0x250)][_0x472197]['images'],delete app['nodeOutputs'][_0x472197]['animated'];return;}setNodeImageState(_0x2d093c,_0x94cf25),_0x2d093c['imageIndex']=0x0,_0x2d093c['overIndex']=0x0,app['nodeOutputs'][_0x472197]['animated']=[!![]];}function restorePreviewImages(_0x331c32,_0xcc6e77){const _0x458d47=a0_0x561a;if(!Array['isArray'](_0xcc6e77)||!_0xcc6e77[_0x458d47(0x23b)])return;setNodeImageState(_0x331c32,_0xcc6e77),_0x331c32['imageIndex']=0x0,_0x331c32['overIndex']=0x0;const _0x13cf68=_0xcc6e77[_0x458d47(0x1e7)](_0x475e02=>{const _0x149cab=new Image();return _0x149cab['src']=buildViewUrl(_0x475e02),_0x149cab;});_0x331c32[_0x458d47(0x243)]=_0x13cf68;}function updatePlayButtonLabel(_0x163dbd){const _0x1a6199=a0_0x561a;if(!_0x163dbd?.['__teTogglePreviewWidget'])return;if(!Array['isArray'](_0x163dbd['__teSavedVideos'])||!_0x163dbd[_0x1a6199(0x229)]['length']){_0x163dbd[_0x1a6199(0x25a)]['name']=PLAY_BUTTON_TEXT;_0x163dbd['__teVideoActionBarWidget']&&markCanvasDirty();return;}_0x163dbd['__teTogglePreviewWidget'][_0x1a6199(0x22b)]=_0x163dbd['__tePreviewPaused']?RESUME_BUTTON_TEXT:PLAY_BUTTON_TEXT,_0x163dbd['__teVideoActionBarWidget']&&markCanvasDirty();}function updateCaptureButtonLabel(_0x13118e){const _0x2e995e=a0_0x561a;if(!_0x13118e?.['__teCaptureFrameWidget'])return;_0x13118e[_0x2e995e(0x210)]['name']=_0x13118e['__teFrameCaptureBusy']?CAPTURE_BUSY_TEXT:CAPTURE_BUTTON_TEXT,_0x13118e[_0x2e995e(0x24f)]&&markCanvasDirty();}function collectVideoElements(_0x4c6750,_0x4de3cf,_0x2eb5f3=new Set(),_0x429574=0x0){const _0x3c595f=a0_0x561a;if(!_0x4c6750||_0x2eb5f3['has'](_0x4c6750)||_0x429574>0x2)return;_0x2eb5f3[_0x3c595f(0x1f0)](_0x4c6750);if(_0x4c6750 instanceof HTMLVideoElement){_0x4de3cf['push'](_0x4c6750);return;}if(_0x4c6750 instanceof HTMLElement){if(_0x4c6750[_0x3c595f(0x221)]==='VIDEO'){_0x4de3cf['push'](_0x4c6750);return;}_0x4de3cf['push'](..._0x4c6750['querySelectorAll']('video'));}for(const _0x7b37ff of[_0x3c595f(0x1ea),'el','inputEl','parentEl','container',_0x3c595f(0x212)]){_0x4c6750?.[_0x7b37ff]&&collectVideoElements(_0x4c6750[_0x7b37ff],_0x4de3cf,_0x2eb5f3,_0x429574+0x1);}}function releaseVideoElement(_0x4164cd){const _0x20af57=a0_0x561a;if(!(_0x4164cd instanceof HTMLVideoElement))return;try{_0x4164cd['pause'](),_0x4164cd['removeAttribute'](_0x20af57(0x1ef)),_0x4164cd['load']?.();}catch{}}function removeOfficialPreviewArtifacts(_0x596f80){const _0x498307=a0_0x561a;_0x596f80[_0x498307(0x1fa)]=null,_0x596f80['__teExpectOfficialPreview']=![],_0x596f80[_0x498307(0x21a)]=![];Array['isArray'](_0x596f80?.['imgs'])&&_0x596f80['imgs'][_0x498307(0x1fb)](releaseVideoElement);_0x596f80['imgs']=[];if(!Array['isArray'](_0x596f80?.['widgets']))return;for(let _0x43ec5d=_0x596f80['widgets'][_0x498307(0x23b)]-0x1;_0x43ec5d>=0x0;_0x43ec5d-=0x1){const _0x4beba4=_0x596f80[_0x498307(0x252)][_0x43ec5d];if(_0x4beba4===_0x596f80[_0x498307(0x214)]||_0x4beba4?.['name']==='te_videopreview')continue;const _0x247fab=[];collectVideoElements(_0x4beba4,_0x247fab);if(!_0x247fab['length'])continue;[...new Set(_0x247fab)][_0x498307(0x1fb)](releaseVideoElement),_0x4beba4?.[_0x498307(0x240)]?.(),_0x596f80['widgets']['splice'](_0x43ec5d,0x1),Array['isArray'](_0x596f80['widgets_values'])&&_0x43ec5d<_0x596f80[_0x498307(0x20b)]['length']&&_0x596f80['widgets_values'][_0x498307(0x23c)](_0x43ec5d,0x1);}}function getActiveVideoElement(_0x587bcb){return _0x587bcb?.['__teCustomVideoEl']||null;}function updateCustomPreviewVisibility(_0x44f083){if(!_0x44f083?.['__teVideoPreviewWidget'])return;_0x44f083['__teHideCustomPreview']=![],ensureMinNodeSize(_0x44f083),markCanvasDirty();}function syncPreviewSource(_0x1a33b8,_0x557a00){const _0x1b975a=a0_0x561a,_0x1fc01c=Array['isArray'](_0x557a00)?_0x557a00[_0x1b975a(0x1f6)](_0x4aa1d0=>_0x4aa1d0?.['filename']):[];_0x1a33b8[_0x1b975a(0x229)]=_0x1fc01c['length']?[_0x1fc01c[0x0]]:[],removeOfficialPreviewArtifacts(_0x1a33b8),setOfficialPreviewState(_0x1a33b8,_0x1a33b8[_0x1b975a(0x229)]);const _0x2da983=_0x1a33b8['__teCustomVideoEl'],_0x355b42=_0x1a33b8[_0x1b975a(0x229)][0x0];_0x2da983&&(releaseVideoElement(_0x2da983),!_0x355b42?_0x1a33b8['__teVideoAspectRatio']=null:(_0x2da983['src']=buildViewUrl(_0x355b42),_0x2da983['load']?.())),updateCustomPreviewVisibility(_0x1a33b8),updatePlayButtonLabel(_0x1a33b8),ensureMinNodeSize(_0x1a33b8),markCanvasDirty();}function buildInputVideoInfo(_0x3044c1){const _0x3cd179=a0_0x561a,_0x5eda63=String(_0x3044c1||'')[_0x3cd179(0x1e2)]();if(!_0x5eda63)return null;return{'filename':_0x5eda63,'subfolder':'','type':'input'};}function isVideoInputConnected(_0x238754){const _0x5abc52=Array['isArray'](_0x238754?.['inputs'])?_0x238754['inputs']['find'](_0xece64e=>_0xece64e?.['name']==='video'):null;return!!_0x5abc52?.['link'];}function syncLocalVideoPreview(_0x59a842,_0x2f000f=![]){const _0x25302a=a0_0x561a;if(!_0x59a842||!_0x2f000f&&isVideoInputConnected(_0x59a842))return;const _0x4622cf=getWidgetByName(_0x59a842,'local_video'),_0x45f7df=buildInputVideoInfo(_0x4622cf?.[_0x25302a(0x22d)]);if(!_0x45f7df){!isVideoInputConnected(_0x59a842)&&syncPreviewSource(_0x59a842,[]);return;}syncPreviewSource(_0x59a842,[_0x45f7df]);}async function uploadVideoFile(_0xd5fe3,_0x394348){const _0x46b6ad=a0_0x561a;try{const _0x251a17=new FormData(),_0x4ee359=new File([_0xd5fe3],_0xd5fe3['name'],{'type':_0xd5fe3['type'],'lastModified':_0xd5fe3['lastModified']});_0x251a17[_0x46b6ad(0x226)]('image',_0x4ee359),_0x251a17['append']('type','input');const _0xc8a929=api[_0x46b6ad(0x23f)]('/upload/image'),_0x59c17d=await new Promise(_0x5172e7=>{const _0x24072a=a0_0x561a,_0x5bd879=new XMLHttpRequest();_0x5bd879['upload'][_0x24072a(0x217)]=_0x129c1f=>{const _0x37c6dd=a0_0x561a;_0x129c1f[_0x37c6dd(0x1e5)]&&_0x394348?.(_0x129c1f['loaded']/_0x129c1f[_0x37c6dd(0x22c)]);},_0x5bd879['onload']=()=>_0x5172e7(_0x5bd879),_0x5bd879['open'](_0x24072a(0x238),_0xc8a929,!![]),_0x5bd879['send'](_0x251a17);});if(_0x59c17d['status']!==0xc8)throw new Error(_0x59c17d['status']+'\x20-\x20'+_0x59c17d[_0x46b6ad(0x207)]);return JSON['parse'](_0x59c17d['responseText']);}catch(_0x3021b5){throw new Error(_0x3021b5?.['message']||'上传视频失败。');}}function installLocalVideoUploadButton(_0x1ea446){const _0x3044dc=a0_0x561a;if(_0x1ea446[_0x3044dc(0x219)])return;const _0x3af96c=getWidgetByName(_0x1ea446,'local_video');if(!_0x3af96c)return;const _0xb412c5=document['createElement'](_0x3044dc(0x1f9));Object['assign'](_0xb412c5,{'type':'file','accept':'video/webm,video/mp4,video/x-matroska,image/gif,video/quicktime,video/x-msvideo','style':'display:\x20none'}),_0xb412c5['onchange']=async()=>{const _0x56b8b5=a0_0x561a,_0xf26f8f=_0xb412c5['files']?.[0x0];_0xb412c5['value']='';if(!_0xf26f8f)return;try{const _0x118e7c=await uploadVideoFile(_0xf26f8f,_0xa28904=>{_0x1ea446['progress']=_0xa28904;});_0x1ea446['progress']=undefined;if(!_0x118e7c?.['name'])throw new Error('上传视频失败。');Array['isArray'](_0x3af96c['options']?.['values'])&&!_0x3af96c['options']['values']['includes'](_0x118e7c['name'])&&_0x3af96c['options']['values'][_0x56b8b5(0x220)](_0x118e7c['name']);_0x3af96c['value']=_0x118e7c[_0x56b8b5(0x22b)];const _0x18d779=_0x1ea446['widgets']?.['indexOf']?.(_0x3af96c)??-0x1;_0x18d779>=0x0&&(_0x1ea446['widgets_values']??=[],_0x1ea446['widgets_values'][_0x18d779]=_0x118e7c['name']),_0x3af96c['callback']?.(_0x118e7c[_0x56b8b5(0x22b)]),syncLocalVideoPreview(_0x1ea446,!![]),markCanvasDirty();}catch(_0x1e108c){_0x1ea446[_0x56b8b5(0x263)]=undefined,console[_0x56b8b5(0x1dd)](_0x1e108c),window[_0x56b8b5(0x1e6)]?.(_0x1e108c?.['message']||_0x56b8b5(0x25f));}},document['body']['appendChild'](_0xb412c5);const _0x452141=_0x1ea446['onRemoved'];_0x1ea446['onRemoved']=function(){const _0x405381=a0_0x561a;releaseVideoElement(this[_0x405381(0x242)]);Array['isArray'](this[_0x405381(0x243)])&&this['imgs']['forEach'](releaseVideoElement);try{_0xb412c5['remove']();}catch{}return _0x452141?.[_0x405381(0x224)](this,arguments);},_0x1ea446[_0x3044dc(0x262)]=_0xb412c5,_0x1ea446[_0x3044dc(0x219)]=_0x1ea446['addWidget'](_0x3044dc(0x23e),LOCAL_UPLOAD_BUTTON_TEXT,'',()=>{const _0x474092=a0_0x561a;app['canvas']['node_widget']=null,_0xb412c5[_0x474092(0x209)]();}),_0x1ea446[_0x3044dc(0x219)]['serialize']=![],hideNativeVideoActionWidget(_0x1ea446[_0x3044dc(0x219)]);}function forwardCanvasEvent(_0x4816be,_0x57cfe6){const _0x39d78b=a0_0x561a;if(!app[_0x39d78b(0x21f)]?.[_0x57cfe6])return;_0x4816be[_0x39d78b(0x261)](),app[_0x39d78b(0x21f)][_0x57cfe6](_0x4816be);}function a0_0x561a(_0x3d63a1,_0x365b02){const _0x16f9de=a0_0x16f9();return a0_0x561a=function(_0x561a8d,_0x35d75a){_0x561a8d=_0x561a8d-0x1dc;let _0x456b58=_0x16f9de[_0x561a8d];return _0x456b58;},a0_0x561a(_0x3d63a1,_0x365b02);}function forwardCanvasEventIfBackground(_0xe4c766,_0x5b646b,_0x1fff97){const _0x509d5d=a0_0x561a;if(_0xe4c766['target']&&_0xe4c766[_0x509d5d(0x204)]!==_0x1fff97)return;forwardCanvasEvent(_0xe4c766,_0x5b646b);}function forwardContextMenuToCanvas(_0x215d19){const _0x562bf1=a0_0x561a;_0x215d19['preventDefault'](),_0x215d19['stopPropagation'](),_0x215d19[_0x562bf1(0x20e)]?.();const _0x31ee03=app['canvas']?.[_0x562bf1(0x21f)];if(_0x31ee03?.['dispatchEvent']){_0x31ee03['dispatchEvent'](new MouseEvent(_0x562bf1(0x1ff),{'bubbles':!![],'cancelable':!![],'view':window,'button':0x2,'buttons':0x2,'clientX':_0x215d19['clientX'],'clientY':_0x215d19['clientY'],'screenX':_0x215d19['screenX'],'screenY':_0x215d19['screenY'],'ctrlKey':_0x215d19['ctrlKey'],'shiftKey':_0x215d19['shiftKey'],'altKey':_0x215d19['altKey'],'metaKey':_0x215d19[_0x562bf1(0x1fc)]}));return;}app['canvas']?.['_mousedown_callback']?.(_0x215d19);}function installVideoPreviewWidget(_0x9855b){const _0x148098=a0_0x561a;if(_0x9855b['__teVideoPreviewWidget']){updateCustomPreviewVisibility(_0x9855b);return;}const _0x172a7c=document['createElement']('div');_0x172a7c['style']['width']='100%',_0x172a7c['style']['borderRadius']='10px',_0x172a7c['style']['overflow']=_0x148098(0x1dc),_0x172a7c['style']['background']=_0x148098(0x223),_0x172a7c[_0x148098(0x241)][_0x148098(0x218)]='1px\x20solid\x20rgba(255,255,255,0.08)';const _0x26d75f=_0x9855b[_0x148098(0x211)]('te_videopreview','preview',_0x172a7c,{'serialize':![],'hideOnZoom':![],'getValue'(){return _0x172a7c['value'];},'setValue'(_0x3ac778){_0x172a7c['value']=_0x3ac778;}});_0x26d75f[_0x148098(0x200)]=function(_0x18e3b3){if(_0x9855b['__teHideCustomPreview'])return[_0x18e3b3,-0x4];const _0x43893d=_0x9855b['__teVideoAspectRatio'];if(_0x43893d&&_0x43893d>0x0){const _0x165095=Math['max']((_0x9855b['size']?.[0x0]??MIN_NODE_WIDTH)-0x14,0xf0);let _0x5b4247=_0x165095/_0x43893d;return _0x5b4247=Math['max'](MIN_PREVIEW_HEIGHT,_0x5b4247),[_0x18e3b3,_0x5b4247+0x8];}return[_0x18e3b3,MIN_PREVIEW_HEIGHT];},_0x172a7c[_0x148098(0x1e1)]('contextmenu',forwardContextMenuToCanvas,!![]),_0x172a7c['addEventListener']('pointerdown',_0x513e93=>forwardCanvasEventIfBackground(_0x513e93,'_mousedown_callback',_0x172a7c),!![]),_0x172a7c['addEventListener']('mousewheel',_0x3c6593=>forwardCanvasEventIfBackground(_0x3c6593,'_mousewheel_callback',_0x172a7c),!![]),_0x172a7c[_0x148098(0x1e1)](_0x148098(0x24b),_0x441815=>forwardCanvasEventIfBackground(_0x441815,'_mousemove_callback',_0x172a7c),!![]),_0x172a7c[_0x148098(0x1e1)]('pointerup',_0x32ccd5=>forwardCanvasEventIfBackground(_0x32ccd5,'_mouseup_callback',_0x172a7c),!![]);const _0x5bd3aa=document[_0x148098(0x215)]('video');_0x5bd3aa[_0x148098(0x253)]=!![],_0x5bd3aa['loop']=![],_0x5bd3aa[_0x148098(0x203)]=![],_0x5bd3aa['autoplay']=![],_0x5bd3aa[_0x148098(0x1f3)]=!![],_0x5bd3aa['preload']='metadata',_0x5bd3aa[_0x148098(0x241)]['display']='block',_0x5bd3aa[_0x148098(0x241)]['width']='100%',_0x5bd3aa[_0x148098(0x241)]['height']='auto',_0x5bd3aa[_0x148098(0x241)][_0x148098(0x228)]='#000',_0x5bd3aa[_0x148098(0x1e1)]('loadedmetadata',()=>{const _0x53b9f9=a0_0x561a;_0x5bd3aa['videoWidth']>0x0&&_0x5bd3aa['videoHeight']>0x0?_0x9855b['__teVideoAspectRatio']=_0x5bd3aa[_0x53b9f9(0x1f4)]/_0x5bd3aa['videoHeight']:_0x9855b[_0x53b9f9(0x213)]=null,ensureMinNodeSize(_0x9855b),_0x9855b['__tePreviewPaused']&&_0x5bd3aa['pause'](),updateCustomPreviewVisibility(_0x9855b),markCanvasDirty();}),_0x5bd3aa[_0x148098(0x1e1)]('canplay',()=>{updateCustomPreviewVisibility(_0x9855b),markCanvasDirty();}),_0x5bd3aa['addEventListener']('play',()=>{_0x9855b['__tePreviewPaused']=![],updatePlayButtonLabel(_0x9855b),markCanvasDirty();}),_0x5bd3aa['addEventListener']('pause',()=>{_0x9855b['__tePreviewPaused']=!![],updatePlayButtonLabel(_0x9855b),markCanvasDirty();}),_0x5bd3aa[_0x148098(0x1e1)](_0x148098(0x1dd),()=>{_0x9855b['__teVideoAspectRatio']=null,updatePlayButtonLabel(_0x9855b),ensureMinNodeSize(_0x9855b),markCanvasDirty();}),_0x172a7c['appendChild'](_0x5bd3aa),_0x9855b[_0x148098(0x214)]=_0x26d75f,_0x9855b['__teCustomVideoEl']=_0x5bd3aa,updateCustomPreviewVisibility(_0x9855b);}async function togglePreviewPlayback(_0x37c7f4){const _0x3121d7=a0_0x561a,_0x5141d7=getActiveVideoElement(_0x37c7f4);if(!_0x5141d7||!Array['isArray'](_0x37c7f4[_0x3121d7(0x229)])||!_0x37c7f4['__teSavedVideos']['length'])return;_0x5141d7[_0x3121d7(0x1f5)]?(_0x37c7f4['__tePreviewPaused']=![],await _0x5141d7['play']?.()[_0x3121d7(0x21c)](()=>{})):_0x5141d7[_0x3121d7(0x1f2)](),updatePlayButtonLabel(_0x37c7f4),markCanvasDirty();}function buildCaptureFilename(_0x20b6df,_0x2be97d){const _0x539b10=a0_0x561a,_0x48eb99=String(_0x20b6df?.['filename']||'te_video')['replace'](/\.[^.]+$/,'')['replace'](/[^a-zA-Z0-9._-]+/g,'_')['replace'](/^_+|_+$/g,'')||'te_video',_0x161250=Math['max'](0x0,Math['round']((_0x2be97d||0x0)*0x3e8));return _0x48eb99+_0x539b10(0x25b)+_0x161250+'ms.png';}async function uploadCapturedFrame(_0x3ddfcc){const _0x27e011=a0_0x561a,_0x383efa=getActiveVideoElement(_0x3ddfcc),_0x3899b8=Array['isArray'](_0x3ddfcc?.['__teSavedVideos'])?_0x3ddfcc['__teSavedVideos'][0x0]:null;if(!_0x383efa||!_0x3899b8)throw new Error('当前节点还没有可截帧的视频。');if(_0x383efa['readyState']<0x2||!_0x383efa[_0x27e011(0x1f4)]||!_0x383efa['videoHeight'])throw new Error('视频还没加载完成，暂时不能截帧。');const _0x4c9764=document['createElement']('canvas');_0x4c9764['width']=_0x383efa['videoWidth'],_0x4c9764['height']=_0x383efa['videoHeight'];const _0x24dd9d=_0x4c9764['getContext']('2d');if(!_0x24dd9d)throw new Error('创建截图画布失败。');_0x24dd9d['drawImage'](_0x383efa,0x0,0x0,_0x4c9764['width'],_0x4c9764['height']);const _0x2af797=await new Promise(_0x38cd64=>_0x4c9764[_0x27e011(0x1fe)](_0x38cd64,'image/png'));if(!(_0x2af797 instanceof Blob))throw new Error('当前帧转图片失败。');const _0x5b5519=new FormData();_0x5b5519[_0x27e011(0x226)](_0x27e011(0x1e9),new File([_0x2af797],buildCaptureFilename(_0x3899b8,_0x383efa[_0x27e011(0x259)]),{'type':'image/png'})),_0x5b5519['append']('type',_0x27e011(0x1f9));const _0x1bbeae=await api[_0x27e011(0x248)](_0x27e011(0x1fd),{'method':'POST','body':_0x5b5519});let _0x498923=null;try{_0x498923=await _0x1bbeae['json']();}catch{_0x498923=null;}if(_0x1bbeae['status']!==0xc8||!_0x498923?.[_0x27e011(0x22b)])throw new Error('上传截帧图片失败。');return{'filename':_0x498923['name'],'subfolder':_0x498923['subfolder']||'','type':_0x498923[_0x27e011(0x202)]||'input'};}function createCapturedFrameNode(_0x33f506,_0x29820d,_0x33de5d){const _0x140ee4=a0_0x561a;if(!app['graph']||!window['LiteGraph']?.['createNode'])throw new Error(_0x140ee4(0x20a));const _0x251e82=window['LiteGraph']['createNode'](IMAGE_NODE_CLASS);if(!_0x251e82)throw new Error('创建节点失败:\x20'+IMAGE_NODE_CLASS);const _0x46b369=_0x33f506['__teCaptureCreatedCount']||0x0;_0x33f506['__teCaptureCreatedCount']=_0x46b369+0x1,app['graph']['add'](_0x251e82),_0x251e82['pos']=[(_0x33f506['pos']?.[0x0]??0x0)+(_0x33f506['size']?.[0x0]??MIN_NODE_WIDTH)+NEW_IMAGE_NODE_GAP_X,(_0x33f506[_0x140ee4(0x234)]?.[0x1]??0x0)+_0x46b369*NEW_IMAGE_NODE_GAP_Y],ensureImageNodeSize(_0x251e82);const _0xc84b74=getWidgetByName(_0x33f506,'filename_prefix')?.[_0x140ee4(0x22d)];return _0xc84b74&&setWidgetValue(_0x251e82,_0x140ee4(0x251),_0xc84b74),setWidgetValue(_0x251e82,'upload_image',_0x29820d['filename']),_0x251e82['properties']={..._0x251e82['properties']??{},[SERIALIZED_PROMPT_KEY]:normalizePromptText(_0x33de5d)[_0x140ee4(0x1e2)]()||DEFAULT_PROMPT_TEXT},restorePreviewImages(_0x251e82,[_0x29820d]),markCanvasDirty(),_0x251e82;}async function captureCurrentFrame(_0x4bb1b7){const _0x413d14=a0_0x561a;if(_0x4bb1b7['__teFrameCaptureBusy'])return;_0x4bb1b7[_0x413d14(0x1e3)]=!![],updateCaptureButtonLabel(_0x4bb1b7),markCanvasDirty();try{const _0x45f88e=await uploadCapturedFrame(_0x4bb1b7);createCapturedFrameNode(_0x4bb1b7,_0x45f88e,getStoredPromptText(_0x4bb1b7));}finally{_0x4bb1b7['__teFrameCaptureBusy']=![],updateCaptureButtonLabel(_0x4bb1b7),markCanvasDirty();}}function drawRoundRect(_0x516f75,_0x2b9fb2,_0x3fa752,_0x35854e,_0x5d685d,_0x40cffa){const _0x4636ca=Math['min'](_0x40cffa,_0x35854e/0x2,_0x5d685d/0x2);_0x516f75['beginPath'](),_0x516f75['moveTo'](_0x2b9fb2+_0x4636ca,_0x3fa752),_0x516f75['arcTo'](_0x2b9fb2+_0x35854e,_0x3fa752,_0x2b9fb2+_0x35854e,_0x3fa752+_0x5d685d,_0x4636ca),_0x516f75['arcTo'](_0x2b9fb2+_0x35854e,_0x3fa752+_0x5d685d,_0x2b9fb2,_0x3fa752+_0x5d685d,_0x4636ca),_0x516f75['arcTo'](_0x2b9fb2,_0x3fa752+_0x5d685d,_0x2b9fb2,_0x3fa752,_0x4636ca),_0x516f75['arcTo'](_0x2b9fb2,_0x3fa752,_0x2b9fb2+_0x35854e,_0x3fa752,_0x4636ca),_0x516f75['closePath']();}function isPointInsideRect(_0x20f1fe,_0x265b5f){const _0x103ec9=a0_0x561a;if(!Array['isArray'](_0x20f1fe)||!Array[_0x103ec9(0x239)](_0x265b5f))return![];const [_0xfe6bff,_0x32ef09]=_0x20f1fe,[_0x3994f6,_0xea4c5a,_0x3d74df,_0x16a614]=_0x265b5f;return _0xfe6bff>=_0x3994f6&&_0xfe6bff<=_0x3994f6+_0x3d74df&&_0x32ef09>=_0xea4c5a&&_0x32ef09<=_0xea4c5a+_0x16a614;}function hideNativeVideoActionWidget(_0x30a239){const _0x4d6f7b=a0_0x561a;if(!_0x30a239||_0x30a239['__teVideoActionHidden'])return;_0x30a239['__teVideoActionHidden']=!![],_0x30a239['__teOriginalComputeSize']=_0x30a239[_0x4d6f7b(0x200)],_0x30a239['__teOriginalDraw']=_0x30a239[_0x4d6f7b(0x22a)],_0x30a239[_0x4d6f7b(0x1f7)]=![],_0x30a239['computeSize']=()=>[0x0,-0x4],_0x30a239['draw']=()=>{};}function a0_0x16f9(){const _0x3293f2=['slice','pause','playsInline','videoWidth','paused','filter','serialize','registerExtension','input','__teOfficialVideoEl','forEach','metaKey','/upload/image','toBlob','mousedown','computeSize','properties','type','muted','target','TEImagePro.SaveVideoWithFrameCapture','rgba(255,\x20255,\x20255,\x200.03)','statusText','addWidget','click','当前画布还没准备好，无法创建截图节点。','widgets_values','397692mwKnZg','63628jXYODg','stopImmediatePropagation','1403004YMRqtr','__teCaptureFrameWidget','addDOMWidget','videoEl','__teVideoAspectRatio','__teVideoPreviewWidget','createElement','min','onprogress','border','__teLocalVideoUploadWidget','__teHideCustomPreview','custom','catch','max','1566Exilww','canvas','push','tagName','number','#050505','apply','20WiuOJa','append','disabled','background','__teSavedVideos','draw','name','total','value','10891272GftQLF','fillStyle','options','截取中...','textBaseline','filename','pos','onNodeCreated','__teInternalResize','500\x2012px\x20sans-serif','post','isArray','set','length','splice','videos','button','apiURL','onRemove','style','__teCustomVideoEl','imgs','884802AILkpJ','__tePreviewSizeLocked','findIndex','restore','fetchApi','subfolder','capture','pointermove','addColorStop','2689036bqZjUJ','weight','__teVideoActionBarWidget','nodeOutputs','filename_prefix','widgets','controls','rgba(0,\x200,\x200,\x200)','message','local_video','images','indexOf','currentTime','__teTogglePreviewWidget','_frame_','prototype','measureText','__teLastManagedSize','上传视频失败。','label','preventDefault','__teLocalVideoUploadInput','progress','upload','hidden','error','__tePreviewPaused','TE_image_pro_save_image_with_output','onExecuted','addEventListener','trim','__teFrameCaptureBusy','rgba(255,\x20255,\x20255,\x200.98)','lengthComputable','alert','map','__teVideoActionBarRects','image','element','callback','rgba(255,\x20255,\x20255,\x200.10)','object','截取当前帧','src','add'];a0_0x16f9=function(){return _0x3293f2;};return a0_0x16f9();}function hideNativeVideoActionWidgets(_0x41a63e){const _0x46faea=a0_0x561a;[_0x41a63e?.[_0x46faea(0x219)],_0x41a63e?.['__teTogglePreviewWidget'],_0x41a63e?.[_0x46faea(0x210)]]['forEach'](hideNativeVideoActionWidget);}function getVideoActionBarItems(_0x5c0ce4){const _0x214447=a0_0x561a,_0x495069=Array[_0x214447(0x239)](_0x5c0ce4?.['__teSavedVideos'])&&_0x5c0ce4[_0x214447(0x229)]['length']>0x0,_0xc820eb=typeof _0x5c0ce4?.['progress']==='number',_0x3a58e7=!!_0x5c0ce4?.['__teFrameCaptureBusy'];return[{'key':_0x214447(0x264),'label':_0xc820eb?'上传中':LOCAL_UPLOAD_BUTTON_TEXT,'title':LOCAL_UPLOAD_BUTTON_TEXT,'weight':1.1,'disabled':_0xc820eb,'active':_0xc820eb,'run':async()=>{const _0x14ecb7=a0_0x561a;app[_0x14ecb7(0x21f)]['node_widget']=null,_0x5c0ce4['__teLocalVideoUploadInput']?.['click']();}},{'key':'preview','label':_0x5c0ce4?.['__tePreviewPaused']?RESUME_BUTTON_TEXT:PLAY_BUTTON_TEXT,'title':_0x5c0ce4?.['__tePreviewPaused']?RESUME_BUTTON_TEXT:PLAY_BUTTON_TEXT,'weight':0x1,'disabled':!_0x495069,'active':_0x495069&&!_0x5c0ce4?.['__tePreviewPaused'],'run':async()=>{await togglePreviewPlayback(_0x5c0ce4);}},{'key':_0x214447(0x24a),'label':_0x3a58e7?CAPTURE_BUSY_TEXT:CAPTURE_BUTTON_TEXT,'title':CAPTURE_BUTTON_TEXT,'weight':1.1,'disabled':!_0x495069||_0x3a58e7,'active':_0x3a58e7,'run':async()=>{await captureCurrentFrame(_0x5c0ce4);}}];}function fitActionBarLabel(_0x289879,_0x6f8149,_0xa92c6d){const _0x3cba30=a0_0x561a,_0x5cafe2=String(_0x6f8149??'');if(_0x289879['measureText'](_0x5cafe2)['width']<=_0xa92c6d)return _0x5cafe2;let _0x1a324f=_0x5cafe2;while(_0x1a324f['length']>0x1&&_0x289879[_0x3cba30(0x25d)](_0x1a324f+'...')['width']>_0xa92c6d){_0x1a324f=_0x1a324f[_0x3cba30(0x1f1)](0x0,-0x1);}return _0x1a324f+'...';}function getVideoActionBarLayout(_0x226d08,_0x4bd67c,_0xd1750b,_0x281c28){const _0x59b808=a0_0x561a,_0x5c1eab=TE_VIDEO_ACTION_BAR_SIDE_MARGIN,_0x39ccd7=Math['max'](0x0,_0x4bd67c-TE_VIDEO_ACTION_BAR_SIDE_MARGIN*0x2),_0x288328=Math[_0x59b808(0x216)](0x1a,Math['max'](0x14,_0x281c28-0x6)),_0x183abf=_0xd1750b+Math[_0x59b808(0x21d)](0x3,(_0x281c28-_0x288328)/0x2),_0x2aa98e=Math[_0x59b808(0x21d)](0x0,_0x226d08['length']-0x1)*TE_VIDEO_ACTION_BAR_GAP,_0x587580=Math[_0x59b808(0x21d)](0x0,_0x39ccd7-TE_VIDEO_ACTION_BAR_PADDING_X*0x2-_0x2aa98e),_0x10baf4=_0x226d08['reduce']((_0x3712d8,_0x4ce367)=>_0x3712d8+(_0x4ce367[_0x59b808(0x24e)]||0x1),0x0)||0x1,_0x221563=[];let _0x2f726b=_0x5c1eab+TE_VIDEO_ACTION_BAR_PADDING_X,_0x4e99c5=0x0;for(let _0xd77bcc=0x0;_0xd77bcc<_0x226d08[_0x59b808(0x23b)];_0xd77bcc+=0x1){const _0x2e027c=_0x226d08[_0xd77bcc],_0x1dbd48=_0xd77bcc===_0x226d08['length']-0x1,_0x545c84=_0x587580*((_0x2e027c['weight']||0x1)/_0x10baf4),_0x5f52b0=_0x1dbd48?Math[_0x59b808(0x21d)](0x22,_0x587580-_0x4e99c5):Math['max'](0x22,Math['round'](_0x545c84));_0x221563[_0x59b808(0x220)]({'item':_0x2e027c,'rect':[_0x2f726b,_0x183abf,_0x5f52b0,_0x288328]}),_0x2f726b+=_0x5f52b0+TE_VIDEO_ACTION_BAR_GAP,_0x4e99c5+=_0x5f52b0;}return _0x221563;}function drawVideoActionBarButton(_0x16d859,_0xe77dd5,_0x1a6b2d){const _0x151efa=a0_0x561a,[_0x2c451c,_0x4535a9,_0x2e5cf6,_0x858b27]=_0xe77dd5;if(_0x2e5cf6<=0x0||_0x858b27<=0x0)return;const _0x46b584=!!_0x1a6b2d[_0x151efa(0x227)],_0x2d24cd=!!_0x1a6b2d['active'],_0x62c6cc=_0x16d859['createLinearGradient'](_0x2c451c,_0x4535a9,_0x2c451c,_0x4535a9+_0x858b27);_0x62c6cc['addColorStop'](0x0,_0x46b584?'rgba(255,\x20255,\x20255,\x200.06)':_0x2d24cd?'rgba(255,\x20255,\x20255,\x200.16)':'rgba(255,\x20255,\x20255,\x200.085)'),_0x62c6cc[_0x151efa(0x24c)](0x1,_0x46b584?_0x151efa(0x206):_0x2d24cd?'rgba(255,\x20255,\x20255,\x200.09)':'rgba(255,\x20255,\x20255,\x200.045)'),_0x16d859['save'](),_0x16d859['shadowColor']=_0x46b584?_0x151efa(0x254):'rgba(0,\x200,\x200,\x200.22)',_0x16d859['shadowBlur']=_0x2d24cd?0x8:0x5,_0x16d859['shadowOffsetY']=0x1,drawRoundRect(_0x16d859,_0x2c451c,_0x4535a9,_0x2e5cf6,_0x858b27,0x8),_0x16d859[_0x151efa(0x22f)]=_0x62c6cc,_0x16d859['fill'](),_0x16d859['shadowColor']=_0x151efa(0x254),_0x16d859['strokeStyle']=_0x46b584?_0x151efa(0x1ec):_0x2d24cd?'rgba(255,\x20255,\x20255,\x200.34)':'rgba(255,\x20255,\x20255,\x200.16)',_0x16d859['lineWidth']=0x1,_0x16d859['stroke'](),_0x16d859['font']=_0x151efa(0x237),_0x16d859['textAlign']='center',_0x16d859[_0x151efa(0x232)]='middle',_0x16d859['fillStyle']=_0x46b584?'rgba(210,\x20210,\x20210,\x200.42)':_0x2d24cd?_0x151efa(0x1e4):'rgba(238,\x20238,\x20238,\x200.90)',_0x16d859['fillText'](fitActionBarLabel(_0x16d859,_0x1a6b2d['label'],_0x2e5cf6-0xa),_0x2c451c+_0x2e5cf6/0x2,_0x4535a9+_0x858b27/0x2+0.5),_0x16d859[_0x151efa(0x247)]();}function hitTestVideoActionBar(_0x5636cd,_0xe24888){const _0x3968f1=a0_0x561a;if(!Array['isArray'](_0xe24888))return null;const _0x578428=_0x5636cd[_0x3968f1(0x1e8)]?.['find'](_0x1e0c1c=>isPointInsideRect(_0xe24888,_0x1e0c1c['rect']));return _0x578428?.['key']??null;}function createVideoActionBarWidget(_0x1bbee9){const _0x3ec147=a0_0x561a;return{'name':TE_VIDEO_ACTION_BAR_NAME,'type':_0x3ec147(0x21b),'value':'','serialize':![],'options':{'serialize':![],'hideOnZoom':![]},'__teVideoActionBar':!![],'__teVideoActionBarRects':[],'computeSize'(_0x3af7e0){return[Math['max'](_0x3af7e0||0x140,0x104),TE_VIDEO_ACTION_BAR_HEIGHT];},'draw'(_0x5ef030,_0x55e8eb,_0x48260e,_0x3236a6,_0xfb7d8c){const _0x3a17f2=a0_0x561a,_0x3cafe7=getVideoActionBarItems(_0x55e8eb||_0x1bbee9),_0x1b8e8c=getVideoActionBarLayout(_0x3cafe7,_0x48260e,_0x3236a6,_0xfb7d8c||TE_VIDEO_ACTION_BAR_HEIGHT);this[_0x3a17f2(0x1e8)]=_0x1b8e8c['map'](({item:_0x4f1de6,rect:_0x39d8c5})=>({'key':_0x4f1de6['key'],'rect':_0x39d8c5})),_0x5ef030['save']();for(const {item:_0x1b51ca,rect:_0x46fc32}of _0x1b8e8c){drawVideoActionBarButton(_0x5ef030,_0x46fc32,_0x1b51ca);}_0x5ef030['restore']();},'mouse'(_0x1cd211,_0x571dce,_0x2c61b2){const _0x15568=a0_0x561a,_0x4a7e3e=_0x1cd211?.[_0x15568(0x202)];if(_0x4a7e3e!=='pointerdown'&&_0x4a7e3e!==_0x15568(0x1ff))return![];if(typeof _0x1cd211?.['button']===_0x15568(0x222)&&_0x1cd211['button']!==0x0)return![];const _0xef1ec5=_0x2c61b2||_0x1bbee9,_0x391bea=hitTestVideoActionBar(this,_0x571dce),_0x371b35=getVideoActionBarItems(_0xef1ec5)['find'](_0x43578e=>_0x43578e['key']===_0x391bea);if(!_0x371b35)return![];_0x1cd211?.['preventDefault']?.(),_0x1cd211?.['stopPropagation']?.(),_0x1cd211?.['stopImmediatePropagation']?.();if(_0x371b35['disabled'])return!![];return Promise['resolve'](_0x371b35['run'](_0x1cd211))[_0x15568(0x21c)](_0x4c2e07=>{const _0x368145=a0_0x561a;console['error'](_0x4c2e07),window[_0x368145(0x1e6)]?.(_0x4c2e07?.['message']||(_0x371b35['title']||_0x371b35[_0x368145(0x260)])+'\x20失败。');}),!![];}};}function ensureVideoActionBar(_0xd40f3a){const _0xa65103=a0_0x561a;if(!_0xd40f3a)return null;!Array['isArray'](_0xd40f3a['widgets'])&&(_0xd40f3a['widgets']=[]);hideNativeVideoActionWidgets(_0xd40f3a);const _0x46bfb1=_0xd40f3a['widgets']['find'](_0x5e6ec3=>_0x5e6ec3?.['__teVideoActionBar']||_0x5e6ec3?.[_0xa65103(0x22b)]===TE_VIDEO_ACTION_BAR_NAME);if(_0x46bfb1)return _0x46bfb1['__teVideoActionBar']=!![],_0xd40f3a['__teVideoActionBarWidget']=_0x46bfb1,_0x46bfb1;const _0xeae4f9=createVideoActionBarWidget(_0xd40f3a),_0x5c7a1e=_0xd40f3a['widgets']['findIndex'](_0x53ee05=>_0x53ee05?.[_0xa65103(0x22b)]==='filename_prefix'),_0x1bbd6f=_0xd40f3a['widgets'][_0xa65103(0x246)](_0x597030=>_0x597030?.[_0xa65103(0x22b)]===_0xa65103(0x256)),_0x1b11a2=_0x5c7a1e>=0x0?_0x5c7a1e:_0x1bbd6f,_0x5b979a=_0x1b11a2>=0x0?_0x1b11a2+0x1:_0xd40f3a[_0xa65103(0x252)][_0xa65103(0x23b)];return _0xd40f3a[_0xa65103(0x252)]['splice'](_0x5b979a,0x0,_0xeae4f9),_0xd40f3a['__teVideoActionBarWidget']=_0xeae4f9,markCanvasDirty(),_0xeae4f9;}app[a0_0x364916(0x1f8)]({'name':a0_0x364916(0x205),async 'beforeRegisterNodeDef'(_0x1ea814,_0x4980bc){const _0x2a7244=a0_0x561a;if(_0x4980bc['name']!==VIDEO_NODE_CLASS)return;const _0x39b440=_0x1ea814['prototype']['onNodeCreated'];_0x1ea814[_0x2a7244(0x25c)][_0x2a7244(0x235)]=function(){const _0x2a70ab=a0_0x561a,_0x3a1d5a=_0x39b440?.['apply'](this,arguments);this['__teSavedVideos']=this[_0x2a70ab(0x229)]||[],this['__tePreviewPaused']=this['__tePreviewPaused']??!![],this['__teFrameCaptureBusy']=this['__teFrameCaptureBusy']??![],this['__teCaptureCreatedCount']=this['__teCaptureCreatedCount']??0x0,this['__tePreviewSizeLocked']=this['__tePreviewSizeLocked']??![],this[_0x2a70ab(0x236)]=this['__teInternalResize']??![],this['__teLastManagedSize']=Array['isArray'](this['__teLastManagedSize'])?this['__teLastManagedSize']:null,this['properties']={...this['properties']??{},[SERIALIZED_PROMPT_KEY]:normalizePromptText(this['properties']?.[SERIALIZED_PROMPT_KEY])[_0x2a70ab(0x1e2)]()||DEFAULT_PROMPT_TEXT},removeLegacyCustomPreview(this),installVideoPreviewWidget(this),installLocalVideoUploadButton(this);const _0x93f7e4=getWidgetByName(this,'local_video');if(_0x93f7e4&&!_0x93f7e4['__tePreviewCallbackInstalled']){const _0x2af5d8=_0x93f7e4[_0x2a70ab(0x1eb)];_0x93f7e4[_0x2a70ab(0x1eb)]=_0x56c86c=>{const _0x3158e1=_0x2af5d8?.['call'](_0x93f7e4,_0x56c86c);return syncLocalVideoPreview(this),markCanvasDirty(),_0x3158e1;},_0x93f7e4['__tePreviewCallbackInstalled']=!![];}return!this[_0x2a70ab(0x25a)]&&(this['__teTogglePreviewWidget']=this[_0x2a70ab(0x208)]('button',PLAY_BUTTON_TEXT,'',async()=>{await togglePreviewPlayback(this);}),this['__teTogglePreviewWidget']['serialize']=![]),hideNativeVideoActionWidget(this['__teTogglePreviewWidget']),!this['__teCaptureFrameWidget']&&(this['__teCaptureFrameWidget']=this['addWidget'](_0x2a70ab(0x23e),CAPTURE_BUTTON_TEXT,'',async()=>{const _0x44f38d=a0_0x561a;try{await captureCurrentFrame(this);}catch(_0x3ed050){console['error'](_0x3ed050),window['alert']?.(_0x3ed050?.[_0x44f38d(0x255)]||'截取当前帧失败。');}}),this['__teCaptureFrameWidget']['serialize']=![]),hideNativeVideoActionWidget(this[_0x2a70ab(0x210)]),ensureVideoActionBar(this),updatePlayButtonLabel(this),updateCaptureButtonLabel(this),syncLocalVideoPreview(this),_0x3a1d5a;};const _0x448823=_0x1ea814['prototype'][_0x2a7244(0x1e0)];_0x1ea814['prototype'][_0x2a7244(0x1e0)]=function(_0x18d364){const _0x59ae1c=a0_0x561a;let _0x5ac8e9;if(_0x448823){const _0x35877d=_0x18d364&&typeof _0x18d364==='object'?{..._0x18d364}:_0x18d364;_0x35877d&&typeof _0x35877d===_0x59ae1c(0x1ed)&&(delete _0x35877d['images'],delete _0x35877d[_0x59ae1c(0x23d)],delete _0x35877d['animated'],delete _0x35877d['gifs']),_0x5ac8e9=_0x448823['call'](this,_0x35877d);}return syncPreviewSource(this,_0x18d364?.[_0x59ae1c(0x257)]??_0x18d364?.['videos']),setStoredPromptText(this,_0x18d364?.['te_prompt_text']),updatePlayButtonLabel(this),_0x5ac8e9;};const _0x4b8486=_0x1ea814[_0x2a7244(0x25c)]['onResize'];_0x1ea814['prototype']['onResize']=function(){const _0x4a580a=a0_0x561a,_0x13707a=Array[_0x4a580a(0x239)](this['size'])?this['size']:null,_0x167751=Array['isArray'](this[_0x4a580a(0x25e)])?this['__teLastManagedSize']:null,_0x139359=!!_0x13707a&&!!_0x167751&&Math['abs']((_0x13707a[0x0]??0x0)-(_0x167751[0x0]??0x0))<0.5&&Math['abs']((_0x13707a[0x1]??0x0)-(_0x167751[0x1]??0x0))<0.5;return!this['__teInternalResize']&&!_0x139359&&(this['__tePreviewSizeLocked']=!![]),_0x4b8486?.['apply'](this,arguments);};const _0x536df9=_0x1ea814[_0x2a7244(0x25c)]['onSerialize'];_0x1ea814['prototype']['onSerialize']=function(_0x1df99d){const _0x12a425=a0_0x561a,_0x2bb7ba=_0x536df9?.['apply'](this,arguments);_0x1df99d['properties']??={};Array[_0x12a425(0x239)](this['__teSavedVideos'])&&this[_0x12a425(0x229)]['length']?_0x1df99d['properties'][SERIALIZED_VIDEO_KEY]=this['__teSavedVideos']:delete _0x1df99d['properties'][SERIALIZED_VIDEO_KEY];const _0x5af32d=this['properties']?.[SERIALIZED_PROMPT_KEY];return _0x5af32d?_0x1df99d['properties'][SERIALIZED_PROMPT_KEY]=_0x5af32d:delete _0x1df99d['properties'][SERIALIZED_PROMPT_KEY],_0x2bb7ba;};const _0x442940=_0x1ea814['prototype']['onConfigure'];_0x1ea814['prototype']['onConfigure']=function(_0x3cbff5){const _0x1b665d=a0_0x561a,_0xd27941=_0x442940?.[_0x1b665d(0x224)](this,arguments);this[_0x1b665d(0x1de)]=!![],this['__teFrameCaptureBusy']=![],this[_0x1b665d(0x245)]=!![],this['__teInternalResize']=![],this['__teLastManagedSize']=null,removeLegacyCustomPreview(this),ensureVideoActionBar(this),updateCaptureButtonLabel(this),setStoredPromptText(this,_0x3cbff5?.['properties']?.[SERIALIZED_PROMPT_KEY]);const _0x12e3ba=_0x3cbff5?.['properties']?.[SERIALIZED_VIDEO_KEY];return Array[_0x1b665d(0x239)](_0x12e3ba)&&_0x12e3ba['length']?syncPreviewSource(this,_0x12e3ba):syncLocalVideoPreview(this,!![]),_0xd27941;};}});
+import { app } from "../../../scripts/app.js";
+import { api } from "../../../scripts/api.js";
+
+const VIDEO_NODE_CLASS = "TE_image_pro_save_video";
+const IMAGE_NODE_CLASS = "TE_image_pro_save_image_with_output";
+const SERIALIZED_VIDEO_KEY = "te_saved_preview_videos";
+const SERIALIZED_PROMPT_KEY = "te_saved_prompt_text";
+const DEFAULT_PROMPT_TEXT = "";
+const PLAY_BUTTON_TEXT = "暂停预览";
+const RESUME_BUTTON_TEXT = "播放预览";
+const CAPTURE_BUTTON_TEXT = "截取当前帧";
+const CAPTURE_BUSY_TEXT = "截取中...";
+const LOCAL_UPLOAD_BUTTON_TEXT = "加载视频";
+const TE_VIDEO_ACTION_BAR_NAME = "te_video_action_bar";
+const TE_VIDEO_ACTION_BAR_HEIGHT = 34;
+const TE_VIDEO_ACTION_BAR_SIDE_MARGIN = 10;
+const TE_VIDEO_ACTION_BAR_PADDING_X = 5;
+const TE_VIDEO_ACTION_BAR_GAP = 6;
+const MIN_NODE_WIDTH = 360;
+const MIN_NODE_HEIGHT = 360;
+const MIN_PREVIEW_HEIGHT = 120;
+const NEW_IMAGE_NODE_GAP_X = 48;
+const NEW_IMAGE_NODE_GAP_Y = 24;
+const NEW_IMAGE_NODE_MIN_WIDTH = 360;
+const NEW_IMAGE_NODE_MIN_HEIGHT = 360;
+
+function markCanvasDirty() {
+    app.graph?.setDirtyCanvas?.(true, false);
+    app.canvas?.setDirty?.(true, false);
+}
+
+function applyNodeSize(node, size) {
+    if (!node || !Array.isArray(size)) {
+        return;
+    }
+
+    node.__teInternalResize = true;
+    node.__teLastManagedSize = [size[0], size[1]];
+    try {
+        node.setSize?.(size);
+    } finally {
+        node.__teInternalResize = false;
+    }
+}
+
+function buildViewUrl(fileInfo) {
+    const params = new URLSearchParams({
+        filename: fileInfo.filename,
+        type: fileInfo.type || "output",
+    });
+    if (fileInfo.subfolder) {
+        params.set("subfolder", fileInfo.subfolder);
+    }
+    params.set("rand", String(Date.now()));
+    return api.apiURL(`/view?${params.toString()}`);
+}
+
+function getWidgetByName(node, widgetName) {
+    if (!Array.isArray(node?.widgets)) {
+        return null;
+    }
+    return node.widgets.find((widget) => widget?.name === widgetName) || null;
+}
+
+function setWidgetValue(node, widgetName, value) {
+    const widget = getWidgetByName(node, widgetName);
+    if (!widget) {
+        return false;
+    }
+
+    if (Array.isArray(widget.options?.values) && !widget.options.values.includes(value)) {
+        widget.options.values.push(value);
+    }
+
+    widget.value = value;
+    const widgetIndex = node.widgets.indexOf(widget);
+    if (widgetIndex >= 0) {
+        node.widgets_values ??= [];
+        node.widgets_values[widgetIndex] = value;
+    }
+    widget.callback?.(value);
+    return true;
+}
+
+function normalizePromptText(value) {
+    if (Array.isArray(value)) {
+        return value.join("");
+    }
+    if (typeof value === "string") {
+        return value;
+    }
+    return "";
+}
+
+function getStoredPromptText(node) {
+    return normalizePromptText(node?.properties?.[SERIALIZED_PROMPT_KEY]).trim() || DEFAULT_PROMPT_TEXT;
+}
+
+function setStoredPromptText(node, text) {
+    node.properties = {
+        ...(node.properties ?? {}),
+        [SERIALIZED_PROMPT_KEY]: normalizePromptText(text).trim() || DEFAULT_PROMPT_TEXT,
+    };
+}
+
+function ensureMinNodeSize(node) {
+    if (node?.__tePreviewSizeLocked) {
+        return;
+    }
+    const nextSize = node.computeSize?.();
+    if (!nextSize) {
+        return;
+    }
+    applyNodeSize(node, [
+        Math.max(nextSize[0], MIN_NODE_WIDTH),
+        Math.max(nextSize[1], MIN_NODE_HEIGHT),
+    ]);
+    markCanvasDirty();
+}
+
+function ensureImageNodeSize(node) {
+    const nextSize = node.computeSize?.();
+    if (!nextSize) {
+        return;
+    }
+    applyNodeSize(node, [
+        Math.max(nextSize[0], NEW_IMAGE_NODE_MIN_WIDTH),
+        Math.max(nextSize[1], NEW_IMAGE_NODE_MIN_HEIGHT),
+    ]);
+}
+
+function removeLegacyCustomPreview(node) {
+    if (!Array.isArray(node?.widgets)) {
+        return;
+    }
+
+    for (let index = node.widgets.length - 1; index >= 0; index -= 1) {
+        const widget = node.widgets[index];
+        if (widget?.name !== "te_videopreview") {
+            continue;
+        }
+
+        if (widget === node.__teVideoPreviewWidget) {
+            continue;
+        }
+
+        widget?.onRemove?.();
+        node.widgets.splice(index, 1);
+        if (Array.isArray(node.widgets_values) && index < node.widgets_values.length) {
+            node.widgets_values.splice(index, 1);
+        }
+    }
+}
+
+function setNodeImageState(node, images) {
+    const nodeId = String(node.id);
+    node.images = images;
+    app.nodeOutputs ??= {};
+    app.nodeOutputs[nodeId] = {
+        ...(app.nodeOutputs[nodeId] ?? {}),
+        images,
+    };
+}
+
+// 只负责清理官方预览遗留的 nodeOutputs 字段。
+// 本节点自绘预览，不再向 app.nodeOutputs 写 images / animated，
+// 否则官方 updatePreviews 会判定为视频输出并额外建一个 <video>，导致上下两个重复预览。
+function setOfficialPreviewState(node) {
+    const nodeId = String(node.id);
+
+    node.images = [];
+    node.imageIndex = 0;
+    node.overIndex = 0;
+
+    const outputs = app.nodeOutputs?.[nodeId];
+    if (!outputs) {
+        return;
+    }
+    delete outputs.images;
+    delete outputs.animated;
+}
+
+function restorePreviewImages(node, images) {
+    if (!Array.isArray(images) || !images.length) {
+        return;
+    }
+
+    setNodeImageState(node, images);
+    node.imageIndex = 0;
+    node.overIndex = 0;
+
+    const loadedImages = images.map((imageInfo) => {
+        const img = new Image();
+        img.src = buildViewUrl(imageInfo);
+        return img;
+    });
+    node.imgs = loadedImages;
+}
+
+function updatePlayButtonLabel(node) {
+    if (!node?.__teTogglePreviewWidget) {
+        return;
+    }
+    if (!Array.isArray(node.__teSavedVideos) || !node.__teSavedVideos.length) {
+        node.__teTogglePreviewWidget.name = PLAY_BUTTON_TEXT;
+        if (node.__teVideoActionBarWidget) {
+            markCanvasDirty();
+        }
+        return;
+    }
+    node.__teTogglePreviewWidget.name = node.__tePreviewPaused ? RESUME_BUTTON_TEXT : PLAY_BUTTON_TEXT;
+    if (node.__teVideoActionBarWidget) {
+        markCanvasDirty();
+    }
+}
+
+function updateCaptureButtonLabel(node) {
+    if (!node?.__teCaptureFrameWidget) {
+        return;
+    }
+    node.__teCaptureFrameWidget.name = node.__teFrameCaptureBusy ? CAPTURE_BUSY_TEXT : CAPTURE_BUTTON_TEXT;
+    if (node.__teVideoActionBarWidget) {
+        markCanvasDirty();
+    }
+}
+
+function collectVideoElements(value, results, visited = new Set(), depth = 0) {
+    if (!value || visited.has(value) || depth > 2) {
+        return;
+    }
+    visited.add(value);
+
+    if (value instanceof HTMLVideoElement) {
+        results.push(value);
+        return;
+    }
+
+    if (value instanceof HTMLElement) {
+        if (value.tagName === "VIDEO") {
+            results.push(value);
+            return;
+        }
+        results.push(...value.querySelectorAll("video"));
+    }
+
+    for (const key of ["element", "el", "inputEl", "parentEl", "container", "videoEl"]) {
+        if (value?.[key]) {
+            collectVideoElements(value[key], results, visited, depth + 1);
+        }
+    }
+}
+
+function releaseVideoElement(videoEl) {
+    if (!(videoEl instanceof HTMLVideoElement)) {
+        return;
+    }
+    try {
+        videoEl.pause();
+        videoEl.removeAttribute("src");
+        videoEl.load?.();
+    } catch {
+    }
+}
+
+function removeOfficialPreviewArtifacts(node) {
+    node.__teOfficialVideoEl = null;
+    node.__teExpectOfficialPreview = false;
+    node.__teHideCustomPreview = false;
+
+    // 官方 useNodeVideo 会设 previewMediaType="video" 并挂上 videoContainer。
+    // 只要这两者还留着，isVideoNode() 就恒为真，官方预览每次重绘都会重建，
+    // 光删 widget 是删不掉的 —— 必须一并清掉。
+    if (node.previewMediaType === "video" || node.previewMediaType === "image") {
+        node.previewMediaType = undefined;
+    }
+    if (node.videoContainer) {
+        [...(node.videoContainer.querySelectorAll?.("video") ?? [])].forEach(releaseVideoElement);
+        node.videoContainer = undefined;
+    }
+
+    if (Array.isArray(node?.imgs)) {
+        node.imgs.forEach(releaseVideoElement);
+    }
+    node.imgs = [];
+
+    if (!Array.isArray(node?.widgets)) {
+        return;
+    }
+
+    for (let index = node.widgets.length - 1; index >= 0; index -= 1) {
+        const widget = node.widgets[index];
+        if (widget === node.__teVideoPreviewWidget || widget?.name === "te_videopreview") {
+            continue;
+        }
+
+        const videoElements = [];
+        collectVideoElements(widget, videoElements);
+        if (!videoElements.length) {
+            continue;
+        }
+
+        [...new Set(videoElements)].forEach(releaseVideoElement);
+        widget?.onRemove?.();
+        node.widgets.splice(index, 1);
+        if (Array.isArray(node.widgets_values) && index < node.widgets_values.length) {
+            node.widgets_values.splice(index, 1);
+        }
+    }
+}
+
+function getActiveVideoElement(node) {
+    return node?.__teCustomVideoEl || null;
+}
+
+function updateCustomPreviewVisibility(node) {
+    if (!node?.__teVideoPreviewWidget) {
+        return;
+    }
+
+    node.__teHideCustomPreview = false;
+    ensureMinNodeSize(node);
+    markCanvasDirty();
+}
+
+function syncPreviewSource(node, videos) {
+    const normalizedVideos = Array.isArray(videos)
+        ? videos.filter((video) => video?.filename)
+        : [];
+    node.__teSavedVideos = normalizedVideos.length ? [normalizedVideos[0]] : [];
+
+    removeOfficialPreviewArtifacts(node);
+    setOfficialPreviewState(node);
+
+    const customVideoEl = node.__teCustomVideoEl;
+    const videoInfo = node.__teSavedVideos[0];
+    if (customVideoEl) {
+        releaseVideoElement(customVideoEl);
+        if (!videoInfo) {
+            node.__teVideoAspectRatio = null;
+        } else {
+            customVideoEl.src = buildViewUrl(videoInfo);
+            customVideoEl.load?.();
+        }
+    }
+
+    updateCustomPreviewVisibility(node);
+    updatePlayButtonLabel(node);
+    ensureMinNodeSize(node);
+    markCanvasDirty();
+}
+
+function buildInputVideoInfo(filename) {
+    const normalized = String(filename || "").trim();
+    if (!normalized) {
+        return null;
+    }
+    return {
+        filename: normalized,
+        subfolder: "",
+        type: "input",
+    };
+}
+
+function isVideoInputConnected(node) {
+    const input = Array.isArray(node?.inputs)
+        ? node.inputs.find((item) => item?.name === "video")
+        : null;
+    return !!input?.link;
+}
+
+function syncLocalVideoPreview(node, force = false) {
+    if (!node || (!force && isVideoInputConnected(node))) {
+        return;
+    }
+
+    const localVideoWidget = getWidgetByName(node, "local_video");
+    const localVideoInfo = buildInputVideoInfo(localVideoWidget?.value);
+    if (!localVideoInfo) {
+        if (!isVideoInputConnected(node)) {
+            syncPreviewSource(node, []);
+        }
+        return;
+    }
+
+    syncPreviewSource(node, [localVideoInfo]);
+}
+
+async function uploadVideoFile(file, progressCallback) {
+    try {
+        const body = new FormData();
+        const uploadedFile = new File([file], file.name, {
+            type: file.type,
+            lastModified: file.lastModified,
+        });
+        body.append("image", uploadedFile);
+        body.append("type", "input");
+
+        const url = api.apiURL("/upload/image");
+        const response = await new Promise((resolve) => {
+            const request = new XMLHttpRequest();
+            request.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    progressCallback?.(event.loaded / event.total);
+                }
+            };
+            request.onload = () => resolve(request);
+            request.open("post", url, true);
+            request.send(body);
+        });
+
+        if (response.status !== 200) {
+            throw new Error(`${response.status} - ${response.statusText}`);
+        }
+
+        return JSON.parse(response.responseText);
+    } catch (error) {
+        throw new Error(error?.message || "上传视频失败。");
+    }
+}
+
+function installLocalVideoUploadButton(node) {
+    if (node.__teLocalVideoUploadWidget) {
+        return;
+    }
+
+    const localVideoWidget = getWidgetByName(node, "local_video");
+    if (!localVideoWidget) {
+        return;
+    }
+
+    const fileInput = document.createElement("input");
+    Object.assign(fileInput, {
+        type: "file",
+        accept: "video/webm,video/mp4,video/x-matroska,image/gif,video/quicktime,video/x-msvideo",
+        style: "display: none",
+    });
+
+    fileInput.onchange = async () => {
+        const selectedFile = fileInput.files?.[0];
+        fileInput.value = "";
+        if (!selectedFile) {
+            return;
+        }
+
+        try {
+            const uploaded = await uploadVideoFile(selectedFile, (progress) => {
+                node.progress = progress;
+            });
+            node.progress = undefined;
+
+            if (!uploaded?.name) {
+                throw new Error("上传视频失败。");
+            }
+
+            if (Array.isArray(localVideoWidget.options?.values) && !localVideoWidget.options.values.includes(uploaded.name)) {
+                localVideoWidget.options.values.push(uploaded.name);
+            }
+
+            localVideoWidget.value = uploaded.name;
+            const widgetIndex = node.widgets?.indexOf?.(localVideoWidget) ?? -1;
+            if (widgetIndex >= 0) {
+                node.widgets_values ??= [];
+                node.widgets_values[widgetIndex] = uploaded.name;
+            }
+            localVideoWidget.callback?.(uploaded.name);
+            syncLocalVideoPreview(node, true);
+            markCanvasDirty();
+        } catch (error) {
+            node.progress = undefined;
+            console.error(error);
+            window.alert?.(error?.message || "上传视频失败。");
+        }
+    };
+
+    document.body.appendChild(fileInput);
+
+    const onRemoved = node.onRemoved;
+    node.onRemoved = function () {
+        releaseVideoElement(this.__teCustomVideoEl);
+        if (Array.isArray(this.imgs)) {
+            this.imgs.forEach(releaseVideoElement);
+        }
+        try {
+            fileInput.remove();
+        } catch {
+        }
+        return onRemoved?.apply(this, arguments);
+    };
+
+    node.__teLocalVideoUploadInput = fileInput;
+    node.__teLocalVideoUploadWidget = node.addWidget("button", LOCAL_UPLOAD_BUTTON_TEXT, "", () => {
+        app.canvas.node_widget = null;
+        fileInput.click();
+    });
+    node.__teLocalVideoUploadWidget.serialize = false;
+    hideNativeVideoActionWidget(node.__teLocalVideoUploadWidget);
+}
+
+function forwardCanvasEvent(event, handlerName) {
+    if (!app.canvas?.[handlerName]) {
+        return;
+    }
+    event.preventDefault();
+    app.canvas[handlerName](event);
+}
+
+function forwardCanvasEventIfBackground(event, handlerName, container) {
+    if (event.target && event.target !== container) {
+        return;
+    }
+    forwardCanvasEvent(event, handlerName);
+}
+
+function forwardContextMenuToCanvas(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation?.();
+
+    const canvasElement = app.canvas?.canvas;
+    if (canvasElement?.dispatchEvent) {
+        canvasElement.dispatchEvent(new MouseEvent("mousedown", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            button: 2,
+            buttons: 2,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            screenX: event.screenX,
+            screenY: event.screenY,
+            ctrlKey: event.ctrlKey,
+            shiftKey: event.shiftKey,
+            altKey: event.altKey,
+            metaKey: event.metaKey,
+        }));
+        return;
+    }
+
+    app.canvas?._mousedown_callback?.(event);
+}
+
+function installVideoPreviewWidget(node) {
+    if (node.__teVideoPreviewWidget) {
+        updateCustomPreviewVisibility(node);
+        return;
+    }
+
+    const container = document.createElement("div");
+    container.style.width = "100%";
+    container.style.borderRadius = "10px";
+    container.style.overflow = "hidden";
+    container.style.background = "#050505";
+    container.style.border = "1px solid rgba(255,255,255,0.08)";
+
+    const previewWidget = node.addDOMWidget("te_videopreview", "preview", container, {
+        serialize: false,
+        hideOnZoom: false,
+        getValue() {
+            return container.value;
+        },
+        setValue(value) {
+            container.value = value;
+        },
+    });
+
+    previewWidget.computeSize = function (width) {
+        if (node.__teHideCustomPreview) {
+            return [width, -4];
+        }
+
+        const aspectRatio = node.__teVideoAspectRatio;
+        if (aspectRatio && aspectRatio > 0) {
+            const previewWidth = Math.max((node.size?.[0] ?? MIN_NODE_WIDTH) - 20, 240);
+            let previewHeight = previewWidth / aspectRatio;
+            previewHeight = Math.max(MIN_PREVIEW_HEIGHT, previewHeight);
+            return [width, previewHeight + 8];
+        }
+        return [width, MIN_PREVIEW_HEIGHT];
+    };
+
+    container.addEventListener("contextmenu", forwardContextMenuToCanvas, true);
+    container.addEventListener("pointerdown", (event) => forwardCanvasEventIfBackground(event, "_mousedown_callback", container), true);
+    container.addEventListener("mousewheel", (event) => forwardCanvasEventIfBackground(event, "_mousewheel_callback", container), true);
+    container.addEventListener("pointermove", (event) => forwardCanvasEventIfBackground(event, "_mousemove_callback", container), true);
+    container.addEventListener("pointerup", (event) => forwardCanvasEventIfBackground(event, "_mouseup_callback", container), true);
+
+    const videoEl = document.createElement("video");
+    videoEl.controls = true;
+    videoEl.loop = false;
+    videoEl.muted = false;
+    videoEl.autoplay = false;
+    videoEl.playsInline = true;
+    videoEl.preload = "metadata";
+    videoEl.style.display = "block";
+    videoEl.style.width = "100%";
+    videoEl.style.height = "auto";
+    videoEl.style.background = "#000";
+
+    videoEl.addEventListener("loadedmetadata", () => {
+        if (videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
+            node.__teVideoAspectRatio = videoEl.videoWidth / videoEl.videoHeight;
+        } else {
+            node.__teVideoAspectRatio = null;
+        }
+        ensureMinNodeSize(node);
+        if (node.__tePreviewPaused) {
+            videoEl.pause();
+        }
+        updateCustomPreviewVisibility(node);
+        markCanvasDirty();
+    });
+
+    videoEl.addEventListener("canplay", () => {
+        updateCustomPreviewVisibility(node);
+        markCanvasDirty();
+    });
+
+    videoEl.addEventListener("play", () => {
+        node.__tePreviewPaused = false;
+        updatePlayButtonLabel(node);
+        markCanvasDirty();
+    });
+
+    videoEl.addEventListener("pause", () => {
+        node.__tePreviewPaused = true;
+        updatePlayButtonLabel(node);
+        markCanvasDirty();
+    });
+
+    videoEl.addEventListener("error", () => {
+        node.__teVideoAspectRatio = null;
+        updatePlayButtonLabel(node);
+        ensureMinNodeSize(node);
+        markCanvasDirty();
+    });
+
+    container.appendChild(videoEl);
+
+    node.__teVideoPreviewWidget = previewWidget;
+    node.__teCustomVideoEl = videoEl;
+    updateCustomPreviewVisibility(node);
+}
+
+async function togglePreviewPlayback(node) {
+    const videoEl = getActiveVideoElement(node);
+    if (!videoEl || !Array.isArray(node.__teSavedVideos) || !node.__teSavedVideos.length) {
+        return;
+    }
+
+    if (videoEl.paused) {
+        node.__tePreviewPaused = false;
+        await videoEl.play?.().catch(() => {});
+    } else {
+        videoEl.pause();
+    }
+    updatePlayButtonLabel(node);
+    markCanvasDirty();
+}
+
+function buildCaptureFilename(videoInfo, currentTimeSeconds) {
+    const baseName = String(videoInfo?.filename || "te_video")
+        .replace(/\.[^.]+$/, "")
+        .replace(/[^a-zA-Z0-9._-]+/g, "_")
+        .replace(/^_+|_+$/g, "") || "te_video";
+    const milliseconds = Math.max(0, Math.round((currentTimeSeconds || 0) * 1000));
+    return `${baseName}_frame_${milliseconds}ms.png`;
+}
+
+async function uploadCapturedFrame(node) {
+    const videoEl = getActiveVideoElement(node);
+    const videoInfo = Array.isArray(node?.__teSavedVideos) ? node.__teSavedVideos[0] : null;
+    if (!videoEl || !videoInfo) {
+        throw new Error("当前节点还没有可截帧的视频。");
+    }
+
+    if (videoEl.readyState < 2 || !videoEl.videoWidth || !videoEl.videoHeight) {
+        throw new Error("视频还没加载完成，暂时不能截帧。");
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = videoEl.videoWidth;
+    canvas.height = videoEl.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+        throw new Error("创建截图画布失败。");
+    }
+    ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+    if (!(blob instanceof Blob)) {
+        throw new Error("当前帧转图片失败。");
+    }
+
+    const formData = new FormData();
+    formData.append(
+        "image",
+        new File([blob], buildCaptureFilename(videoInfo, videoEl.currentTime), {
+            type: "image/png",
+        })
+    );
+    formData.append("type", "input");
+
+    const response = await api.fetchApi("/upload/image", {
+        method: "POST",
+        body: formData,
+    });
+
+    let data = null;
+    try {
+        data = await response.json();
+    } catch {
+        data = null;
+    }
+
+    if (response.status !== 200 || !data?.name) {
+        throw new Error("上传截帧图片失败。");
+    }
+
+    return {
+        filename: data.name,
+        subfolder: data.subfolder || "",
+        type: data.type || "input",
+    };
+}
+
+function createCapturedFrameNode(sourceNode, imageInfo, promptText) {
+    if (!app.graph || !window.LiteGraph?.createNode) {
+        throw new Error("当前画布还没准备好，无法创建截图节点。");
+    }
+
+    const newNode = window.LiteGraph.createNode(IMAGE_NODE_CLASS);
+    if (!newNode) {
+        throw new Error(`创建节点失败: ${IMAGE_NODE_CLASS}`);
+    }
+
+    const offsetIndex = sourceNode.__teCaptureCreatedCount || 0;
+    sourceNode.__teCaptureCreatedCount = offsetIndex + 1;
+
+    app.graph.add(newNode);
+    newNode.pos = [
+        (sourceNode.pos?.[0] ?? 0) + (sourceNode.size?.[0] ?? MIN_NODE_WIDTH) + NEW_IMAGE_NODE_GAP_X,
+        (sourceNode.pos?.[1] ?? 0) + offsetIndex * NEW_IMAGE_NODE_GAP_Y,
+    ];
+
+    ensureImageNodeSize(newNode);
+
+    const filenamePrefix = getWidgetByName(sourceNode, "filename_prefix")?.value;
+    if (filenamePrefix) {
+        setWidgetValue(newNode, "filename_prefix", filenamePrefix);
+    }
+    setWidgetValue(newNode, "upload_image", imageInfo.filename);
+
+    newNode.properties = {
+        ...(newNode.properties ?? {}),
+        [SERIALIZED_PROMPT_KEY]: normalizePromptText(promptText).trim() || DEFAULT_PROMPT_TEXT,
+    };
+
+    restorePreviewImages(newNode, [imageInfo]);
+    markCanvasDirty();
+    return newNode;
+}
+
+async function captureCurrentFrame(node) {
+    if (node.__teFrameCaptureBusy) {
+        return;
+    }
+
+    node.__teFrameCaptureBusy = true;
+    updateCaptureButtonLabel(node);
+    markCanvasDirty();
+
+    try {
+        const uploadedImage = await uploadCapturedFrame(node);
+        createCapturedFrameNode(node, uploadedImage, getStoredPromptText(node));
+    } finally {
+        node.__teFrameCaptureBusy = false;
+        updateCaptureButtonLabel(node);
+        markCanvasDirty();
+    }
+}
+
+function drawRoundRect(ctx, x, y, width, height, radius) {
+    const r = Math.min(radius, width / 2, height / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + width, y, x + width, y + height, r);
+    ctx.arcTo(x + width, y + height, x, y + height, r);
+    ctx.arcTo(x, y + height, x, y, r);
+    ctx.arcTo(x, y, x + width, y, r);
+    ctx.closePath();
+}
+
+function isPointInsideRect(pos, rect) {
+    if (!Array.isArray(pos) || !Array.isArray(rect)) {
+        return false;
+    }
+    const [x, y] = pos;
+    const [rx, ry, rw, rh] = rect;
+    return x >= rx && x <= rx + rw && y >= ry && y <= ry + rh;
+}
+
+function hideNativeVideoActionWidget(widget) {
+    if (!widget || widget.__teVideoActionHidden) {
+        return;
+    }
+    widget.__teVideoActionHidden = true;
+    widget.__teOriginalComputeSize = widget.computeSize;
+    widget.__teOriginalDraw = widget.draw;
+    widget.serialize = false;
+    widget.computeSize = () => [0, -4];
+    widget.draw = () => {};
+}
+
+function hideNativeVideoActionWidgets(node) {
+    [
+        node?.__teLocalVideoUploadWidget,
+        node?.__teTogglePreviewWidget,
+        node?.__teCaptureFrameWidget,
+    ].forEach(hideNativeVideoActionWidget);
+}
+
+function getVideoActionBarItems(node) {
+    const hasVideo = Array.isArray(node?.__teSavedVideos) && node.__teSavedVideos.length > 0;
+    const uploadBusy = typeof node?.progress === "number";
+    const captureBusy = !!node?.__teFrameCaptureBusy;
+
+    return [
+        {
+            key: "upload",
+            label: uploadBusy ? "上传中" : LOCAL_UPLOAD_BUTTON_TEXT,
+            title: LOCAL_UPLOAD_BUTTON_TEXT,
+            weight: 1.1,
+            disabled: uploadBusy,
+            active: uploadBusy,
+            run: async () => {
+                app.canvas.node_widget = null;
+                node.__teLocalVideoUploadInput?.click();
+            },
+        },
+        {
+            key: "preview",
+            label: node?.__tePreviewPaused ? RESUME_BUTTON_TEXT : PLAY_BUTTON_TEXT,
+            title: node?.__tePreviewPaused ? RESUME_BUTTON_TEXT : PLAY_BUTTON_TEXT,
+            weight: 1,
+            disabled: !hasVideo,
+            active: hasVideo && !node?.__tePreviewPaused,
+            run: async () => {
+                await togglePreviewPlayback(node);
+            },
+        },
+        {
+            key: "capture",
+            label: captureBusy ? CAPTURE_BUSY_TEXT : CAPTURE_BUTTON_TEXT,
+            title: CAPTURE_BUTTON_TEXT,
+            weight: 1.1,
+            disabled: !hasVideo || captureBusy,
+            active: captureBusy,
+            run: async () => {
+                await captureCurrentFrame(node);
+            },
+        },
+    ];
+}
+
+function fitActionBarLabel(ctx, label, maxWidth) {
+    const text = String(label ?? "");
+    if (ctx.measureText(text).width <= maxWidth) {
+        return text;
+    }
+
+    let fitted = text;
+    while (fitted.length > 1 && ctx.measureText(`${fitted}...`).width > maxWidth) {
+        fitted = fitted.slice(0, -1);
+    }
+    return `${fitted}...`;
+}
+
+function getVideoActionBarLayout(items, width, y, height) {
+    const barX = TE_VIDEO_ACTION_BAR_SIDE_MARGIN;
+    const barWidth = Math.max(0, width - TE_VIDEO_ACTION_BAR_SIDE_MARGIN * 2);
+    const buttonHeight = Math.min(26, Math.max(20, height - 6));
+    const buttonY = y + Math.max(3, (height - buttonHeight) / 2);
+    const gapTotal = Math.max(0, items.length - 1) * TE_VIDEO_ACTION_BAR_GAP;
+    const usableWidth = Math.max(0, barWidth - TE_VIDEO_ACTION_BAR_PADDING_X * 2 - gapTotal);
+    const weightTotal = items.reduce((sum, item) => sum + (item.weight || 1), 0) || 1;
+    const layout = [];
+    let cursorX = barX + TE_VIDEO_ACTION_BAR_PADDING_X;
+    let usedWidth = 0;
+
+    for (let index = 0; index < items.length; index += 1) {
+        const item = items[index];
+        const isLast = index === items.length - 1;
+        const rawWidth = usableWidth * ((item.weight || 1) / weightTotal);
+        const buttonWidth = isLast
+            ? Math.max(34, usableWidth - usedWidth)
+            : Math.max(34, Math.round(rawWidth));
+        layout.push({
+            item,
+            rect: [cursorX, buttonY, buttonWidth, buttonHeight],
+        });
+        cursorX += buttonWidth + TE_VIDEO_ACTION_BAR_GAP;
+        usedWidth += buttonWidth;
+    }
+
+    return layout;
+}
+
+function drawVideoActionBarButton(ctx, rect, item) {
+    const [x, y, width, height] = rect;
+    if (width <= 0 || height <= 0) {
+        return;
+    }
+
+    const disabled = !!item.disabled;
+    const active = !!item.active;
+    const gradient = ctx.createLinearGradient(x, y, x, y + height);
+    gradient.addColorStop(0, disabled ? "rgba(255, 255, 255, 0.06)" : active ? "rgba(255, 255, 255, 0.16)" : "rgba(255, 255, 255, 0.085)");
+    gradient.addColorStop(1, disabled ? "rgba(255, 255, 255, 0.03)" : active ? "rgba(255, 255, 255, 0.09)" : "rgba(255, 255, 255, 0.045)");
+
+    ctx.save();
+    ctx.shadowColor = disabled ? "rgba(0, 0, 0, 0)" : "rgba(0, 0, 0, 0.22)";
+    ctx.shadowBlur = active ? 8 : 5;
+    ctx.shadowOffsetY = 1;
+    drawRoundRect(ctx, x, y, width, height, 8);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    ctx.shadowColor = "rgba(0, 0, 0, 0)";
+    ctx.strokeStyle = disabled
+        ? "rgba(255, 255, 255, 0.10)"
+        : active ? "rgba(255, 255, 255, 0.34)" : "rgba(255, 255, 255, 0.16)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.font = "500 12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = disabled
+        ? "rgba(210, 210, 210, 0.42)"
+        : active ? "rgba(255, 255, 255, 0.98)" : "rgba(238, 238, 238, 0.90)";
+    ctx.fillText(fitActionBarLabel(ctx, item.label, width - 10), x + width / 2, y + height / 2 + 0.5);
+    ctx.restore();
+}
+
+function hitTestVideoActionBar(widget, pos) {
+    if (!Array.isArray(pos)) {
+        return null;
+    }
+    const hit = widget.__teVideoActionBarRects?.find((entry) => isPointInsideRect(pos, entry.rect));
+    return hit?.key ?? null;
+}
+
+function createVideoActionBarWidget(node) {
+    return {
+        name: TE_VIDEO_ACTION_BAR_NAME,
+        type: "custom",
+        value: "",
+        serialize: false,
+        options: { serialize: false, hideOnZoom: false },
+        __teVideoActionBar: true,
+        __teVideoActionBarRects: [],
+        computeSize(width) {
+            return [Math.max(width || 320, 260), TE_VIDEO_ACTION_BAR_HEIGHT];
+        },
+        draw(ctx, drawNode, width, y, height) {
+            const items = getVideoActionBarItems(drawNode || node);
+            const layout = getVideoActionBarLayout(items, width, y, height || TE_VIDEO_ACTION_BAR_HEIGHT);
+            this.__teVideoActionBarRects = layout.map(({ item, rect }) => ({
+                key: item.key,
+                rect,
+            }));
+
+            ctx.save();
+            for (const { item, rect } of layout) {
+                drawVideoActionBarButton(ctx, rect, item);
+            }
+            ctx.restore();
+        },
+        mouse(event, pos, mouseNode) {
+            const eventType = event?.type;
+            if (eventType !== "pointerdown" && eventType !== "mousedown") {
+                return false;
+            }
+            if (typeof event?.button === "number" && event.button !== 0) {
+                return false;
+            }
+
+            const activeNode = mouseNode || node;
+            const key = hitTestVideoActionBar(this, pos);
+            const item = getVideoActionBarItems(activeNode).find((entry) => entry.key === key);
+            if (!item) {
+                return false;
+            }
+
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            event?.stopImmediatePropagation?.();
+
+            if (item.disabled) {
+                return true;
+            }
+
+            Promise.resolve(item.run(event)).catch((error) => {
+                console.error(error);
+                window.alert?.(error?.message || `${item.title || item.label} 失败。`);
+            });
+            return true;
+        },
+    };
+}
+
+function ensureVideoActionBar(node) {
+    if (!node) {
+        return null;
+    }
+    if (!Array.isArray(node.widgets)) {
+        node.widgets = [];
+    }
+
+    hideNativeVideoActionWidgets(node);
+    const existingWidget = node.widgets.find((widget) => widget?.__teVideoActionBar || widget?.name === TE_VIDEO_ACTION_BAR_NAME);
+    if (existingWidget) {
+        existingWidget.__teVideoActionBar = true;
+        node.__teVideoActionBarWidget = existingWidget;
+        return existingWidget;
+    }
+
+    const widget = createVideoActionBarWidget(node);
+    const filenamePrefixIndex = node.widgets.findIndex((entry) => entry?.name === "filename_prefix");
+    const localVideoIndex = node.widgets.findIndex((entry) => entry?.name === "local_video");
+    const insertAfter = filenamePrefixIndex >= 0 ? filenamePrefixIndex : localVideoIndex;
+    const insertIndex = insertAfter >= 0 ? insertAfter + 1 : node.widgets.length;
+    node.widgets.splice(insertIndex, 0, widget);
+    node.__teVideoActionBarWidget = widget;
+    markCanvasDirty();
+    return widget;
+}
+
+app.registerExtension({
+    name: "TEImagePro.SaveVideoWithFrameCapture",
+    async beforeRegisterNodeDef(nodeType, nodeData) {
+        if (nodeData.name !== VIDEO_NODE_CLASS) {
+            return;
+        }
+
+        const onNodeCreated = nodeType.prototype.onNodeCreated;
+        nodeType.prototype.onNodeCreated = function () {
+            const result = onNodeCreated?.apply(this, arguments);
+
+            this.__teSavedVideos = this.__teSavedVideos || [];
+            this.__tePreviewPaused = this.__tePreviewPaused ?? true;
+            this.__teFrameCaptureBusy = this.__teFrameCaptureBusy ?? false;
+            this.__teCaptureCreatedCount = this.__teCaptureCreatedCount ?? 0;
+            this.__tePreviewSizeLocked = this.__tePreviewSizeLocked ?? false;
+            this.__teInternalResize = this.__teInternalResize ?? false;
+            this.__teLastManagedSize = Array.isArray(this.__teLastManagedSize) ? this.__teLastManagedSize : null;
+            this.properties = {
+                ...(this.properties ?? {}),
+                [SERIALIZED_PROMPT_KEY]:
+                    normalizePromptText(this.properties?.[SERIALIZED_PROMPT_KEY]).trim() || DEFAULT_PROMPT_TEXT,
+            };
+
+            removeLegacyCustomPreview(this);
+            installVideoPreviewWidget(this);
+            installLocalVideoUploadButton(this);
+
+            const localVideoWidget = getWidgetByName(this, "local_video");
+            if (localVideoWidget && !localVideoWidget.__tePreviewCallbackInstalled) {
+                const originalCallback = localVideoWidget.callback;
+                localVideoWidget.callback = (value) => {
+                    const callbackResult = originalCallback?.call(localVideoWidget, value);
+                    syncLocalVideoPreview(this);
+                    markCanvasDirty();
+                    return callbackResult;
+                };
+                localVideoWidget.__tePreviewCallbackInstalled = true;
+            }
+
+            if (!this.__teTogglePreviewWidget) {
+                this.__teTogglePreviewWidget = this.addWidget("button", PLAY_BUTTON_TEXT, "", async () => {
+                    await togglePreviewPlayback(this);
+                });
+                this.__teTogglePreviewWidget.serialize = false;
+            }
+            hideNativeVideoActionWidget(this.__teTogglePreviewWidget);
+
+            if (!this.__teCaptureFrameWidget) {
+                this.__teCaptureFrameWidget = this.addWidget("button", CAPTURE_BUTTON_TEXT, "", async () => {
+                    try {
+                        await captureCurrentFrame(this);
+                    } catch (error) {
+                        console.error(error);
+                        window.alert?.(error?.message || "截取当前帧失败。");
+                    }
+                });
+                this.__teCaptureFrameWidget.serialize = false;
+            }
+            hideNativeVideoActionWidget(this.__teCaptureFrameWidget);
+            ensureVideoActionBar(this);
+
+            updatePlayButtonLabel(this);
+            updateCaptureButtonLabel(this);
+            syncLocalVideoPreview(this);
+            return result;
+        };
+
+        const onExecuted = nodeType.prototype.onExecuted;
+        nodeType.prototype.onExecuted = function (message) {
+            let result;
+            if (onExecuted) {
+                const baseMessage = message && typeof message === "object"
+                    ? { ...message }
+                    : message;
+                if (baseMessage && typeof baseMessage === "object") {
+                    delete baseMessage.images;
+                    delete baseMessage.video;
+                    delete baseMessage.videos;
+                    delete baseMessage.animated;
+                    delete baseMessage.gifs;
+                }
+                result = onExecuted.call(this, baseMessage);
+            }
+            // 后端现在发 "video"；保留 images/videos 回退，兼容旧版本已存盘的工作流。
+            syncPreviewSource(this, message?.video ?? message?.images ?? message?.videos);
+            setStoredPromptText(this, message?.te_prompt_text);
+            updatePlayButtonLabel(this);
+            return result;
+        };
+
+        const onResize = nodeType.prototype.onResize;
+        nodeType.prototype.onResize = function () {
+            const currentSize = Array.isArray(this.size) ? this.size : null;
+            const lastManagedSize = Array.isArray(this.__teLastManagedSize) ? this.__teLastManagedSize : null;
+            const managedResize =
+                !!currentSize &&
+                !!lastManagedSize &&
+                Math.abs((currentSize[0] ?? 0) - (lastManagedSize[0] ?? 0)) < 0.5 &&
+                Math.abs((currentSize[1] ?? 0) - (lastManagedSize[1] ?? 0)) < 0.5;
+
+            if (!this.__teInternalResize && !managedResize) {
+                this.__tePreviewSizeLocked = true;
+            }
+            return onResize?.apply(this, arguments);
+        };
+
+        const onSerialize = nodeType.prototype.onSerialize;
+        nodeType.prototype.onSerialize = function (info) {
+            const result = onSerialize?.apply(this, arguments);
+            info.properties ??= {};
+
+            if (Array.isArray(this.__teSavedVideos) && this.__teSavedVideos.length) {
+                info.properties[SERIALIZED_VIDEO_KEY] = this.__teSavedVideos;
+            } else {
+                delete info.properties[SERIALIZED_VIDEO_KEY];
+            }
+
+            const promptText = this.properties?.[SERIALIZED_PROMPT_KEY];
+            if (promptText) {
+                info.properties[SERIALIZED_PROMPT_KEY] = promptText;
+            } else {
+                delete info.properties[SERIALIZED_PROMPT_KEY];
+            }
+
+            return result;
+        };
+
+        const onConfigure = nodeType.prototype.onConfigure;
+        nodeType.prototype.onConfigure = function (info) {
+            const result = onConfigure?.apply(this, arguments);
+            this.__tePreviewPaused = true;
+            this.__teFrameCaptureBusy = false;
+            this.__tePreviewSizeLocked = true;
+            this.__teInternalResize = false;
+            this.__teLastManagedSize = null;
+            removeLegacyCustomPreview(this);
+            ensureVideoActionBar(this);
+            updateCaptureButtonLabel(this);
+            setStoredPromptText(this, info?.properties?.[SERIALIZED_PROMPT_KEY]);
+
+            const videos = info?.properties?.[SERIALIZED_VIDEO_KEY];
+            if (Array.isArray(videos) && videos.length) {
+                syncPreviewSource(this, videos);
+            } else {
+                syncLocalVideoPreview(this, true);
+            }
+            return result;
+        };
+    },
+});

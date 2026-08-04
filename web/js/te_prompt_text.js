@@ -1,1 +1,846 @@
-const a0_0x118764=a0_0x53c7;(function(_0x5a997d,_0xc17c0d){const _0x28ef36=a0_0x53c7,_0x27e1a9=_0x5a997d();while(!![]){try{const _0x49b8e5=-parseInt(_0x28ef36(0x167))/0x1*(-parseInt(_0x28ef36(0x1a0))/0x2)+-parseInt(_0x28ef36(0x15f))/0x3+-parseInt(_0x28ef36(0x163))/0x4*(parseInt(_0x28ef36(0x18e))/0x5)+-parseInt(_0x28ef36(0x156))/0x6*(-parseInt(_0x28ef36(0x16a))/0x7)+-parseInt(_0x28ef36(0x147))/0x8+-parseInt(_0x28ef36(0x184))/0x9+parseInt(_0x28ef36(0x17a))/0xa;if(_0x49b8e5===_0xc17c0d)break;else _0x27e1a9['push'](_0x27e1a9['shift']());}catch(_0x24e957){_0x27e1a9['push'](_0x27e1a9['shift']());}}}(a0_0x5297,0xe6c99));import{app}from'../../../scripts/app.js';import{api}from'../../../scripts/api.js';const PROMPT_TEXT_NODE_CLASS='TE_prompt_text',PROMPT_TEXT_TARGET_CONFIGS={'TE_image_pro_grok_image':{'imageInputs':[{'name':a0_0x118764(0x193),'label':'图片1','insertText':'图1'},{'name':'image_2','label':a0_0x118764(0x171),'insertText':'图2'},{'name':'image_3','label':'图片3','insertText':'图3'}]},'TE_image_pro_happyh_video':{'imageInputs':Array['from']({'length':0x9},(_0x4b137d,_0x4a5cb5)=>({'name':'image_'+(_0x4a5cb5+0x1),'label':'图片'+(_0x4a5cb5+0x1),'insertText':'图'+(_0x4a5cb5+0x1)}))}};let activeMenu=null;function markCanvasDirty(){const _0x2616ad=a0_0x53c7;app['graph']?.[_0x2616ad(0x187)]?.(!![],![]),app['canvas']?.['setDirty']?.(!![],![]);}function buildViewUrl(_0x301f6d){const _0x196ba2=a0_0x53c7;if(!_0x301f6d?.['filename'])return'';const _0x5aba09=new URLSearchParams({'filename':_0x301f6d['filename'],'type':_0x301f6d['type']||_0x196ba2(0x181),'rand':String(Date['now']())});return _0x301f6d['subfolder']&&_0x5aba09['set']('subfolder',_0x301f6d['subfolder']),api[_0x196ba2(0x19a)]('/view?'+_0x5aba09['toString']());}function getWidgetByName(_0x50af94,_0xa7a497){const _0x27048f=a0_0x53c7;return Array['isArray'](_0x50af94?.['widgets'])?_0x50af94['widgets']['find'](_0xcd9bab=>_0xcd9bab?.[_0x27048f(0x196)]===_0xa7a497)||null:null;}function getWidgetTextElement(_0x3961f1){const _0x5ac4bd=a0_0x53c7,_0x40a7e0=[_0x3961f1?.['inputEl'],_0x3961f1?.['element'],_0x3961f1?.[_0x5ac4bd(0x141)],_0x3961f1?.[_0x5ac4bd(0x19b)]];for(const _0x433e30 of _0x40a7e0){if(!_0x433e30)continue;if(_0x433e30 instanceof HTMLTextAreaElement||_0x433e30 instanceof HTMLInputElement)return _0x433e30;const _0x3e1e33=_0x433e30[_0x5ac4bd(0x16b)]?.('textarea,input');if(_0x3e1e33 instanceof HTMLTextAreaElement||_0x3e1e33 instanceof HTMLInputElement)return _0x3e1e33;}return null;}function getOriginNodeFromInput(_0x460067,_0x344159){const _0x35a3d6=a0_0x53c7,_0x21c97c=_0x460067?.[_0x35a3d6(0x186)]?.[_0x35a3d6(0x14e)](_0x4f5289=>_0x4f5289?.['name']===_0x344159);if(!_0x21c97c?.[_0x35a3d6(0x143)]||!app['graph']?.['links'])return null;const _0x2a37b6=app[_0x35a3d6(0x14f)][_0x35a3d6(0x151)][_0x21c97c['link']],_0x3e7ba0=_0x2a37b6?.['origin_id']??_0x2a37b6?.['originId'];return _0x3e7ba0==null?null:app[_0x35a3d6(0x14f)]['getNodeById']?.(_0x3e7ba0)||null;}function getPromptTextTargetConfig(_0x4b209f){const _0x18cafc=a0_0x53c7,_0x2eacff=typeof _0x4b209f==='string'?_0x4b209f:_0x4b209f?.[_0x18cafc(0x16c)];return _0x2eacff?PROMPT_TEXT_TARGET_CONFIGS[_0x2eacff]||null:null;}function getDownstreamPromptTargetNode(_0x53e43f){const _0x5c829a=a0_0x53c7,_0x14721b=_0x53e43f?.['outputs']?.[0x0]?.['links'];if(!Array[_0x5c829a(0x148)](_0x14721b)||!app[_0x5c829a(0x14f)]?.['links'])return null;for(const _0x46bf96 of _0x14721b){const _0x443b9d=app['graph'][_0x5c829a(0x151)][_0x46bf96];if(!_0x443b9d)continue;const _0x222441=_0x443b9d[_0x5c829a(0x152)]??_0x443b9d['targetId'],_0x17ad41=_0x222441==null?null:app['graph']['getNodeById']?.(_0x222441),_0x50bf16=_0x443b9d[_0x5c829a(0x13d)]??_0x443b9d['targetSlot'],_0x2d3661=_0x17ad41?.['inputs']?.[_0x50bf16];if(getPromptTextTargetConfig(_0x17ad41)&&_0x2d3661?.[_0x5c829a(0x196)]===_0x5c829a(0x1a8))return _0x17ad41;}return null;}function getLoadImageFileInfo(_0x3cdaf2){const _0x58cdeb=a0_0x53c7;if(!_0x3cdaf2||_0x3cdaf2[_0x58cdeb(0x16c)]!==_0x58cdeb(0x189))return null;const _0x37ed2f=getWidgetByName(_0x3cdaf2,_0x58cdeb(0x193))||_0x3cdaf2['widgets']?.[0x0],_0x4b9a3e=String(_0x37ed2f?.['value']||_0x3cdaf2['widgets_values']?.[0x0]||'')['trim']();return _0x4b9a3e?{'filename':_0x4b9a3e,'subfolder':'','type':_0x58cdeb(0x158)}:null;}function getFirstImageFileInfo(_0x5cdd64){const _0x12c39a=a0_0x53c7,_0x2232da=app[_0x12c39a(0x170)]?.[String(_0x5cdd64?.['id'])]?.['images'];if(Array['isArray'](_0x2232da)&&_0x2232da[_0x12c39a(0x194)])return _0x2232da[0x0];if(Array['isArray'](_0x5cdd64?.[_0x12c39a(0x180)])&&_0x5cdd64['images'][_0x12c39a(0x194)])return _0x5cdd64['images'][0x0];return getLoadImageFileInfo(_0x5cdd64);}function getFirstImageSrc(_0x5cb217){const _0x32cc4a=a0_0x53c7;if(Array['isArray'](_0x5cb217?.['imgs'])&&_0x5cb217['imgs']['length']&&_0x5cb217[_0x32cc4a(0x164)][0x0]?.['src'])return _0x5cb217['imgs'][0x0][_0x32cc4a(0x174)];return buildViewUrl(getFirstImageFileInfo(_0x5cb217));}function getConnectedImageOptions(_0x1ecfe3){const _0x18dc27=a0_0x53c7,_0x39d7e5=getDownstreamPromptTargetNode(_0x1ecfe3),_0x19a88f=getPromptTextTargetConfig(_0x39d7e5)?.['imageInputs']||[];if(!_0x39d7e5||!_0x19a88f['length'])return[];return _0x19a88f['map'](_0x5512e6=>{const _0x177866=a0_0x53c7,_0x2a376a=getOriginNodeFromInput(_0x39d7e5,_0x5512e6[_0x177866(0x196)]);if(!_0x2a376a)return null;return{..._0x5512e6,'src':getFirstImageSrc(_0x2a376a)};})[_0x18dc27(0x157)](Boolean);}function makeChip(_0xf4cae3){const _0x187721=a0_0x53c7,_0x54216d=document['createElement']('span');_0x54216d['className']='te-prompt-image-chip',_0x54216d['dataset'][_0x187721(0x13e)]=_0xf4cae3['insertText'],_0x54216d['contentEditable']='false',Object['assign'](_0x54216d['style'],{'display':'inline-flex','alignItems':_0x187721(0x15d),'gap':'5px','margin':'0\x204px','padding':'2px\x208px\x202px\x203px','borderRadius':'8px','border':_0x187721(0x1a6),'background':_0x187721(0x1a7),'color':_0x187721(0x154),'verticalAlign':'middle','whiteSpace':'nowrap'});if(_0xf4cae3['src']){const _0x570338=document['createElement']('img');_0x570338['src']=_0xf4cae3['src'],Object['assign'](_0x570338['style'],{'width':_0x187721(0x169),'height':'28px','borderRadius':'5px','objectFit':_0x187721(0x160),'display':'inline-block'}),_0x54216d['appendChild'](_0x570338);}const _0x4b7be1=document['createElement']('span');return _0x4b7be1['textContent']=_0xf4cae3['insertText'],_0x54216d['appendChild'](_0x4b7be1),_0x54216d;}function plainTextFromEditor(_0xd4cabb){let _0x20b269='';const _0x5b15ca=_0x30fd76=>{const _0x39c05d=a0_0x53c7;if(_0x30fd76['nodeType']===Node['TEXT_NODE']){_0x20b269+=_0x30fd76['nodeValue']||'';return;}if(_0x30fd76['nodeType']!==Node['ELEMENT_NODE'])return;if(_0x30fd76['classList']?.[_0x39c05d(0x18f)]('te-prompt-image-chip')){_0x20b269+=_0x30fd76['dataset'][_0x39c05d(0x13e)]||_0x30fd76['textContent']||'';return;}if(_0x30fd76[_0x39c05d(0x176)]==='BR'){_0x20b269+='\x0a';return;}for(const _0x2f26ee of _0x30fd76['childNodes']){_0x5b15ca(_0x2f26ee);}[_0x39c05d(0x178),'P']['includes'](_0x30fd76[_0x39c05d(0x176)])&&_0x30fd76!==_0xd4cabb&&(_0x20b269+='\x0a');};return _0x5b15ca(_0xd4cabb),_0x20b269['replace'](/\n$/g,'');}function setHiddenWidgetValue(_0x24c1e4,_0x1fc6ad,_0x42507f,_0x5597d8){const _0x266db7=a0_0x53c7,_0x28405a=String(_0x5597d8||'');_0x1fc6ad&&(_0x1fc6ad['value']=_0x28405a,_0x1fc6ad['callback']?.(_0x28405a));_0x42507f&&(_0x42507f['value']=_0x28405a,_0x42507f[_0x266db7(0x198)](new Event('input',{'bubbles':!![]})),_0x42507f['dispatchEvent'](new Event('change',{'bubbles':!![]})));const _0x2ad3d1=Array[_0x266db7(0x148)](_0x24c1e4['widgets'])?_0x24c1e4[_0x266db7(0x146)]['indexOf'](_0x1fc6ad):-0x1;_0x2ad3d1>=0x0&&(_0x24c1e4['widgets_values']??=[],_0x24c1e4['widgets_values'][_0x2ad3d1]=_0x28405a),markCanvasDirty();}function a0_0x53c7(_0x49a6e4,_0x4c3e14){const _0x529705=a0_0x5297();return a0_0x53c7=function(_0x53c71d,_0x37c048){_0x53c71d=_0x53c71d-0x13d;let _0x3b2dd8=_0x529705[_0x53c71d];return _0x3b2dd8;},a0_0x53c7(_0x49a6e4,_0x4c3e14);}function escapeRegExp(_0x35474f){return String(_0x35474f||'')['replace'](/[.*+?^${}()|[\]\\]/g,'\x5c$&');}function getPromptTokenPattern(_0x4680f2){const _0x1b3016=a0_0x53c7,_0x1a9219=Array['from'](new Set(getConnectedImageOptions(_0x4680f2)[_0x1b3016(0x192)](_0x3aa2c3=>String(_0x3aa2c3?.[_0x1b3016(0x13e)]||'')[_0x1b3016(0x1a2)]())[_0x1b3016(0x157)](Boolean)))['sort']((_0xa30579,_0x1fa28a)=>_0x1fa28a[_0x1b3016(0x194)]-_0xa30579['length']);if(!_0x1a9219['length'])return/(图(?:[1-9]|10|11|12))/g;return new RegExp('('+_0x1a9219[_0x1b3016(0x192)](escapeRegExp)['join']('|')+')','g');}function renderEditorFromText(_0x53b730,_0x5f3811,_0xe2880f){const _0x1b1534=a0_0x53c7,_0x2686ff=new Map(getConnectedImageOptions(_0xe2880f)[_0x1b1534(0x192)](_0x1d75f0=>[_0x1d75f0['insertText'],_0x1d75f0]));_0x53b730['replaceChildren']();const _0x51df47=String(_0x5f3811||''),_0x5789b0=getPromptTokenPattern(_0xe2880f);let _0x4eaea8=0x0;for(const _0x1ad7e2 of _0x51df47[_0x1b1534(0x175)](_0x5789b0)){_0x1ad7e2['index']>_0x4eaea8&&_0x53b730['appendChild'](document[_0x1b1534(0x142)](_0x51df47['slice'](_0x4eaea8,_0x1ad7e2[_0x1b1534(0x19f)])));const _0x3ad2f3=_0x2686ff['get'](_0x1ad7e2[0x0]);_0x53b730['appendChild'](_0x3ad2f3?makeChip(_0x3ad2f3):document[_0x1b1534(0x142)](_0x1ad7e2[0x0])),_0x4eaea8=_0x1ad7e2[_0x1b1534(0x19f)]+_0x1ad7e2[0x0]['length'];}_0x4eaea8<_0x51df47['length']&&_0x53b730['appendChild'](document['createTextNode'](_0x51df47['slice'](_0x4eaea8))),!_0x53b730['childNodes']['length']&&_0x53b730['appendChild'](document['createElement']('br'));}function getCaretRect(_0x5d66d4){const _0x1e001a=a0_0x53c7,_0x3da288=window['getSelection']();if(_0x3da288?.['rangeCount']){const _0x57c9a8=_0x3da288[_0x1e001a(0x15a)](0x0)[_0x1e001a(0x185)]();_0x57c9a8['collapse'](!![]);const _0x5e7511=_0x57c9a8[_0x1e001a(0x17c)]()[0x0]||_0x57c9a8['getBoundingClientRect']();if(_0x5e7511&&(_0x5e7511['width']||_0x5e7511['height']||_0x5e7511['left']||_0x5e7511['top']))return _0x5e7511;}return _0x5d66d4['getBoundingClientRect']();}function getMentionRangeInEditor(_0x2d535c){const _0x1a5997=a0_0x53c7,_0x315990=window[_0x1a5997(0x140)]();if(!_0x315990?.['rangeCount']||!_0x2d535c['contains'](_0x315990['anchorNode']))return null;const _0x2d095b=_0x315990[_0x1a5997(0x17b)],_0x12bd4f=_0x315990['anchorOffset'];if(_0x2d095b['nodeType']!==Node[_0x1a5997(0x168)])return null;const _0x7c4421=(_0x2d095b['nodeValue']||'')['slice'](0x0,_0x12bd4f),_0x50de71=_0x7c4421[_0x1a5997(0x172)](/@[\u4e00-\u9fa5\w]*$/);if(!_0x50de71)return null;const _0x3bbd9b=document['createRange']();return _0x3bbd9b['setStart'](_0x2d095b,_0x12bd4f-_0x50de71[0x0]['length']),_0x3bbd9b['setEnd'](_0x2d095b,_0x12bd4f),_0x3bbd9b;}function closeMenu(){activeMenu?.['element']?.['remove'](),activeMenu=null;}function updateMenuSelection(){if(!activeMenu)return;activeMenu['rows']['forEach']((_0x11decb,_0x3e0e8d)=>{const _0x252967=a0_0x53c7;_0x11decb['style']['background']=_0x3e0e8d===activeMenu[_0x252967(0x13f)]?'rgba(44,\x20221,\x20118,\x200.18)':_0x252967(0x165),_0x11decb[_0x252967(0x17e)]['color']=_0x3e0e8d===activeMenu['selectedIndex']?'#ffffff':'inherit';});}function syncEditorToWidget(_0x9da0ca){const _0x2c0b9b=a0_0x53c7,_0x1ef6d0=_0x9da0ca[_0x2c0b9b(0x190)];if(!_0x1ef6d0)return;setHiddenWidgetValue(_0x9da0ca,_0x1ef6d0['textWidget'],_0x1ef6d0[_0x2c0b9b(0x173)],plainTextFromEditor(_0x1ef6d0[_0x2c0b9b(0x18a)]));}function chooseOption(_0x1abf6a,_0x8c4072){const _0x21226c=a0_0x53c7,_0xe0a23e=_0x8c4072[_0x21226c(0x190)];if(!_0xe0a23e)return;const _0x448405=getMentionRangeInEditor(_0xe0a23e['editor']);if(!_0x448405)return;_0x448405['deleteContents']();const _0x3c5a61=makeChip(_0x1abf6a),_0x82e42b=document['createTextNode']('\x20');_0x448405[_0x21226c(0x19c)](_0x82e42b),_0x448405[_0x21226c(0x19c)](_0x3c5a61);const _0x410bf9=window['getSelection'](),_0x554987=document['createRange']();_0x554987['setStartAfter'](_0x82e42b),_0x554987['collapse'](!![]),_0x410bf9['removeAllRanges'](),_0x410bf9[_0x21226c(0x166)](_0x554987),syncEditorToWidget(_0x8c4072),closeMenu(),_0xe0a23e['editor']['focus']();}function a0_0x5297(){const _0x3a7419=['1801280AmHJaW','isArray','none','\x20\x20->\x20\x20','size','54px','ArrowDown','find','graph','stopPropagation','links','target_id','#f2f2f2','#eaf2ff','promptNode','6ptlNrn','filter','input','value','getRangeAt','onConnectionsChange','element','center','addEventListener','364251ThOWXC','cover','spellcheck','getData','31576kKDbfE','imgs','transparent','addRange','1676guOdQY','TEXT_NODE','28px','7738255GYbFom','querySelector','type','keydown','onResize','paste','nodeOutputs','图片2','match','textarea','src','matchAll','tagName','createElement','DIV','div','18329780DVwTSA','anchorNode','getClientRects','options','style','preventDefault','images','output','button','min','6347655rygQBo','cloneRange','inputs','setDirtyCanvas','14px/1.55\x20sans-serif','LoadImage','editor','flex','onNodeCreated','wheel','955YTDAtx','contains','__tePromptTextState','dblclick','map','image','length','assign','name','height','dispatchEvent','1px\x20solid\x20rgba(255,\x20255,\x20255,\x200.2)','apiURL','inputElement','insertNode','appendChild','100000','index','676GhhTuq','blur','trim','border-box','apply','9px','1px\x20solid\x20rgba(92,\x20154,\x20255,\x200.9)','rgba(55,\x20105,\x20180,\x200.55)','prompt','target_slot','insertText','selectedIndex','getSelection','domElement','createTextNode','link','Escape','TE.PromptText','widgets'];a0_0x5297=function(){return _0x3a7419;};return a0_0x5297();}function showMentionMenu(_0x5ab518){const _0x2dfb8e=a0_0x53c7,_0x2ca430=_0x5ab518['__tePromptTextState'];if(!_0x2ca430)return;const _0x885a9=getConnectedImageOptions(_0x5ab518),_0x26a5ff=getMentionRangeInEditor(_0x2ca430[_0x2dfb8e(0x18a)]);if(!_0x885a9['length']||!_0x26a5ff){closeMenu();return;}closeMenu();const _0x5daf1a=getCaretRect(_0x2ca430[_0x2dfb8e(0x18a)]),_0x59d315=document[_0x2dfb8e(0x177)]('div');_0x59d315['className']='te-prompt-image-mention-menu',Object['assign'](_0x59d315['style'],{'position':'fixed','left':Math['max'](0x8,Math['min'](window['innerWidth']-0x148,_0x5daf1a['left']))+'px','top':Math['max'](0x8,Math[_0x2dfb8e(0x183)](window['innerHeight']-0x104,_0x5daf1a['bottom']+0x8))+'px','minWidth':'260px','maxWidth':'320px','padding':'10px','borderRadius':'14px','background':'rgba(38,\x2038,\x2038,\x200.98)','color':'#f2f2f2','boxShadow':'0\x2018px\x2045px\x20rgba(0,\x200,\x200,\x200.35)','zIndex':_0x2dfb8e(0x19e),'fontFamily':'sans-serif'});const _0x42bc0c=[];_0x885a9['forEach']((_0x3787c6,_0x3a7ae6)=>{const _0x120914=a0_0x53c7,_0x4c59ea=document['createElement']('button');_0x4c59ea[_0x120914(0x16c)]=_0x120914(0x182),Object['assign'](_0x4c59ea['style'],{'display':_0x120914(0x18b),'alignItems':'center','gap':'14px','width':'100%','border':'0','borderRadius':'10px','padding':_0x120914(0x1a5),'background':'transparent','color':'inherit','cursor':'pointer','fontSize':'20px','textAlign':'left'}),_0x4c59ea[_0x120914(0x15e)]('mouseenter',()=>{activeMenu&&(activeMenu['selectedIndex']=_0x3a7ae6,updateMenuSelection());}),_0x4c59ea['addEventListener']('pointerdown',_0x1d0271=>{const _0x422ef3=a0_0x53c7;_0x1d0271[_0x422ef3(0x17f)](),_0x1d0271[_0x422ef3(0x150)](),chooseOption(_0x3787c6,_0x5ab518);});const _0x9c37e8=document['createElement']('div');Object['assign'](_0x9c37e8['style'],{'width':_0x120914(0x14c),'height':'54px','borderRadius':'7px','overflow':'hidden','flex':'0\x200\x20auto','background':'rgba(255,\x20255,\x20255,\x200.12)'});if(_0x3787c6['src']){const _0x34b244=document['createElement']('img');_0x34b244['src']=_0x3787c6['src'],Object['assign'](_0x34b244['style'],{'width':'100%','height':'100%','objectFit':'cover','display':'block'}),_0x9c37e8['appendChild'](_0x34b244);}const _0x226b0e=document[_0x120914(0x177)]('span');_0x226b0e['textContent']=_0x3787c6['label']+_0x120914(0x14a)+_0x3787c6['insertText'],_0x226b0e['style']['flex']='1\x201\x20auto',_0x4c59ea['append'](_0x9c37e8,_0x226b0e),_0x42bc0c['push'](_0x4c59ea),_0x59d315['appendChild'](_0x4c59ea);}),document['body'][_0x2dfb8e(0x19d)](_0x59d315),activeMenu={'element':_0x59d315,'rows':_0x42bc0c,'options':_0x885a9,'selectedIndex':0x0,'promptNode':_0x5ab518},updateMenuSelection();}function handleMenuKeydown(_0x14821a){const _0x36895a=a0_0x53c7;if(!activeMenu)return![];if(_0x14821a['key']===_0x36895a(0x14d))return _0x14821a[_0x36895a(0x17f)](),activeMenu['selectedIndex']=(activeMenu[_0x36895a(0x13f)]+0x1)%activeMenu['options']['length'],updateMenuSelection(),!![];if(_0x14821a['key']==='ArrowUp')return _0x14821a['preventDefault'](),activeMenu[_0x36895a(0x13f)]=(activeMenu['selectedIndex']-0x1+activeMenu['options']['length'])%activeMenu[_0x36895a(0x17d)]['length'],updateMenuSelection(),!![];if(_0x14821a['key']==='Enter')return _0x14821a['preventDefault'](),chooseOption(activeMenu['options'][activeMenu['selectedIndex']],activeMenu[_0x36895a(0x155)]),!![];if(_0x14821a['key']===_0x36895a(0x144))return _0x14821a[_0x36895a(0x17f)](),closeMenu(),!![];return![];}function hideOriginalTextWidget(_0x16a32e){const _0x506074=a0_0x53c7;if(!_0x16a32e)return;_0x16a32e['computeSize']=()=>[0x0,-0x4];const _0x54197b=_0x16a32e[_0x506074(0x15c)]||_0x16a32e['inputEl']||_0x16a32e['domElement']||_0x16a32e['inputElement'];_0x54197b?.['style']&&(_0x54197b['style']['display']='none');}function getPromptEditorHeight(_0x2a78b3){return Math['max'](0xa0,(_0x2a78b3?.['size']?.[0x1]||0xf0)-0x4c);}function updatePromptTextEditorLayout(_0xe81a59){const _0x518402=a0_0x53c7,_0x493f33=_0xe81a59?.['__tePromptTextState'];if(!_0x493f33)return;const _0x59733c=getPromptEditorHeight(_0xe81a59);_0x493f33['container']['style'][_0x518402(0x197)]=_0x59733c+0x8+'px',_0x493f33['editor']['style'][_0x518402(0x197)]=_0x59733c+'px',_0x493f33['editor']['style']['minHeight']=_0x59733c+'px',_0x493f33['domWidget']['computeSize']=_0x35b96f=>[_0x35b96f,_0x59733c+0x8],markCanvasDirty();}function createPromptTextEditor(_0x2cf97d){const _0x51a968=a0_0x53c7;if(_0x2cf97d['__tePromptTextState'])return;const _0x21c28c=getWidgetByName(_0x2cf97d,'text'),_0x2fc8f8=getWidgetTextElement(_0x21c28c);hideOriginalTextWidget(_0x21c28c);const _0x18e37e=document['createElement']('div');Object[_0x51a968(0x195)](_0x18e37e['style'],{'width':'100%','boxSizing':_0x51a968(0x1a3),'padding':'2px\x200\x206px','height':getPromptEditorHeight(_0x2cf97d)+0x8+'px'});const _0xf301d9=document['createElement'](_0x51a968(0x179));_0xf301d9['contentEditable']='true',_0xf301d9[_0x51a968(0x161)]=![],_0xf301d9['className']='te-prompt-text-editor',Object[_0x51a968(0x195)](_0xf301d9['style'],{'height':getPromptEditorHeight(_0x2cf97d)+'px','minHeight':getPromptEditorHeight(_0x2cf97d)+'px','width':'100%','boxSizing':'border-box','padding':'10px','borderRadius':'8px','border':_0x51a968(0x199),'background':'rgba(24,\x2024,\x2024,\x200.96)','color':_0x51a968(0x153),'font':_0x51a968(0x188),'overflowY':'auto','whiteSpace':'pre-wrap','wordBreak':'break-word','outline':'none','resize':_0x51a968(0x149)}),_0x18e37e['appendChild'](_0xf301d9);const _0x5034d4=_0x2cf97d['addDOMWidget']('te_prompt_editor','prompt',_0x18e37e,{'serialize':![],'hideOnZoom':![],'getValue'(){return plainTextFromEditor(_0xf301d9);},'setValue'(_0x492d76){renderEditorFromText(_0xf301d9,_0x492d76,_0x2cf97d);}});_0x5034d4['computeSize']=_0x5bf293=>[_0x5bf293,getPromptEditorHeight(_0x2cf97d)+0x8],_0x2cf97d['__tePromptTextState']={'textWidget':_0x21c28c,'textarea':_0x2fc8f8,'editor':_0xf301d9,'container':_0x18e37e,'domWidget':_0x5034d4},renderEditorFromText(_0xf301d9,_0x21c28c?.['value']||_0x2fc8f8?.['value']||'',_0x2cf97d),syncEditorToWidget(_0x2cf97d);const _0x5868e6=()=>showMentionMenu(_0x2cf97d);_0xf301d9['addEventListener']('input',()=>{syncEditorToWidget(_0x2cf97d),_0x5868e6();}),_0xf301d9[_0x51a968(0x15e)](_0x51a968(0x16d),_0x56c6e4=>{if(handleMenuKeydown(_0x56c6e4))return;setTimeout(_0x5868e6,0x0);}),_0xf301d9[_0x51a968(0x15e)]('click',_0x5868e6),_0xf301d9['addEventListener'](_0x51a968(0x1a1),()=>{setTimeout(closeMenu,0xa0),syncEditorToWidget(_0x2cf97d);}),_0xf301d9['addEventListener'](_0x51a968(0x16f),_0x10e5a6=>{const _0x2994d0=a0_0x53c7;_0x10e5a6[_0x2994d0(0x17f)]();const _0x4a2ee9=_0x10e5a6['clipboardData']?.[_0x2994d0(0x162)]('text/plain')||'';document['execCommand']('insertText',![],_0x4a2ee9);});for(const _0x38f867 of['pointerdown','mousedown',_0x51a968(0x191),_0x51a968(0x18d)]){_0x18e37e['addEventListener'](_0x38f867,_0x1f2d85=>{_0x1f2d85['stopPropagation']();},!![]);}const _0x2e8ffb=_0x2cf97d['onConnectionsChange'];_0x2cf97d[_0x51a968(0x15b)]=function(){const _0xac69a8=a0_0x53c7,_0x1cfe38=_0x2e8ffb?.[_0xac69a8(0x1a4)](this,arguments);return renderEditorFromText(_0xf301d9,plainTextFromEditor(_0xf301d9),_0x2cf97d),syncEditorToWidget(_0x2cf97d),_0x1cfe38;};const _0x1bcd99=_0x2cf97d[_0x51a968(0x16e)];_0x2cf97d['onResize']=function(){const _0x5adcc6=_0x1bcd99?.['apply'](this,arguments);return updatePromptTextEditorLayout(this),_0x5adcc6;},_0x2cf97d['setSize']?.([Math['max'](_0x2cf97d['size']?.[0x0]||0x168,0x17c),Math['max'](_0x2cf97d[_0x51a968(0x14b)]?.[0x1]||0xf0,0xf0)]),updatePromptTextEditorLayout(_0x2cf97d),markCanvasDirty();}document['addEventListener']('pointerdown',_0x3f1a78=>{const _0x45c02d=a0_0x53c7;activeMenu&&!activeMenu[_0x45c02d(0x15c)]['contains'](_0x3f1a78['target'])&&closeMenu();},!![]),app['registerExtension']({'name':a0_0x118764(0x145),async 'beforeRegisterNodeDef'(_0x105b87,_0x2245eb){const _0x2a1314=a0_0x53c7;if(_0x2245eb['name']!==PROMPT_TEXT_NODE_CLASS)return;const _0x244f77=_0x105b87['prototype']['onNodeCreated'];_0x105b87['prototype'][_0x2a1314(0x18c)]=function(){const _0x97d6ed=a0_0x53c7,_0x44bf14=_0x244f77?.[_0x97d6ed(0x1a4)](this,arguments);return setTimeout(()=>createPromptTextEditor(this),0x0),_0x44bf14;};const _0x4851b8=_0x105b87['prototype']['onConfigure'];_0x105b87['prototype']['onConfigure']=function(){const _0x103f73=a0_0x53c7,_0x4a14e2=_0x4851b8?.[_0x103f73(0x1a4)](this,arguments);return setTimeout(()=>{const _0x4c9a8d=a0_0x53c7;createPromptTextEditor(this);const _0x382e68=this[_0x4c9a8d(0x190)];_0x382e68&&renderEditorFromText(_0x382e68['editor'],_0x382e68['textWidget']?.['value']||_0x382e68['textarea']?.[_0x4c9a8d(0x159)]||'',this);},0x0),_0x4a14e2;};}});
+import { app } from "../../../scripts/app.js";
+import { api } from "../../../scripts/api.js";
+
+const PROMPT_TEXT_NODE_CLASS = "TE_prompt_text";
+const PROMPT_TEXT_TARGET_CONFIGS = {
+    TE_image_pro_grok_image: {
+        imageInputs: [
+            { name: "image", label: "图片1", insertText: "图1" },
+            { name: "image_2", label: "图片2", insertText: "图2" },
+            { name: "image_3", label: "图片3", insertText: "图3" },
+        ],
+    },
+    TE_image_pro_happyh_video: {
+        imageInputs: Array.from({ length: 9 }, (_, index) => ({
+            name: `image_${index + 1}`,
+            label: `图片${index + 1}`,
+            insertText: `图${index + 1}`,
+        })),
+    },
+    MiniMaxH3ReferenceToVideo: {
+        minimaxH3References: true,
+    },
+    MiniMaxH3ImageToVideo: {
+        imageInputs: [
+            { name: "first_frame", label: "首帧", insertText: "<Picture 1>" },
+            { name: "last_frame", label: "尾帧", insertText: "<Picture 2>" },
+        ],
+    },
+};
+
+let activeMenu = null;
+
+function markCanvasDirty() {
+    app.graph?.setDirtyCanvas?.(true, false);
+    app.canvas?.setDirty?.(true, false);
+}
+
+function buildViewUrl(fileInfo) {
+    if (!fileInfo?.filename) {
+        return "";
+    }
+    const params = new URLSearchParams({
+        filename: fileInfo.filename,
+        type: fileInfo.type || "output",
+        rand: String(Date.now()),
+    });
+    if (fileInfo.subfolder) {
+        params.set("subfolder", fileInfo.subfolder);
+    }
+    return api.apiURL(`/view?${params.toString()}`);
+}
+
+function getWidgetByName(node, name) {
+    return Array.isArray(node?.widgets)
+        ? node.widgets.find((widget) => widget?.name === name) || null
+        : null;
+}
+
+function getWidgetTextElement(widget) {
+    const candidates = [widget?.inputEl, widget?.element, widget?.domElement, widget?.inputElement];
+    for (const candidate of candidates) {
+        if (!candidate) {
+            continue;
+        }
+        if (candidate instanceof HTMLTextAreaElement || candidate instanceof HTMLInputElement) {
+            return candidate;
+        }
+        const found = candidate.querySelector?.("textarea,input");
+        if (found instanceof HTMLTextAreaElement || found instanceof HTMLInputElement) {
+            return found;
+        }
+    }
+    return null;
+}
+
+function getGraph(node) {
+    return node?.graph || app.canvas?.getCurrentGraph?.() || app.canvas?.graph || app.graph || null;
+}
+
+function getGraphLink(graph, linkOrId) {
+    if (linkOrId && typeof linkOrId === "object") {
+        return linkOrId;
+    }
+    const links = graph?.links;
+    return links instanceof Map ? links.get(linkOrId) : links?.[linkOrId];
+}
+
+function getGraphLinks(graph) {
+    const links = graph?.links;
+    if (links instanceof Map) {
+        return Array.from(links.values());
+    }
+    return Array.isArray(links) ? links.filter(Boolean) : Object.values(links || {});
+}
+
+function getNodeById(graph, nodeId) {
+    return graph?.getNodeById?.(nodeId) || graph?._nodes_by_id?.[nodeId] || null;
+}
+
+function getLinkOriginId(link) {
+    return Array.isArray(link) ? link[1] : link?.origin_id ?? link?.originId;
+}
+
+function getLinkOriginSlot(link) {
+    return Array.isArray(link) ? link[2] : link?.origin_slot ?? link?.originSlot;
+}
+
+function getLinkTargetId(link) {
+    return Array.isArray(link) ? link[3] : link?.target_id ?? link?.targetId;
+}
+
+function getLinkTargetSlot(link) {
+    return Array.isArray(link) ? link[4] : link?.target_slot ?? link?.targetSlot;
+}
+
+function getInputLeafName(input) {
+    return String(input?.name || "").split(".").pop();
+}
+
+function findInputByName(node, inputName) {
+    return (node?.inputs || []).find((input) => (
+        input?.name === inputName || getInputLeafName(input) === inputName
+    )) || null;
+}
+
+function getOriginNodeFromInput(node, inputName) {
+    const input = findInputByName(node, inputName);
+    const linkId = input?.link ?? input?.links?.[0];
+    const graph = getGraph(node);
+    if (linkId == null || !graph) {
+        return null;
+    }
+    const link = getGraphLink(graph, linkId);
+    const originId = getLinkOriginId(link);
+    return originId == null ? null : getNodeById(graph, originId);
+}
+
+function getPromptTextTargetConfig(nodeOrType) {
+    if (typeof nodeOrType === "string") {
+        return PROMPT_TEXT_TARGET_CONFIGS[nodeOrType] || null;
+    }
+    const names = [
+        nodeOrType?.comfyClass,
+        nodeOrType?.type,
+        nodeOrType?.constructor?.comfyClass,
+        nodeOrType?.constructor?.type,
+    ].map((value) => String(value || "")).filter(Boolean);
+    for (const name of names) {
+        if (PROMPT_TEXT_TARGET_CONFIGS[name]) {
+            return PROMPT_TEXT_TARGET_CONFIGS[name];
+        }
+        if (name.endsWith("MiniMaxH3ReferenceToVideo")) {
+            return PROMPT_TEXT_TARGET_CONFIGS.MiniMaxH3ReferenceToVideo;
+        }
+        if (name.endsWith("MiniMaxH3ImageToVideo")) {
+            return PROMPT_TEXT_TARGET_CONFIGS.MiniMaxH3ImageToVideo;
+        }
+    }
+    const title = String(nodeOrType?.title || "");
+    if (title === "MiniMax H3 Reference to Video") {
+        return PROMPT_TEXT_TARGET_CONFIGS.MiniMaxH3ReferenceToVideo;
+    }
+    return title === "MiniMax H3 Image to Video"
+        ? PROMPT_TEXT_TARGET_CONFIGS.MiniMaxH3ImageToVideo
+        : null;
+}
+
+function getDownstreamPromptTargetNode(promptNode) {
+    const graph = getGraph(promptNode);
+    if (!graph) {
+        return null;
+    }
+
+    const outputLinks = promptNode?.outputs?.[0]?.links;
+    const linkValues = outputLinks instanceof Set
+        ? Array.from(outputLinks)
+        : Array.isArray(outputLinks)
+            ? outputLinks
+            : outputLinks == null
+                ? []
+                : [outputLinks];
+    const links = linkValues.map((value) => getGraphLink(graph, value)).filter(Boolean);
+    if (!links.length) {
+        links.push(...getGraphLinks(graph).filter((link) => (
+            String(getLinkOriginId(link)) === String(promptNode?.id)
+            && Number(getLinkOriginSlot(link) || 0) === 0
+        )));
+    }
+
+    for (const link of links) {
+        if (!link) {
+            continue;
+        }
+        const targetId = getLinkTargetId(link);
+        const targetNode = targetId == null ? null : getNodeById(graph, targetId);
+        const targetSlot = getLinkTargetSlot(link);
+        const targetInput = targetNode?.inputs?.[targetSlot];
+        if (getPromptTextTargetConfig(targetNode) && getInputLeafName(targetInput) === "prompt") {
+            return targetNode;
+        }
+    }
+    return null;
+}
+
+function getLoadImageFileInfo(node) {
+    if (!node || node.type !== "LoadImage") {
+        return null;
+    }
+    const uploadWidget = getWidgetByName(node, "image") || node.widgets?.[0];
+    const filename = String(uploadWidget?.value || node.widgets_values?.[0] || "").trim();
+    return filename ? { filename, subfolder: "", type: "input" } : null;
+}
+
+function getFirstImageFileInfo(node) {
+    const outputImages = app.nodeOutputs?.[String(node?.id)]?.images;
+    if (Array.isArray(outputImages) && outputImages.length) {
+        return outputImages[0];
+    }
+    if (Array.isArray(node?.images) && node.images.length) {
+        return node.images[0];
+    }
+    return getLoadImageFileInfo(node);
+}
+
+function getFirstImageSrc(node) {
+    if (Array.isArray(node?.imgs) && node.imgs.length && node.imgs[0]?.src) {
+        return node.imgs[0].src;
+    }
+    return buildViewUrl(getFirstImageFileInfo(node));
+}
+
+function getConnectedInputsByPrefix(targetNode, prefix) {
+    const pattern = new RegExp(`^${escapeRegExp(prefix)}(\\d+)$`);
+    return (targetNode?.inputs || []).map((input) => {
+        const match = getInputLeafName(input).match(pattern);
+        if (!match) {
+            return null;
+        }
+        const originNode = getOriginNodeFromInput(targetNode, input.name);
+        return originNode ? { input, originNode, slot: Number(match[1]) } : null;
+    }).filter(Boolean).sort((left, right) => left.slot - right.slot);
+}
+
+function getMiniMaxH3ReferenceOptions(targetNode) {
+    const options = [];
+    const images = getConnectedInputsByPrefix(targetNode, "ref_image_");
+    images.forEach((entry, index) => {
+        options.push({
+            name: entry.input.name,
+            label: `参考图${index + 1}`,
+            insertText: `<Picture ${index + 1}>`,
+            src: getFirstImageSrc(entry.originNode),
+            previewLabel: "图片",
+        });
+    });
+
+    let audioIndex = 0;
+    const videos = getConnectedInputsByPrefix(targetNode, "ref_video_")
+        .filter((entry) => !entry.input.name.startsWith("ref_video_audio_"));
+    videos.forEach((entry, index) => {
+        const soundtrackName = `ref_video_audio_${entry.slot}`;
+        if (getOriginNodeFromInput(targetNode, soundtrackName)) {
+            audioIndex += 1;
+            options.push({
+                name: soundtrackName,
+                label: `视频音频${index + 1}`,
+                insertText: `<Audio ${audioIndex}>`,
+                previewLabel: "音频",
+            });
+        }
+        options.push({
+            name: entry.input.name,
+            label: `参考视频${index + 1}`,
+            insertText: `<Video ${index + 1}>`,
+            previewLabel: "视频",
+        });
+    });
+
+    getConnectedInputsByPrefix(targetNode, "ref_audio_").forEach((entry) => {
+        audioIndex += 1;
+        options.push({
+            name: entry.input.name,
+            label: `参考音频${audioIndex}`,
+            insertText: `<Audio ${audioIndex}>`,
+            previewLabel: "音频",
+        });
+    });
+    return options;
+}
+
+function getConnectedReferenceOptions(promptNode) {
+    const targetNode = getDownstreamPromptTargetNode(promptNode);
+    const config = getPromptTextTargetConfig(targetNode);
+    if (!targetNode || !config) {
+        return [];
+    }
+    if (config.minimaxH3References) {
+        return getMiniMaxH3ReferenceOptions(targetNode);
+    }
+
+    return (config.imageInputs || []).map((inputDef) => {
+        const originNode = getOriginNodeFromInput(targetNode, inputDef.name);
+        if (!originNode) {
+            return null;
+        }
+        return { ...inputDef, src: getFirstImageSrc(originNode) };
+    }).filter(Boolean);
+}
+
+function makeChip(option) {
+    const chip = document.createElement("span");
+    chip.className = "te-prompt-image-chip";
+    chip.dataset.insertText = option.insertText;
+    chip.contentEditable = "false";
+    Object.assign(chip.style, {
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "5px",
+        margin: "0 4px",
+        padding: "2px 8px 2px 3px",
+        borderRadius: "8px",
+        border: "1px solid rgba(92, 154, 255, 0.9)",
+        background: "rgba(55, 105, 180, 0.55)",
+        color: "#eaf2ff",
+        verticalAlign: "middle",
+        whiteSpace: "nowrap",
+    });
+
+    if (option.src) {
+        const img = document.createElement("img");
+        img.src = option.src;
+        Object.assign(img.style, {
+            width: "28px",
+            height: "28px",
+            borderRadius: "5px",
+            objectFit: "cover",
+            display: "inline-block",
+        });
+        chip.appendChild(img);
+    }
+
+    const label = document.createElement("span");
+    label.textContent = option.insertText;
+    chip.appendChild(label);
+    return chip;
+}
+
+function plainTextFromEditor(root) {
+    let text = "";
+    const walk = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            text += node.nodeValue || "";
+            return;
+        }
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            return;
+        }
+        if (node.classList?.contains("te-prompt-image-chip")) {
+            text += node.dataset.insertText || node.textContent || "";
+            return;
+        }
+        if (node.tagName === "BR") {
+            text += "\n";
+            return;
+        }
+        for (const child of node.childNodes) {
+            walk(child);
+        }
+        if (["DIV", "P"].includes(node.tagName) && node !== root) {
+            text += "\n";
+        }
+    };
+    walk(root);
+    return text.replace(/\n$/g, "");
+}
+
+function setHiddenWidgetValue(node, widget, textarea, value) {
+    const text = String(value || "");
+    if (widget) {
+        widget.value = text;
+        widget.callback?.(text);
+    }
+    if (textarea) {
+        textarea.value = text;
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
+        textarea.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    const index = Array.isArray(node.widgets) ? node.widgets.indexOf(widget) : -1;
+    if (index >= 0) {
+        node.widgets_values ??= [];
+        node.widgets_values[index] = text;
+    }
+    markCanvasDirty();
+}
+
+function escapeRegExp(value) {
+    return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function getPromptTokenPattern(promptNode) {
+    const tokens = Array.from(new Set(getConnectedReferenceOptions(promptNode)
+        .map((item) => String(item?.insertText || "").trim())
+        .filter(Boolean)))
+        .sort((left, right) => right.length - left.length);
+    if (!tokens.length) {
+        return /(图(?:[1-9]|10|11|12))/g;
+    }
+    return new RegExp(`(${tokens.map(escapeRegExp).join("|")})`, "g");
+}
+
+function renderEditorFromText(editor, text, promptNode) {
+    const optionsByText = new Map(getConnectedReferenceOptions(promptNode).map((item) => [item.insertText, item]));
+    editor.replaceChildren();
+
+    const value = String(text || "");
+    const pattern = getPromptTokenPattern(promptNode);
+    let last = 0;
+    for (const match of value.matchAll(pattern)) {
+        if (match.index > last) {
+            editor.appendChild(document.createTextNode(value.slice(last, match.index)));
+        }
+        const option = optionsByText.get(match[0]);
+        editor.appendChild(option ? makeChip(option) : document.createTextNode(match[0]));
+        last = match.index + match[0].length;
+    }
+    if (last < value.length) {
+        editor.appendChild(document.createTextNode(value.slice(last)));
+    }
+    if (!editor.childNodes.length) {
+        editor.appendChild(document.createElement("br"));
+    }
+}
+
+function getCaretRect(fallbackEl) {
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+        const range = selection.getRangeAt(0).cloneRange();
+        range.collapse(true);
+        const rect = range.getClientRects()[0] || range.getBoundingClientRect();
+        if (rect && (rect.width || rect.height || rect.left || rect.top)) {
+            return rect;
+        }
+    }
+    return fallbackEl.getBoundingClientRect();
+}
+
+function positionMentionMenu(menu, anchorRect) {
+    const margin = 8;
+    const gap = 8;
+    const menuRect = menu.getBoundingClientRect();
+    const left = Math.max(margin, Math.min(
+        window.innerWidth - menuRect.width - margin,
+        anchorRect.left,
+    ));
+    let top = anchorRect.bottom + gap;
+    if (top + menuRect.height > window.innerHeight - margin) {
+        top = anchorRect.top - menuRect.height - gap;
+    }
+    top = Math.max(margin, Math.min(window.innerHeight - menuRect.height - margin, top));
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
+    menu.style.visibility = "visible";
+}
+
+function getMentionRangeInEditor(editor) {
+    const selection = window.getSelection();
+    if (!selection?.rangeCount || !editor.contains(selection.anchorNode)) {
+        return null;
+    }
+    const anchor = selection.anchorNode;
+    const offset = selection.anchorOffset;
+    if (anchor.nodeType !== Node.TEXT_NODE) {
+        return null;
+    }
+    const before = (anchor.nodeValue || "").slice(0, offset);
+    const match = before.match(/@[\u4e00-\u9fa5\w]*$/);
+    if (!match) {
+        return null;
+    }
+    const range = document.createRange();
+    range.setStart(anchor, offset - match[0].length);
+    range.setEnd(anchor, offset);
+    return range;
+}
+
+function closeMenu() {
+    activeMenu?.element?.remove();
+    activeMenu = null;
+}
+
+function updateMenuSelection() {
+    if (!activeMenu) {
+        return;
+    }
+    activeMenu.rows.forEach((row, index) => {
+        row.style.background = index === activeMenu.selectedIndex
+            ? "rgba(44, 221, 118, 0.18)"
+            : "transparent";
+        row.style.color = index === activeMenu.selectedIndex ? "#ffffff" : "inherit";
+    });
+    activeMenu.rows[activeMenu.selectedIndex]?.scrollIntoView?.({ block: "nearest" });
+}
+
+function syncEditorToWidget(promptNode) {
+    const state = promptNode.__tePromptTextState;
+    if (!state) {
+        return;
+    }
+    setHiddenWidgetValue(promptNode, state.textWidget, state.textarea, plainTextFromEditor(state.editor));
+}
+
+function chooseOption(option, promptNode) {
+    const state = promptNode.__tePromptTextState;
+    if (!state) {
+        return;
+    }
+    const range = getMentionRangeInEditor(state.editor);
+    if (!range) {
+        return;
+    }
+
+    range.deleteContents();
+    const chip = makeChip(option);
+    const spacer = document.createTextNode(" ");
+    range.insertNode(spacer);
+    range.insertNode(chip);
+
+    const selection = window.getSelection();
+    const after = document.createRange();
+    after.setStartAfter(spacer);
+    after.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(after);
+
+    syncEditorToWidget(promptNode);
+    closeMenu();
+    state.editor.focus();
+}
+
+function showMentionMenu(promptNode) {
+    const state = promptNode.__tePromptTextState;
+    if (!state) {
+        return;
+    }
+    const options = getConnectedReferenceOptions(promptNode);
+    const mentionRange = getMentionRangeInEditor(state.editor);
+    if (!options.length || !mentionRange) {
+        closeMenu();
+        return;
+    }
+
+    closeMenu();
+    const rect = getCaretRect(state.editor);
+    const menu = document.createElement("div");
+    menu.className = "te-prompt-image-mention-menu";
+    Object.assign(menu.style, {
+        position: "fixed",
+        left: "0",
+        top: "0",
+        width: `${Math.min(320, Math.max(160, window.innerWidth - 16))}px`,
+        maxHeight: `${Math.max(120, window.innerHeight - 16)}px`,
+        overflowY: "auto",
+        overscrollBehavior: "contain",
+        boxSizing: "border-box",
+        padding: "10px",
+        borderRadius: "14px",
+        background: "rgba(38, 38, 38, 0.98)",
+        color: "#f2f2f2",
+        boxShadow: "0 18px 45px rgba(0, 0, 0, 0.35)",
+        zIndex: "100000",
+        fontFamily: "sans-serif",
+        visibility: "hidden",
+    });
+
+    const rows = [];
+    options.forEach((option, index) => {
+        const row = document.createElement("button");
+        row.type = "button";
+        Object.assign(row.style, {
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            width: "100%",
+            border: "0",
+            borderRadius: "10px",
+            padding: "9px",
+            background: "transparent",
+            color: "inherit",
+            cursor: "pointer",
+            fontSize: "20px",
+            textAlign: "left",
+        });
+        row.addEventListener("mouseenter", () => {
+            if (activeMenu) {
+                activeMenu.selectedIndex = index;
+                updateMenuSelection();
+            }
+        });
+        row.addEventListener("pointerdown", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            chooseOption(option, promptNode);
+        });
+
+        const preview = document.createElement("div");
+        Object.assign(preview.style, {
+            width: "54px",
+            height: "54px",
+            borderRadius: "7px",
+            overflow: "hidden",
+            flex: "0 0 auto",
+            background: "rgba(255, 255, 255, 0.12)",
+        });
+        if (option.src) {
+            const img = document.createElement("img");
+            img.src = option.src;
+            Object.assign(img.style, {
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+            });
+            preview.appendChild(img);
+        } else if (option.previewLabel) {
+            preview.textContent = option.previewLabel;
+            Object.assign(preview.style, {
+                display: "grid",
+                placeItems: "center",
+                color: "rgba(255, 255, 255, 0.72)",
+                fontSize: "12px",
+                fontWeight: "700",
+            });
+        }
+
+        const label = document.createElement("span");
+        label.textContent = `${option.label}  ->  ${option.insertText}`;
+        label.style.flex = "1 1 auto";
+        row.append(preview, label);
+        rows.push(row);
+        menu.appendChild(row);
+    });
+
+    document.body.appendChild(menu);
+    positionMentionMenu(menu, rect);
+    activeMenu = { element: menu, rows, options, selectedIndex: 0, promptNode };
+    updateMenuSelection();
+}
+
+function handleMenuKeydown(event) {
+    if (!activeMenu) {
+        return false;
+    }
+    if (event.key === "ArrowDown") {
+        event.preventDefault();
+        activeMenu.selectedIndex = (activeMenu.selectedIndex + 1) % activeMenu.options.length;
+        updateMenuSelection();
+        return true;
+    }
+    if (event.key === "ArrowUp") {
+        event.preventDefault();
+        activeMenu.selectedIndex = (activeMenu.selectedIndex - 1 + activeMenu.options.length) % activeMenu.options.length;
+        updateMenuSelection();
+        return true;
+    }
+    if (event.key === "Enter") {
+        event.preventDefault();
+        chooseOption(activeMenu.options[activeMenu.selectedIndex], activeMenu.promptNode);
+        return true;
+    }
+    if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return true;
+    }
+    return false;
+}
+
+function hideOriginalTextWidget(widget) {
+    if (!widget) {
+        return;
+    }
+    widget.computeSize = () => [0, -4];
+    const el = widget.element || widget.inputEl || widget.domElement || widget.inputElement;
+    if (el?.style) {
+        el.style.display = "none";
+    }
+}
+
+function getPromptEditorHeight(node) {
+    return Math.max(160, (node?.size?.[1] || 240) - 76);
+}
+
+function updatePromptTextEditorLayout(node) {
+    const state = node?.__tePromptTextState;
+    if (!state) {
+        return;
+    }
+    const height = getPromptEditorHeight(node);
+    state.container.style.height = `${height + 8}px`;
+    state.editor.style.height = `${height}px`;
+    state.editor.style.minHeight = `${height}px`;
+    state.domWidget.computeSize = (width) => [width, height + 8];
+    markCanvasDirty();
+}
+
+function createPromptTextEditor(node) {
+    if (node.__tePromptTextState) {
+        return;
+    }
+
+    const textWidget = getWidgetByName(node, "text");
+    const textarea = getWidgetTextElement(textWidget);
+    hideOriginalTextWidget(textWidget);
+
+    const container = document.createElement("div");
+    Object.assign(container.style, {
+        width: "100%",
+        boxSizing: "border-box",
+        padding: "2px 0 6px",
+        height: `${getPromptEditorHeight(node) + 8}px`,
+    });
+
+    const editor = document.createElement("div");
+    editor.contentEditable = "true";
+    editor.spellcheck = false;
+    editor.className = "te-prompt-text-editor";
+    Object.assign(editor.style, {
+        height: `${getPromptEditorHeight(node)}px`,
+        minHeight: `${getPromptEditorHeight(node)}px`,
+        width: "100%",
+        boxSizing: "border-box",
+        padding: "10px",
+        borderRadius: "8px",
+        border: "1px solid rgba(255, 255, 255, 0.2)",
+        background: "rgba(24, 24, 24, 0.96)",
+        color: "#f2f2f2",
+        font: "14px/1.55 sans-serif",
+        overflowY: "auto",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+        outline: "none",
+        resize: "none",
+    });
+
+    container.appendChild(editor);
+    const domWidget = node.addDOMWidget("te_prompt_editor", "prompt", container, {
+        serialize: false,
+        hideOnZoom: false,
+        getValue() {
+            return plainTextFromEditor(editor);
+        },
+        setValue(value) {
+            renderEditorFromText(editor, value, node);
+        },
+    });
+    domWidget.computeSize = (width) => [width, getPromptEditorHeight(node) + 8];
+
+    node.__tePromptTextState = { textWidget, textarea, editor, container, domWidget };
+    renderEditorFromText(editor, textWidget?.value || textarea?.value || "", node);
+    syncEditorToWidget(node);
+
+    const update = () => showMentionMenu(node);
+    editor.addEventListener("input", () => {
+        syncEditorToWidget(node);
+        update();
+    });
+    editor.addEventListener("keydown", (event) => {
+        if (handleMenuKeydown(event)) {
+            return;
+        }
+        setTimeout(update, 0);
+    });
+    editor.addEventListener("click", update);
+    editor.addEventListener("blur", () => {
+        setTimeout(closeMenu, 160);
+        syncEditorToWidget(node);
+    });
+    editor.addEventListener("paste", (event) => {
+        event.preventDefault();
+        const text = event.clipboardData?.getData("text/plain") || "";
+        document.execCommand("insertText", false, text);
+    });
+
+    for (const eventName of ["pointerdown", "mousedown", "dblclick", "wheel"]) {
+        container.addEventListener(eventName, (event) => {
+            event.stopPropagation();
+        }, true);
+    }
+
+    const originalOnConnectionsChange = node.onConnectionsChange;
+    node.onConnectionsChange = function () {
+        const result = originalOnConnectionsChange?.apply(this, arguments);
+        renderEditorFromText(editor, plainTextFromEditor(editor), node);
+        syncEditorToWidget(node);
+        return result;
+    };
+
+    const originalOnResize = node.onResize;
+    node.onResize = function () {
+        const result = originalOnResize?.apply(this, arguments);
+        updatePromptTextEditorLayout(this);
+        return result;
+    };
+
+    node.setSize?.([
+        Math.max(node.size?.[0] || 360, 380),
+        Math.max(node.size?.[1] || 240, 240),
+    ]);
+    updatePromptTextEditorLayout(node);
+    markCanvasDirty();
+}
+
+document.addEventListener("pointerdown", (event) => {
+    if (activeMenu && !activeMenu.element.contains(event.target)) {
+        closeMenu();
+    }
+}, true);
+
+app.registerExtension({
+    name: "TE.PromptText",
+    async beforeRegisterNodeDef(nodeType, nodeData) {
+        if (nodeData.name !== PROMPT_TEXT_NODE_CLASS) {
+            return;
+        }
+
+        const originalOnNodeCreated = nodeType.prototype.onNodeCreated;
+        nodeType.prototype.onNodeCreated = function () {
+            const result = originalOnNodeCreated?.apply(this, arguments);
+            setTimeout(() => createPromptTextEditor(this), 0);
+            return result;
+        };
+
+        const originalOnConfigure = nodeType.prototype.onConfigure;
+        nodeType.prototype.onConfigure = function () {
+            const result = originalOnConfigure?.apply(this, arguments);
+            setTimeout(() => {
+                createPromptTextEditor(this);
+                const state = this.__tePromptTextState;
+                if (state) {
+                    renderEditorFromText(state.editor, state.textWidget?.value || state.textarea?.value || "", this);
+                }
+            }, 0);
+            return result;
+        };
+    },
+});
