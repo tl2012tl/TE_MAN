@@ -1,13 +1,22 @@
-# TE MAN  v3.5
+# TE MAN  v3.6
 
 TE MAN 是首个专为 ComfyUI 打造的本地 + 在线 API 双线兼容无限画布插件，覆盖漫剧创作、提示词扩写、分镜生成、生图生视频、素材管理与AI助手等。插件为 ComfyUI 本地带来无限画布的创作体验，支持一键分镜、一键三视图、一键故事板、一键九宫格、自由裁切、多任务并发、资产素材库、提示词素材库、构想台 AI 、3D导演台、文本工具节点、节点自动连线、快速断线、自定义保存路径等功能，让本地模型和在线 API 都能更好用、更高效。
 
 用了新特性，只支持 Python 3.12/3.13，可去 B 站下载我的 Py3.13 整合包https://pan.quark.cn/s/e1649b85eb60
 
 
-## v3.5.3
+## v3.6
 
-### 1. TE MAN MiniMaxH3增强提示词Prompt TEXT 更新
+### 1. 新增 TE MAN MiniMax H3 AI提示词增强节点
+
+新增 **TE MAN MiniMax H3 AI提示词增强(本地orAPI)** 节点，专门针对 MiniMax H3 视频节点的提示词工程进行增强。节点内置 H3 提示词工程规则，不依赖外部 md 文件；支持本地模板和 API 增强两种方式，并输出中文视频提示词。
+
+- 支持 **本地模板** 和 **API增强** 两种模式。
+- 支持五种任务模式：全参考模式、文生视频 `T2VA`、首帧图生视频 `I2VA`、首尾帧视频 `FL2VA`、尾帧图生视频 `L2VA`。
+- 根据不同任务模式使用独立规则，避免文生视频、首帧、首尾帧、尾帧和全参考模式之间互相污染。
+- 全参考模式按 `subject_definitions`、`summary`、`retention_analysis`、`detailed_description`、`overall_soundscape`、`non_diegetic_music` 六个字段输出；其他四种模式按三段核心字段输出。
+
+### 2. TE MAN MiniMaxH3增强提示词Prompt TEXT 更新
 
 **TE MAN MiniMaxH3增强提示词Prompt TEXT** 现已支持 ComfyUI 自带的 MiniMax H3 视频节点，可通过输入 `@` 选择已连接的参考素材并插入对应标记。
 
@@ -15,7 +24,7 @@ TE MAN 是首个专为 ComfyUI 打造的本地 + 在线 API 双线兼容无限�
 - 参考图片按顺序插入 `<Picture N>`，参考视频插入 `<Video N>`，音频插入 `<Audio N>`。
 - **MiniMax H3 Image to Video** 支持首尾帧输入：`first_frame` 对应 `<Picture 1>`，`last_frame` 对应 `<Picture 2>`。
 
-### 2. 构想台支持多 API 供应商设置
+### 3. 构想台支持多 API 供应商设置
 
 **构想台设置** 现在可以保存多个 API 供应商，方便在不同供应商、本地模型和不同接口格式之间快速切换。
 
