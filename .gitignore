@@ -4,6 +4,7 @@
 /TE_Image_Compress_Test.py
 /Grok_Video_Generator test.py
 /data/te_man_idea_desk.db
+data/
 /data/te_man_idea_desk.db-*
 /te_bernini_backend/text_embed_cache/
 __pycache__/
