@@ -416,27 +416,15 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
         preset: str = "normal",
         seed: int = -1,
         image=None,
+        image_2=None,
+        image_3=None,
+        image_4=None,
+        image_5=None,
         timeout_s: int = 600,
         绕过代理: bool = False,
         线路选择: str = "线路1",
         **extra_kwargs,
     ):
-        scaled_image = None
-        if image is not None:
-            scaled_image = _scale_image_tensor_to_total_pixels_if_needed(image)
-            if scaled_image is not image:
-                logger.info(
-                    f"Grok Video Safe PY 输入图自动缩放: "
-                    f"{_shape_to_hw_text(image)} -> {_shape_to_hw_text(scaled_image)} "
-                    f"(目标约 {_MAX_INPUT_IMAGE_MEGAPIXELS:.1f}MP)"
-                )
-            else:
-                logger.info(
-                    f"Grok Video Safe PY 输入图未缩放: "
-                    f"{_shape_to_hw_text(image)} "
-                    f"(未超过约 {_MAX_INPUT_IMAGE_MEGAPIXELS:.1f}MP)"
-                )
-
         super_generate_video = super().generate_video
         call_kwargs = dict(
             prompt=prompt,
@@ -448,10 +436,20 @@ class BananaGrokVideoSafePyNode(_BaseGrokVideoNode):
             resolution_name=resolution_name,
             preset=preset,
             seed=seed,
-            image=scaled_image,
+            image=image,
+            image_2=image_2,
+            image_3=image_3,
+            image_4=image_4,
+            image_5=image_5,
             timeout_s=timeout_s,
             绕过代理=绕过代理,
             线路选择=线路选择,
+        )
+        call_kwargs, _input_routes, _merged_count = _scale_named_image_kwargs(
+            call_kwargs,
+            ["image", "image_2", "image_3", "image_4", "image_5"],
+            "Grok Video Safe PY 输入图",
+            log_unscaled=True,
         )
         return super_generate_video(**call_kwargs)
 
