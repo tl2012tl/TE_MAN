@@ -334,7 +334,7 @@ https://pan.quark.cn/s/228999e7c788
 
 ## Links
 
-API 站：https://tem.588186.xyz
+API 站：https://teynex.com
 
 B 站主页：https://space.bilibili.com/361444771
 
