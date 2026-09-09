@@ -34,7 +34,7 @@ else:
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TE_image_pro_grok_image": "TE MAN Grok Image",
     "TE_image_pro_grok_video": "TE MAN Grok Video",
-    "TE_image_pro_gpt_image_2": "TE MAN GPT Image 2",
+    "TE_image_pro_gpt_image_2": "TE MAN GPT Image 2 & 2.5",
     "TE_image_pro_banana": "TE MAN Gemini Image",
     "TE_image_pro_special_async2": "TE MAN Gemini 特渠",
     "TE_image_pro_sora2_video": "TE MAN sora2 video",
